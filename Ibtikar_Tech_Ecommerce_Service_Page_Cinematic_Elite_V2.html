@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="ar" dir="rtl" class="dark">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+  <meta name="description" content="ابتكار تك — تصميم وتطوير متاجر إلكترونية عالية التحويل، من الاستراتيجية وتجربة المستخدم إلى التطوير والربط والقياس والنمو.">
+  <meta name="theme-color" content="#08080C">
+  <meta name="color-scheme" content="dark">
+  <link rel="canonical" href="https://ibtikar-tech.com/services/ecommerce-development">
+  <meta property="og:type" content="website">
+  <meta property="og:locale" content="ar_SA">
+  <meta property="og:title" content="تصميم وتطوير المتاجر الإلكترونية | ابتكار تك">
+  <meta property="og:description" content="نحوّل المتجر إلى تجربة شراء واضحة، سريعة، قابلة للقياس والتوسع.">
+  <title>تصميم وتطوير المتاجر الإلكترونية | ابتكار تك</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Sans+Arabic:wght@300;400;500;600;700&family=Tajawal:wght@400;500;700;800;900&display=swap" rel="stylesheet">
+
+  <script>
+    tailwind = { config: {
+      darkMode: 'class',
+      theme: {
+        extend: {
+          colors: {
+            ink: '#08080C',
+            panel: '#101019',
+            panel2: '#151523',
+            cyanx: '#27D8F4',
+            bluex: '#5B84FF',
+            purplex: '#9B63FF',
+            pinkx: '#F15AAF',
+            greenx: '#36D8A4'
+          },
+          fontFamily: {
+            sans: ['IBM Plex Sans Arabic', 'Tajawal', 'system-ui', 'sans-serif'],
+            display: ['Tajawal', 'IBM Plex Sans Arabic', 'system-ui', 'sans-serif']
+          },
+          boxShadow: {
+            cinematic: '0 45px 130px rgba(0,0,0,.48)',
+            neon: '0 0 50px rgba(91,132,255,.24)'
+          },
+          borderRadius: {
+            '4xl': '2rem',
+            '5xl': '2.75rem'
+          }
+        }
+      }
+    }};
+  </script>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+  <script type="application/ld+json">
+  {
+    "@context":"https://schema.org",
+    "@graph":[
+      {
+        "@type":"Service",
+        "name":"تصميم وتطوير المتاجر الإلكترونية",
+        "serviceType":"Ecommerce Strategy, UX, Design and Development",
+        "provider":{"@type":"Organization","name":"ابتكار تك للحلول والخدمات الرقمية","url":"https://ibtikar-tech.com"},
+        "areaServed":["SA","YE","AE","KW","QA","BH","OM"],
+        "description":"خدمة متكاملة لبناء وتحسين المتاجر الإلكترونية تشمل الاستراتيجية وتجربة المستخدم والتصميم والتطوير والربط والقياس والتحسين.",
+        "url":"https://ibtikar-tech.com/services/ecommerce-development"
+      },
+      {
+        "@type":"BreadcrumbList",
+        "itemListElement":[
+          {"@type":"ListItem","position":1,"name":"الرئيسية","item":"https://ibtikar-tech.com/"},
+          {"@type":"ListItem","position":2,"name":"الخدمات","item":"https://ibtikar-tech.com/services"},
+          {"@type":"ListItem","position":3,"name":"المتاجر الإلكترونية","item":"https://ibtikar-tech.com/services/ecommerce-development"}
+        ]
+      }
+    ]
+  }
+  </script>
+
+  <style>
+    :root{
+      --bg:#08080c;
+      --bg-2:#0d0d15;
+      --panel:#101019;
+      --panel-2:#151523;
+      --text:#f7f8ff;
+      --muted:#a4aac0;
+      --line:rgba(255,255,255,.09);
+      --cyan:#27d8f4;
+      --blue:#5b84ff;
+      --purple:#9b63ff;
+      --pink:#f15aaf;
+      --green:#36d8a4;
+      --gradient:linear-gradient(135deg,var(--cyan),var(--blue) 34%,var(--purple) 67%,var(--pink));
+      --ease:cubic-bezier(.22,1,.36,1);
+      --max:1240px;
+    }
+    *{box-sizing:border-box}
+    html{scroll-behavior:smooth;scroll-padding-top:100px}
+    body{margin:0;background:var(--bg);color:var(--text);font-family:"IBM Plex Sans Arabic","Tajawal",system-ui,sans-serif;overflow-x:hidden;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility}
+    body::before{content:"";position:fixed;inset:0;z-index:-6;background:radial-gradient(circle at 86% 8%,rgba(39,216,244,.1),transparent 27%),radial-gradient(circle at 12% 35%,rgba(155,99,255,.14),transparent 32%),radial-gradient(circle at 68% 92%,rgba(241,90,175,.08),transparent 28%),#08080c}
+    a{color:inherit;text-decoration:none}
+    button,input,select,textarea{font:inherit}
+    button{cursor:pointer}
+    img,svg{max-width:100%}
+    ::selection{background:rgba(155,99,255,.32);color:#fff}
+    .container-shell{width:min(calc(100% - 40px),var(--max));margin-inline:auto}
+    .noise{position:fixed;inset:-50%;z-index:100;pointer-events:none;opacity:.028;mix-blend-mode:screen;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='180' height='180'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.82' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='.8'/%3E%3C/svg%3E")}
+    .progress{position:fixed;inset:0 0 auto 0;height:3px;z-index:120;pointer-events:none}.progress span{display:block;height:100%;transform-origin:right;transform:scaleX(0);background:var(--gradient);box-shadow:0 0 22px rgba(91,132,255,.62)}
+    .glass{background:rgba(14,14,24,.72);backdrop-filter:blur(24px) saturate(1.35);border:1px solid var(--line)}
+    .gradient-text{background:linear-gradient(90deg,#a4efff 0%,#8aaaff 36%,#c395ff 68%,#ff91ce 100%);-webkit-background-clip:text;background-clip:text;color:transparent}
+    .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
+    .skip-link{position:fixed;top:-70px;right:16px;z-index:999;background:#fff;color:#111;padding:12px 18px;border-radius:12px}.skip-link:focus{top:16px}
+
+    .site-header{position:fixed;top:12px;right:0;left:0;z-index:90;transition:transform .5s var(--ease)}
+    .site-header.is-hidden{transform:translateY(-135%)}
+    .nav-shell{height:70px;border-radius:22px;display:flex;align-items:center;justify-content:space-between;gap:20px;padding:0 14px;background:rgba(8,8,14,.7);backdrop-filter:blur(26px) saturate(1.4);border:1px solid var(--line);box-shadow:0 18px 60px rgba(0,0,0,.24)}
+    .brand{display:flex;align-items:center;gap:11px;min-width:max-content}
+    .brand-mark{width:40px;height:40px;display:flex;align-items:flex-end;gap:3px;transform:rotate(-7deg);filter:drop-shadow(0 10px 20px rgba(91,132,255,.35))}
+    .brand-mark i{width:10px;border-radius:4px;background:var(--gradient)}
+    .brand-mark i:nth-child(1){height:22px}.brand-mark i:nth-child(2){height:35px}.brand-mark i:nth-child(3){height:28px}
+    .brand-copy{line-height:1.15}.brand-copy strong{display:block;font-size:17px}.brand-copy small{display:block;color:#8088a2;font-size:9px;margin-top:4px}
+    .desktop-nav{display:flex;align-items:center;gap:3px;padding:5px;border:1px solid var(--line);background:rgba(255,255,255,.03);border-radius:14px}
+    .desktop-nav a{padding:7px 11px;border-radius:9px;color:#b7bed1;font-size:12px;font-weight:700;transition:.25s}
+    .desktop-nav a:hover,.desktop-nav a.active{background:rgba(255,255,255,.08);color:#fff}
+    .menu-btn{display:none;width:42px;height:42px;border:1px solid var(--line);background:rgba(255,255,255,.04);color:#fff;border-radius:13px}
+    .mobile-menu{display:none;position:fixed;top:94px;right:16px;left:16px;z-index:89;padding:14px;border:1px solid var(--line);background:rgba(9,9,17,.97);backdrop-filter:blur(24px);border-radius:20px;box-shadow:0 35px 100px rgba(0,0,0,.46)}
+    .mobile-menu.open{display:grid}.mobile-menu a{padding:12px 14px;border-radius:11px;color:#d3d8e8;font-weight:700}.mobile-menu a:hover{background:rgba(255,255,255,.06)}
+
+    .btn{min-height:50px;padding:0 22px;border-radius:15px;border:1px solid transparent;display:inline-flex;align-items:center;justify-content:center;gap:9px;font-weight:800;position:relative;overflow:hidden;isolation:isolate;transition:transform .35s var(--ease),box-shadow .35s,border-color .35s}
+    .btn::before{content:"";position:absolute;inset:0;z-index:-1;background:linear-gradient(110deg,transparent 30%,rgba(255,255,255,.28) 50%,transparent 70%);transform:translateX(130%);transition:transform .8s var(--ease)}
+    .btn:hover::before{transform:translateX(-130%)}.btn:hover{transform:translateY(-3px)}
+    .btn-primary{background:var(--gradient);color:#fff;box-shadow:0 16px 44px rgba(91,87,228,.34)}
+    .btn-secondary{background:rgba(255,255,255,.045);border-color:rgba(255,255,255,.15);color:#fff}
+    .btn-white{background:#fff;color:#10101a}
+    .btn-small{min-height:42px;padding-inline:17px;font-size:13px}
+
+    .hero{position:relative;min-height:100svh;padding:162px 0 90px;overflow:hidden;display:flex;align-items:center}
+    .hero::before{content:"";position:absolute;inset:0;opacity:.24;background-image:linear-gradient(rgba(255,255,255,.04) 1px,transparent 1px),linear-gradient(90deg,rgba(255,255,255,.04) 1px,transparent 1px);background-size:56px 56px;mask-image:linear-gradient(to bottom,#000 8%,transparent 88%);transform:perspective(980px) rotateX(62deg) scale(1.7);transform-origin:top center}
+    .hero::after{content:"";position:absolute;width:780px;height:780px;top:-420px;left:50%;transform:translateX(-50%);border-radius:50%;background:conic-gradient(from 180deg,rgba(39,216,244,.25),rgba(91,132,255,.14),rgba(155,99,255,.2),rgba(241,90,175,.18),rgba(39,216,244,.25));filter:blur(80px);opacity:.72;animation:aurora 28s linear infinite}
+    @keyframes aurora{to{transform:translateX(-50%) rotate(360deg)}}
+    .hero-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.8;pointer-events:none}
+    .hero-grid{position:relative;z-index:2;display:grid;grid-template-columns:.92fr 1.08fr;gap:72px;align-items:center}
+    .crumbs{display:flex;align-items:center;gap:8px;color:#7f889f;font-size:11px;margin-bottom:18px}
+    .eyebrow{display:inline-flex;align-items:center;gap:9px;padding:8px 13px;border:1px solid rgba(96,186,255,.2);background:rgba(47,105,179,.12);color:#a8edff;border-radius:99px;font-size:12px;font-weight:800}
+    .eyebrow i{width:7px;height:7px;border-radius:50%;background:var(--cyan);box-shadow:0 0 0 6px rgba(39,216,244,.1)}
+    .hero h1{font-family:"Tajawal",sans-serif;font-size:clamp(50px,6.2vw,92px);line-height:1.02;letter-spacing:-.055em;margin:22px 0;text-wrap:balance}
+    .hero-copy>p{font-size:18px;line-height:1.95;color:#bcc3d6;max-width:650px}
+    .hero-actions{display:flex;gap:12px;flex-wrap:wrap;margin-top:30px}
+    .hero-trust{display:flex;gap:9px;flex-wrap:wrap;margin-top:25px}.hero-trust span{padding:8px 11px;border-radius:11px;border:1px solid var(--line);background:rgba(255,255,255,.03);color:#aeb5ca;font-size:11px}.hero-trust b{color:#fff;margin-inline-end:5px}
+
+    .product-stage{position:relative;min-height:640px;perspective:1500px;isolation:isolate}
+    .stage-aura{position:absolute;inset:12% 6%;border-radius:50%;background:radial-gradient(circle,rgba(91,132,255,.28),rgba(155,99,255,.13) 38%,transparent 68%);filter:blur(24px);opacity:.9;transform:translate3d(var(--ax,0),var(--ay,0),0)}
+    .webgl-mount{position:absolute;inset:0;display:grid;place-items:center;pointer-events:none}
+    .commerce-obj{position:relative;width:min(100%,640px);height:500px;transform-style:preserve-3d;transform:rotateX(var(--rx,2deg)) rotateY(var(--ry,-5deg)) translate3d(0,var(--tz,0),0);transition:transform .24s ease-out;will-change:transform}
+    .browser-shell{position:absolute;inset:30px 34px 58px 20px;border-radius:30px;overflow:hidden;background:linear-gradient(180deg,rgba(22,22,39,.96),rgba(12,12,22,.97));border:1px solid rgba(255,255,255,.14);box-shadow:0 55px 140px rgba(0,0,0,.58),0 0 80px rgba(91,132,255,.12);transform:translateZ(0)}
+    .browser-shell::after{content:"";position:absolute;inset:0;pointer-events:none;background:radial-gradient(420px circle at var(--mx,50%) var(--my,50%),rgba(255,255,255,.11),transparent 48%)}
+    .browser-bar{height:48px;display:flex;align-items:center;justify-content:space-between;padding:0 16px;border-bottom:1px solid rgba(255,255,255,.07);color:#929ab0;font-size:10px}
+    .browser-dots{display:flex;gap:6px}.browser-dots i{width:8px;height:8px;border-radius:50%;background:#ff5e87}.browser-dots i:nth-child(2){background:#ffc861}.browser-dots i:nth-child(3){background:#35daa6}
+    .store-body{height:calc(100% - 48px);display:grid;grid-template-columns:60px 1fr;background:linear-gradient(145deg,#f7f7fb,#ececf5);color:#171724}
+    .store-side{background:#111321;padding:16px 10px;display:flex;flex-direction:column;gap:15px;align-items:center}.store-side i{width:28px;height:28px;border-radius:9px;background:rgba(255,255,255,.07)}.store-side i:first-child{background:var(--gradient)}
+    .store-main{padding:18px}.store-nav{display:flex;align-items:center;justify-content:space-between}.store-logo{font-size:14px;font-weight:900}.store-links{display:flex;gap:7px}.store-links i{width:44px;height:6px;border-radius:5px;background:#d6d7e1}
+    .store-hero{height:150px;margin-top:14px;border-radius:20px;background:linear-gradient(135deg,#15162a,#2f2448 56%,#6f3257);display:grid;grid-template-columns:1fr .9fr;align-items:center;padding:22px;overflow:hidden;position:relative}
+    .store-copy small{color:#a4eaff;font-size:8px}.store-copy strong{display:block;color:#fff;font-size:24px;line-height:1.15;margin:8px 0}.store-copy span{display:block;width:70px;height:8px;border-radius:10px;background:var(--gradient)}
+    .product-orbit{position:relative;height:120px}.product-orbit i{position:absolute;border-radius:50%;border:1px solid rgba(255,255,255,.14)}.product-orbit i:nth-child(1){inset:5px}.product-orbit i:nth-child(2){inset:24px}.product-orbit i:nth-child(3){inset:42px}
+    .product-bottle{position:absolute;width:70px;height:100px;left:50%;top:50%;transform:translate(-50%,-50%);border-radius:14px 14px 20px 20px;background:linear-gradient(145deg,#8c5072,#3d1f36);box-shadow:0 22px 45px rgba(0,0,0,.28)}.product-bottle::before{content:"";position:absolute;width:34px;height:18px;top:-14px;left:50%;transform:translateX(-50%);border-radius:5px 5px 2px 2px;background:#d9b889}.product-bottle::after{content:"";position:absolute;width:42px;height:30px;left:50%;top:38px;transform:translateX(-50%);border-radius:4px;background:#ead9bc}
+    .products-row{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}.product-card{height:106px;border-radius:14px;background:#fff;border:1px solid #e4e5ee;padding:8px}.product-card i{display:block;height:58px;border-radius:10px;background:linear-gradient(145deg,#f1e8f1,#ddd8ee)}.product-card span{display:block;height:6px;width:70%;border-radius:5px;background:#d8d9e2;margin-top:7px}.product-card b{display:block;height:6px;width:43%;border-radius:5px;background:#8c63e8;margin-top:5px}
+    .phone-shell{position:absolute;width:165px;height:335px;left:0;bottom:0;border-radius:34px;padding:8px;background:#10111d;border:1px solid rgba(255,255,255,.16);box-shadow:0 35px 90px rgba(0,0,0,.54);transform:translateZ(75px) rotateY(-5deg)}
+    .phone-screen{height:100%;border-radius:27px;overflow:hidden;background:#f7f7fb;color:#171724;padding:11px}.phone-notch{width:48px;height:9px;border-radius:10px;background:#10111d;margin:-4px auto 10px}.phone-banner{height:96px;border-radius:15px;background:linear-gradient(135deg,#17182c,#4b2f60);padding:15px;color:#fff}.phone-banner strong{display:block;font-size:14px}.phone-banner span{display:block;width:50px;height:6px;border-radius:8px;background:var(--gradient);margin-top:10px}.phone-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-top:10px}.phone-grid i{height:74px;border-radius:12px;background:#fff;border:1px solid #e4e5ed}.phone-cta{height:36px;border-radius:11px;background:var(--gradient);margin-top:10px}
+    .floating-pill{position:absolute;padding:11px 14px;border-radius:14px;background:rgba(255,255,255,.96);color:#171724;box-shadow:0 18px 55px rgba(0,0,0,.3);font-size:10px;display:flex;align-items:center;gap:9px;transform:translateZ(110px);animation:floaty 5.8s ease-in-out infinite}.floating-pill b{display:block;font-size:11px}.floating-pill small{color:#70768b}.floating-pill em{font-style:normal;color:#16a676;font-weight:900}.pill-one{right:-16px;top:70px}.pill-two{right:18px;bottom:18px;animation-delay:-2.3s}
+    @keyframes floaty{50%{transform:translateZ(110px) translateY(-10px)}}
+    .gyro-btn{position:absolute;left:20px;top:20px;z-index:3;width:42px;height:42px;border-radius:13px;border:1px solid var(--line);background:rgba(255,255,255,.05);color:#fff;display:none;place-items:center}
+
+    .story{position:relative;background:linear-gradient(180deg,#08080c,#0b0b13 50%,#08080c)}
+    .story-wrap{height:520vh;position:relative}
+    .story-stage{position:sticky;top:0;height:100svh;overflow:hidden;display:grid;place-items:center}
+    .story-canvas{position:absolute;inset:0;width:100%;height:100%;opacity:.68}
+    .story-grid{position:relative;z-index:2;display:grid;grid-template-columns:.9fr 1.1fr;gap:70px;align-items:center;width:min(calc(100% - 40px),var(--max));margin:auto}
+    .story-copy{max-width:540px}.story-index{font-size:11px;letter-spacing:.2em;color:#7e87a0;margin-bottom:15px}.story-kicker{color:#a9edff;font-size:12px;font-weight:800}.story h2{font-family:"Tajawal",sans-serif;font-size:clamp(42px,5vw,74px);line-height:1.06;letter-spacing:-.045em;margin:14px 0 20px}.story-copy p{font-size:17px;line-height:1.95;color:#abb3c7}.story-tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:24px}.story-tags span{padding:7px 10px;border-radius:10px;border:1px solid var(--line);background:rgba(255,255,255,.03);font-size:10px;color:#b8bfd0}
+    .story-visual{position:relative;height:610px;display:grid;place-items:center;perspective:1400px}.visual-shell{position:relative;width:min(100%,650px);height:520px;border-radius:38px;border:1px solid rgba(255,255,255,.12);background:linear-gradient(145deg,rgba(20,20,34,.82),rgba(11,11,19,.9));box-shadow:0 50px 150px rgba(0,0,0,.55),0 0 80px rgba(91,132,255,.08);overflow:hidden;transform-style:preserve-3d}.visual-shell::before{content:"";position:absolute;inset:0;background:radial-gradient(420px circle at var(--vx,50%) var(--vy,50%),rgba(255,255,255,.1),transparent 48%);pointer-events:none}.visual-toolbar{height:54px;padding:0 18px;display:flex;align-items:center;justify-content:space-between;border-bottom:1px solid var(--line);color:#81899f;font-size:10px}.visual-dots{display:flex;gap:6px}.visual-dots i{width:8px;height:8px;border-radius:50%;background:#ff5b83}.visual-dots i:nth-child(2){background:#ffc65d}.visual-dots i:nth-child(3){background:#35d8a5}.visual-label{color:#a9b0c4}.visual-scene{position:absolute;inset:54px 0 0;display:grid;place-items:center;padding:28px}.story-dots{position:absolute;left:24px;top:50%;transform:translateY(-50%);z-index:4;display:grid;gap:13px}.story-dot{width:42px;height:42px;border-radius:14px;border:1px solid var(--line);background:rgba(255,255,255,.035);color:#737b91;font-size:10px;display:grid;place-items:center;transition:.3s}.story-dot.active{background:var(--gradient);color:#fff;border-color:transparent;box-shadow:0 14px 34px rgba(92,81,225,.3)}
+    .story-sentinels{position:absolute;inset:0;pointer-events:none}.story-sentinel{height:20%;display:block}
+
+    .scene-strategy{position:relative;width:100%;height:100%;display:grid;place-items:center}.strategy-core{width:126px;height:126px;border-radius:38px;display:grid;place-items:center;text-align:center;font-weight:900;background:linear-gradient(145deg,#1f2142,#2f2453);box-shadow:0 20px 70px rgba(95,105,255,.28),inset 0 0 0 1px rgba(255,255,255,.12);position:relative;z-index:2}.strategy-ring{position:absolute;border-radius:50%;border:1px solid rgba(119,141,255,.2)}.strategy-ring.r1{width:260px;height:260px}.strategy-ring.r2{width:390px;height:390px}.strategy-node{position:absolute;padding:9px 13px;border-radius:12px;background:rgba(255,255,255,.06);border:1px solid var(--line);font-size:10px;color:#c3c8d7}.strategy-node:nth-of-type(1){top:12%;right:21%}.strategy-node:nth-of-type(2){bottom:15%;right:15%}.strategy-node:nth-of-type(3){bottom:12%;left:20%}.strategy-node:nth-of-type(4){top:18%;left:15%}
+    .scene-ux{width:100%;height:100%;display:grid;grid-template-columns:.7fr 1.3fr;gap:18px}.ux-nav{border-radius:18px;background:#121420;border:1px solid var(--line);padding:15px;display:grid;gap:10px}.ux-nav i{height:12px;border-radius:8px;background:rgba(255,255,255,.07)}.ux-nav i:nth-child(2){background:linear-gradient(90deg,var(--blue),var(--purple))}.ux-main{display:grid;grid-template-rows:90px 1fr;gap:16px}.ux-search{border-radius:18px;background:linear-gradient(135deg,rgba(39,216,244,.12),rgba(155,99,255,.13));border:1px solid rgba(119,141,255,.14);display:grid;place-items:center;color:#c7d2ff;font-size:12px}.ux-products{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.ux-products i{border-radius:18px;background:linear-gradient(145deg,#1b1c2b,#12131d);border:1px solid var(--line);position:relative}.ux-products i::after{content:"";position:absolute;right:12px;left:12px;bottom:14px;height:7px;border-radius:5px;background:rgba(255,255,255,.08)}
+    .scene-build{width:100%;height:100%;display:grid;grid-template-columns:1fr .4fr;gap:18px}.build-canvas{border-radius:22px;background:linear-gradient(145deg,#f5f5f9,#dedee8);padding:18px;color:#151522}.build-head{height:26px;border-radius:8px;background:#fff}.build-banner{height:130px;border-radius:17px;background:linear-gradient(135deg,#18192e,#53315e);margin-top:12px}.build-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:9px;margin-top:12px}.build-grid i{height:100px;border-radius:13px;background:#fff}.build-panel{border-radius:22px;background:#11131f;border:1px solid var(--line);padding:15px;display:grid;align-content:start;gap:12px}.build-panel i{height:38px;border-radius:11px;background:rgba(255,255,255,.06)}.build-panel i:nth-child(2){background:linear-gradient(135deg,rgba(91,132,255,.22),rgba(155,99,255,.22))}
+    .scene-connect{position:relative;width:100%;height:100%;display:grid;place-items:center}.connect-core{width:118px;height:118px;border-radius:36px;display:grid;place-items:center;text-align:center;font-weight:900;background:var(--gradient);box-shadow:0 22px 70px rgba(93,81,226,.34);z-index:2}.connect-line{position:absolute;height:1px;background:linear-gradient(90deg,transparent,rgba(112,135,255,.65),transparent);transform-origin:center}.connect-line.l1{width:76%;transform:rotate(0)}.connect-line.l2{width:70%;transform:rotate(58deg)}.connect-line.l3{width:70%;transform:rotate(-58deg)}.connect-node{position:absolute;padding:9px 12px;border-radius:12px;background:#151723;border:1px solid var(--line);font-size:10px;color:#c9cedd}.connect-node.n1{top:10%;right:14%}.connect-node.n2{top:11%;left:15%}.connect-node.n3{right:9%;bottom:17%}.connect-node.n4{left:10%;bottom:15%}.connect-node.n5{bottom:5%;left:50%;transform:translateX(-50%)}
+    .scene-growth{width:100%;height:100%;display:grid;grid-template-columns:repeat(3,1fr);grid-template-rows:auto 1fr;gap:14px}.growth-kpi{padding:18px;border-radius:18px;background:rgba(255,255,255,.04);border:1px solid var(--line)}.growth-kpi small{color:#868fa8}.growth-kpi strong{display:block;font-size:26px;margin:4px 0}.growth-kpi span{font-size:9px;color:#32d29f}.growth-chart{grid-column:1/-1;border-radius:22px;border:1px solid var(--line);background:linear-gradient(180deg,rgba(91,132,255,.08),rgba(255,255,255,.02));display:flex;align-items:end;gap:14px;padding:24px}.growth-chart i{flex:1;height:var(--h);border-radius:8px 8px 3px 3px;background:linear-gradient(to top,var(--blue),var(--cyan));box-shadow:0 0 20px rgba(39,216,244,.14)}.growth-chart i:nth-child(even){background:linear-gradient(to top,var(--purple),var(--pink))}
+
+    .section-pad{padding:120px 0}.section-head{max-width:760px;margin:0 auto 55px;text-align:center}.section-kicker{display:inline-flex;padding:7px 12px;border-radius:99px;border:1px solid rgba(155,99,255,.22);background:rgba(155,99,255,.08);color:#c9adff;font-size:11px;font-weight:900}.section-head h2{font-family:"Tajawal",sans-serif;font-size:clamp(36px,4.5vw,62px);line-height:1.15;letter-spacing:-.04em;margin:16px 0}.section-head p{color:#aab1c4;font-size:16px;line-height:1.9}
+
+    .trust-section{position:relative;background:linear-gradient(180deg,#08080c,#0d0d16 50%,#08080c)}
+    .trust-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:16px}.trust-card{position:relative;min-height:210px;padding:25px;border-radius:26px;background:linear-gradient(145deg,rgba(20,20,34,.84),rgba(13,13,22,.9));border:1px solid var(--line);overflow:hidden;transform-style:preserve-3d;transition:transform .35s var(--ease),border-color .35s,box-shadow .35s}.trust-card:hover{border-color:rgba(111,124,255,.32);box-shadow:0 28px 80px rgba(0,0,0,.38)}.trust-card::before{content:"";position:absolute;inset:0;background:radial-gradient(360px circle at var(--cx,50%) var(--cy,50%),rgba(91,132,255,.16),transparent 50%);opacity:0;transition:opacity .25s}.trust-card:hover::before{opacity:1}.trust-card>*{position:relative;z-index:2}.trust-card.large{grid-column:span 6}.trust-card.small{grid-column:span 3}.trust-card.tall{grid-column:span 3;grid-row:span 2;min-height:436px}.trust-icon{width:48px;height:48px;border-radius:16px;display:grid;place-items:center;background:linear-gradient(135deg,rgba(39,216,244,.15),rgba(155,99,255,.18));border:1px solid rgba(255,255,255,.08);font-weight:900}.trust-card h3{font-size:20px;margin:18px 0 8px}.trust-card p{color:#9fa7bb;font-size:13px;line-height:1.8}.metric{font-family:"Tajawal",sans-serif;font-size:clamp(38px,5vw,68px);font-weight:900;line-height:1}.metric-label{color:#8e97ae;font-size:11px;margin-top:8px}.quote-card{display:flex;flex-direction:column;justify-content:space-between}.quote-card blockquote{margin:0;font-size:20px;line-height:1.75;color:#edf0ff}.quote-card footer{margin-top:25px;display:flex;align-items:center;gap:12px}.avatar{width:44px;height:44px;border-radius:15px;display:grid;place-items:center;background:var(--gradient);font-weight:900}.quote-card small{display:block;color:#858da2}.demo-badge{display:inline-flex;align-items:center;gap:6px;padding:5px 9px;border-radius:99px;background:rgba(255,177,77,.1);color:#ffc169;border:1px solid rgba(255,177,77,.18);font-size:9px;font-weight:900;margin-bottom:14px}
+
+    .offer-section{background:#08080c}.offer-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}.offer-card{position:relative;padding:28px;border-radius:28px;background:linear-gradient(150deg,#12121d,#0d0d15);border:1px solid var(--line);overflow:hidden;transition:.35s var(--ease)}.offer-card:hover{transform:translateY(-8px);border-color:rgba(112,124,255,.3);box-shadow:0 28px 85px rgba(0,0,0,.34)}.offer-card::after{content:"";position:absolute;width:180px;height:180px;border-radius:50%;left:-70px;top:-70px;background:radial-gradient(circle,rgba(155,99,255,.18),transparent 68%)}.offer-card>*{position:relative;z-index:2}.offer-no{font-size:10px;color:#7f879c;letter-spacing:.18em}.offer-card h3{font-size:22px;margin:15px 0 10px}.offer-card p{color:#9fa6b9;font-size:13px;line-height:1.8}.offer-list{display:grid;gap:10px;margin-top:22px}.offer-list span{font-size:12px;color:#c7ccda;display:flex;align-items:center;gap:8px}.offer-list span::before{content:"";width:7px;height:7px;border-radius:50%;background:var(--green);box-shadow:0 0 0 5px rgba(54,216,164,.08)}
+
+    .cta-section{position:relative;padding:130px 0;overflow:hidden}.cta-orb{position:absolute;width:620px;height:620px;border-radius:50%;right:-230px;top:-160px;background:conic-gradient(from 180deg,rgba(39,216,244,.28),rgba(91,132,255,.18),rgba(155,99,255,.24),rgba(241,90,175,.2),rgba(39,216,244,.28));filter:blur(85px);opacity:.5;animation:aurora 24s linear infinite}.cta-card{position:relative;z-index:2;border-radius:40px;padding:56px;background:linear-gradient(145deg,rgba(23,23,40,.9),rgba(11,11,19,.92));border:1px solid rgba(255,255,255,.12);box-shadow:0 50px 150px rgba(0,0,0,.5);display:grid;grid-template-columns:.85fr 1.15fr;gap:60px;align-items:start;overflow:hidden}.cta-card::before{content:"";position:absolute;inset:0;background:radial-gradient(480px circle at var(--fx,50%) var(--fy,50%),rgba(91,132,255,.13),transparent 50%);pointer-events:none}.cta-copy,.lead-form{position:relative;z-index:2}.cta-copy h2{font-family:"Tajawal",sans-serif;font-size:clamp(38px,5vw,66px);line-height:1.1;letter-spacing:-.045em;margin:15px 0}.cta-copy p{color:#abb2c5;line-height:1.9}.cta-points{display:grid;gap:12px;margin-top:28px}.cta-points span{display:flex;align-items:center;gap:9px;color:#c5cad9;font-size:13px}.cta-points span::before{content:"✓";width:23px;height:23px;border-radius:8px;display:grid;place-items:center;background:rgba(54,216,164,.12);color:#4cddb0;font-weight:900}
+    .lead-form{display:grid;grid-template-columns:1fr 1fr;gap:14px}.field{position:relative}.field.full{grid-column:1/-1}.field label{display:block;color:#aeb5c8;font-size:11px;margin-bottom:7px}.field input,.field select,.field textarea{width:100%;border:1px solid var(--line);background:rgba(255,255,255,.035);color:#fff;border-radius:15px;padding:14px 15px;outline:0;transition:border-color .25s,box-shadow .25s,transform .25s}.field textarea{min-height:112px;resize:vertical}.field input:focus,.field select:focus,.field textarea:focus{border-color:rgba(91,132,255,.72);box-shadow:0 0 0 4px rgba(91,132,255,.1),0 0 32px rgba(91,132,255,.12);transform:translateY(-1px)}.field select option{background:#12121d}.form-submit{grid-column:1/-1;position:relative}.form-submit .btn{width:100%;min-height:55px}.form-note{grid-column:1/-1;color:#81899d;font-size:10px;line-height:1.7}.form-status{grid-column:1/-1;min-height:24px;color:#73e7bd;font-size:12px}.shockwave{position:absolute;border-radius:50%;pointer-events:none;background:radial-gradient(circle,rgba(255,255,255,.45),rgba(91,132,255,.22) 35%,transparent 70%);transform:translate(-50%,-50%) scale(0);animation:shock .72s ease-out forwards}.form-submit .shockwave{z-index:4}.success-panel{display:none;grid-column:1/-1;padding:18px;border-radius:17px;border:1px solid rgba(54,216,164,.25);background:rgba(54,216,164,.07);color:#c7f7e7}.success-panel.show{display:block}.success-panel strong{display:block;font-size:15px}.success-panel small{color:#89b8a8}.summary-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:13px}.summary-actions button,.summary-actions a{min-height:38px;padding:0 13px;border-radius:10px;border:1px solid rgba(255,255,255,.12);background:rgba(255,255,255,.05);color:#fff;font-size:10px;font-weight:800}
+    @keyframes shock{to{transform:translate(-50%,-50%) scale(7);opacity:0}}
+
+    .footer{border-top:1px solid var(--line);padding:70px 0 26px;background:#07070b}.footer-grid{display:grid;grid-template-columns:1.4fr repeat(3,.7fr);gap:38px}.footer p{color:#858da1;font-size:12px;max-width:300px}.footer h3{font-size:13px;margin-bottom:16px}.footer a{display:block;color:#8f97aa;font-size:11px;margin:10px 0}.footer a:hover{color:#fff}.footer-bottom{border-top:1px solid var(--line);margin-top:46px;padding-top:20px;display:flex;justify-content:space-between;gap:20px;color:#747c90;font-size:10px}
+    .mobile-cta{display:none;position:fixed;right:12px;left:12px;bottom:12px;z-index:85;padding:7px;border:1px solid var(--line);background:rgba(8,8,14,.82);backdrop-filter:blur(20px);border-radius:17px}.mobile-cta .btn{width:100%}
+
+    .reveal{opacity:0;transform:translateY(28px)}
+
+    @media(max-width:1080px){
+      .desktop-nav{display:none}.menu-btn{display:grid;place-items:center}.hero-grid{grid-template-columns:1fr;gap:45px}.hero-copy{text-align:center}.hero-copy>p{margin-inline:auto}.hero-actions,.hero-trust{justify-content:center}.product-stage{max-width:720px;width:100%;margin:auto}.story-grid{grid-template-columns:1fr;gap:28px}.story-copy{text-align:center;max-width:760px;margin:auto}.story-tags{justify-content:center}.story-visual{height:520px}.trust-card.large{grid-column:span 8}.trust-card.small,.trust-card.tall{grid-column:span 4}.offer-grid{grid-template-columns:1fr 1fr}.cta-card{grid-template-columns:1fr;gap:38px}.footer-grid{grid-template-columns:1.2fr repeat(2,1fr)}
+    }
+    @media(max-width:760px){
+      .container-shell{width:min(calc(100% - 28px),var(--max))}.site-header{top:8px}.nav-shell{height:62px;border-radius:18px}.brand-mark{width:34px;height:34px}.brand-copy strong{font-size:15px}.brand-copy small{font-size:8px}.nav-shell>.btn{display:none}.mobile-menu{top:79px}
+      .hero{padding:128px 0 70px;min-height:auto}.hero h1{font-size:clamp(42px,13vw,62px)}.hero-copy>p{font-size:15px}.hero-actions{flex-direction:column}.hero-actions .btn{width:100%}.product-stage{min-height:500px}.commerce-obj{height:430px}.browser-shell{inset:18px 10px 54px 8px}.phone-shell{width:126px;height:270px}.floating-pill{display:none}.store-side{display:none}.store-body{grid-template-columns:1fr}.store-hero{height:128px;padding:16px}.store-copy strong{font-size:19px}.products-row{gap:6px}.product-card{height:86px}.product-card i{height:45px}.gyro-btn{display:grid}
+      .story-wrap{height:auto}.story-stage{position:relative;height:auto;padding:85px 0}.story-grid{display:block}.story-copy{margin-bottom:30px}.story h2{font-size:40px}.story-copy p{font-size:14px}.story-visual{height:auto}.visual-shell{height:430px;border-radius:28px}.story-dots,.story-sentinels{display:none}.mobile-story-list{display:grid!important;gap:16px;margin-top:30px}.mobile-story-card{padding:22px;border-radius:23px;border:1px solid var(--line);background:linear-gradient(145deg,rgba(20,20,34,.82),rgba(12,12,21,.9))}.mobile-story-card small{color:#8c94a9}.mobile-story-card h3{font-size:25px;line-height:1.2;margin:10px 0}.mobile-story-card p{color:#9fa6b8;font-size:13px;line-height:1.8}.story-grid>.story-copy,.story-grid>.story-visual{display:none}
+      .section-pad{padding:86px 0}.section-head{margin-bottom:36px}.section-head h2{font-size:34px}.section-head p{font-size:14px}.trust-grid{display:grid;grid-template-columns:1fr}.trust-card.large,.trust-card.small,.trust-card.tall{grid-column:auto;grid-row:auto;min-height:210px}.trust-card.tall{min-height:350px}.offer-grid{grid-template-columns:1fr}.cta-section{padding:90px 0}.cta-card{padding:26px;border-radius:28px}.lead-form{grid-template-columns:1fr}.field.full,.form-submit,.form-note,.form-status,.success-panel{grid-column:auto}.footer-grid{grid-template-columns:1fr 1fr}.footer-grid>div:first-child{grid-column:1/-1}.footer-bottom{display:block;text-align:center}.footer-bottom span{display:block;margin-top:6px}.mobile-cta{display:block}.footer{padding-bottom:95px}
+    }
+    @media(max-width:420px){.store-hero{grid-template-columns:1fr .7fr}.product-bottle{width:54px;height:78px}.product-orbit{height:90px}.phone-shell{left:-4px}.hero-trust{display:grid;grid-template-columns:1fr 1fr}.footer-grid{grid-template-columns:1fr}.footer-grid>div:first-child{grid-column:auto}}
+    @media(prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}.reveal{opacity:1!important;transform:none!important}.story-wrap{height:auto}.story-stage{position:relative;height:auto;padding:100px 0}.story-sentinels,.story-dots{display:none}.mobile-story-list{display:grid!important}.story-grid>.story-copy,.story-grid>.story-visual{display:none}}
+  </style>
+</head>
+<body>
+  <a class="skip-link" href="#main">تجاوز إلى المحتوى</a>
+  <div class="noise" aria-hidden="true"></div>
+  <div class="progress" aria-hidden="true"><span id="progressBar"></span></div>
+
+  <header class="site-header" id="siteHeader">
+    <div class="container-shell nav-shell">
+      <a class="brand" href="#top" aria-label="ابتكار تك — الصفحة الرئيسية">
+        <span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span>
+        <span class="brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span>
+      </a>
+      <nav class="desktop-nav" aria-label="التنقل الرئيسي">
+        <a href="#top" class="active">المتاجر</a>
+        <a href="#story">الرحلة</a>
+        <a href="#trust">الثقة</a>
+        <a href="#solutions">المسارات</a>
+        <a href="#contact">ابدأ مشروعك</a>
+      </nav>
+      <div class="flex items-center gap-2">
+        <a class="btn btn-primary btn-small" href="#contact">اطلب تشخيصًا</a>
+        <button class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="mobileMenu" aria-label="فتح القائمة">☰</button>
+      </div>
+    </div>
+  </header>
+
+  <nav class="mobile-menu" id="mobileMenu" aria-label="قائمة الجوال">
+    <a href="#top">المتاجر الإلكترونية</a>
+    <a href="#story">رحلة بناء المتجر</a>
+    <a href="#trust">الثقة والجودة</a>
+    <a href="#solutions">مسارات التعاون</a>
+    <a href="#contact">ابدأ مشروعك</a>
+  </nav>
+
+  <main id="main">
+    <section class="hero" id="top">
+      <canvas class="hero-canvas" id="heroCanvas" aria-hidden="true"></canvas>
+      <div class="container-shell hero-grid">
+        <div class="hero-copy">
+          <div class="crumbs"><a href="#">الرئيسية</a><span>←</span><a href="#">الخدمات</a><span>←</span><span>المتاجر الإلكترونية</span></div>
+          <span class="eyebrow"><i></i> استراتيجية · تجربة · تطوير · نمو</span>
+          <h1>متجر لا يكتفي بالعرض.<span class="gradient-text">بل يقود العميل إلى الشراء.</span></h1>
+          <p>نبني متاجر إلكترونية تجمع بين وضوح العلامة، هندسة رحلة الشراء، الأداء التقني، والقياس؛ حتى يتحول كل تفاعل إلى خطوة أقرب نحو الطلب.</p>
+          <div class="hero-actions">
+            <a class="btn btn-primary" href="#contact">ابدأ تشخيص متجرك</a>
+            <a class="btn btn-secondary" href="#story">شاهد كيف نبنيه</a>
+          </div>
+          <div class="hero-trust">
+            <span><b>UX</b> رحلة شراء مدروسة</span>
+            <span><b>Mobile-first</b> مهيأ للمس</span>
+            <span><b>Analytics</b> أحداث قابلة للقياس</span>
+            <span><b>Scalable</b> قابل للتوسع</span>
+          </div>
+        </div>
+
+        <div class="product-stage" id="productStage">
+          <div class="stage-aura" id="stageAura"></div>
+          <button class="gyro-btn" id="gyroBtn" type="button" aria-label="تفعيل حركة الجهاز">◎</button>
+          <div class="webgl-mount" id="webglMount" data-ready-for="spline-or-three" aria-label="مشهد ثلاثي الأبعاد للمتجر">
+            <div class="commerce-obj" id="commerceObj">
+              <div class="browser-shell" id="browserShell">
+                <div class="browser-bar"><span class="browser-dots"><i></i><i></i><i></i></span><span>ibtikar-store.preview</span><span>LIVE</span></div>
+                <div class="store-body">
+                  <aside class="store-side"><i></i><i></i><i></i><i></i><i></i></aside>
+                  <div class="store-main">
+                    <div class="store-nav"><strong class="store-logo">LUMIÈRE</strong><div class="store-links"><i></i><i></i><i></i></div></div>
+                    <div class="store-hero">
+                      <div class="store-copy"><small>NEW COLLECTION</small><strong>اكتشف جمال التفاصيل</strong><span></span></div>
+                      <div class="product-orbit"><i></i><i></i><i></i><div class="product-bottle"></div></div>
+                    </div>
+                    <div class="products-row"><div class="product-card"><i></i><span></span><b></b></div><div class="product-card"><i></i><span></span><b></b></div><div class="product-card"><i></i><span></span><b></b></div></div>
+                  </div>
+                </div>
+              </div>
+              <div class="phone-shell"><div class="phone-screen"><div class="phone-notch"></div><div class="phone-banner"><strong>تجربة جوال أسرع</strong><span></span></div><div class="phone-grid"><i></i><i></i><i></i><i></i></div><div class="phone-cta"></div></div></div>
+              <div class="floating-pill pill-one"><span>✓</span><div><b>طلب جديد</b><small>تم الدفع بنجاح</small></div><em>+1</em></div>
+              <div class="floating-pill pill-two"><span>↗</span><div><b>معدل التحويل</b><small>مؤشر تجريبي</small></div><em>+18%</em></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="story" id="story" aria-labelledby="storyHeading">
+      <div class="story-wrap">
+        <div class="story-stage">
+          <canvas class="story-canvas" id="storyCanvas" aria-hidden="true"></canvas>
+          <div class="story-dots" aria-label="مراحل القصة">
+            <button class="story-dot active" data-step="0" aria-label="الاستراتيجية">01</button>
+            <button class="story-dot" data-step="1" aria-label="تجربة المستخدم">02</button>
+            <button class="story-dot" data-step="2" aria-label="التصميم والتطوير">03</button>
+            <button class="story-dot" data-step="3" aria-label="الربط والتشغيل">04</button>
+            <button class="story-dot" data-step="4" aria-label="الإطلاق والنمو">05</button>
+          </div>
+
+          <div class="story-grid">
+            <div class="story-copy">
+              <div class="story-index" id="storyIndex">01 / 05</div>
+              <span class="story-kicker" id="storyKicker">استراتيجية المتجر</span>
+              <h2 id="storyHeading">نبدأ من التجارة،<span class="gradient-text">لا من القالب.</span></h2>
+              <p id="storyText">نحلل المنتجات والجمهور والهامش ومسار الشراء والمنصة والتكاملات قبل اتخاذ أي قرار بصري أو تقني.</p>
+              <div class="story-tags" id="storyTags"><span>الجمهور</span><span>المنتجات</span><span>المنصة</span><span>الأهداف</span></div>
+            </div>
+
+            <div class="story-visual" id="storyVisual">
+              <div class="visual-shell" id="visualShell">
+                <div class="visual-toolbar"><span class="visual-dots"><i></i><i></i><i></i></span><span class="visual-label" id="visualLabel">STRATEGY MAP</span><span id="visualCounter">01 / 05</span></div>
+                <div class="visual-scene" id="visualScene"></div>
+              </div>
+            </div>
+
+            <div class="mobile-story-list" style="display:none" id="mobileStoryList"></div>
+          </div>
+        </div>
+        <div class="story-sentinels" aria-hidden="true">
+          <span class="story-sentinel" data-step="0"></span>
+          <span class="story-sentinel" data-step="1"></span>
+          <span class="story-sentinel" data-step="2"></span>
+          <span class="story-sentinel" data-step="3"></span>
+          <span class="story-sentinel" data-step="4"></span>
+        </div>
+      </div>
+    </section>
+
+    <section class="trust-section section-pad" id="trust">
+      <div class="container-shell">
+        <div class="section-head reveal">
+          <span class="section-kicker">الثقة ليست ادعاءً</span>
+          <h2>نحوّل الجودة إلى <span class="gradient-text">معايير يمكن فحصها.</span></h2>
+          <p>بدل الوعود العامة، نربط المشروع بمؤشرات واضحة في تجربة الاستخدام، الأداء، القياس، والتسليم.</p>
+        </div>
+
+        <div class="trust-grid">
+          <article class="trust-card large reveal parallax-card">
+            <span class="trust-icon">CWV</span>
+            <div class="metric gradient-text">2.5s</div>
+            <div class="metric-label">هدف LCP للصفحات الرئيسية عند توافر استضافة ومحتوى مناسبين</div>
+            <p>نعالج الصور والخطوط والسكربتات ومسارات العرض الحرجة، ثم نقيس النتائج بدل الاعتماد على الانطباع.</p>
+          </article>
+
+          <article class="trust-card small reveal parallax-card">
+            <span class="trust-icon">UX</span>
+            <div class="metric">≤ 3</div>
+            <div class="metric-label">نقرات مستهدفة من الاكتشاف إلى المنتج</div>
+            <p>هيكل تصنيفات وبحث وتنقل يقلل الضياع ويقرب العميل من القرار.</p>
+          </article>
+
+          <article class="trust-card tall quote-card reveal parallax-card">
+            <div>
+              <span class="demo-badge">نموذج تحريري — يُستبدل بشهادة موثقة</span>
+              <blockquote>“بعد إعادة بناء رحلة الجوال وصفحة المنتج أصبح المتجر أوضح، وأصبح الفريق يعرف أين يقيس وأين يحسّن.”</blockquote>
+            </div>
+            <footer><span class="avatar">ع</span><div><strong>عميل متجر تجريبي</strong><small>تجارة إلكترونية · الخليج</small></div></footer>
+          </article>
+
+          <article class="trust-card small reveal parallax-card">
+            <span class="trust-icon">DATA</span>
+            <div class="metric">100%</div>
+            <div class="metric-label">أحداث رئيسية محددة قبل الإطلاق</div>
+            <p>مشاهدات المنتجات، الإضافة للسلة، بدء الدفع، الشراء، ونقرات قنوات التواصل.</p>
+          </article>
+
+          <article class="trust-card large reveal parallax-card">
+            <span class="trust-icon">QA</span>
+            <h3>مصفوفة اختبار قبل التسليم</h3>
+            <p>الجوال، الكمبيوتر، المتصفحات الأساسية، البحث، التصنيفات، المنتج، السلة، الدفع، الرسائل، التتبع، والأخطاء.</p>
+            <div class="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-5 text-[10px] text-slate-300"><span class="glass rounded-xl px-3 py-2">Responsive</span><span class="glass rounded-xl px-3 py-2">Accessibility</span><span class="glass rounded-xl px-3 py-2">Analytics</span><span class="glass rounded-xl px-3 py-2">Checkout</span></div>
+          </article>
+        </div>
+      </div>
+    </section>
+
+    <section class="offer-section section-pad" id="solutions">
+      <div class="container-shell">
+        <div class="section-head reveal">
+          <span class="section-kicker">اختر نقطة البداية</span>
+          <h2>ثلاثة مسارات، <span class="gradient-text">ونتيجة واحدة: متجر أفضل.</span></h2>
+          <p>نحدد المسار وفق حالة المشروع، وليس وفق قالب ثابت للبيع.</p>
+        </div>
+        <div class="offer-grid">
+          <article class="offer-card reveal"><span class="offer-no">01 / BUILD</span><h3>بناء متجر جديد</h3><p>للعلامات التي تريد تأسيس متجر واضح من الاستراتيجية حتى الإطلاق.</p><div class="offer-list"><span>اختيار المنصة</span><span>هندسة المحتوى والتصنيفات</span><span>تصميم وتطوير متجاوب</span><span>الربط والقياس</span></div></article>
+          <article class="offer-card reveal"><span class="offer-no">02 / REBUILD</span><h3>إعادة تصميم متجر قائم</h3><p>للمتاجر التي تملك منتجات وزيارات، لكن تجربتها لا تعكس جودة العلامة أو لا تدعم التحويل.</p><div class="offer-list"><span>تدقيق UX وCRO</span><span>إعادة بناء الصفحة الرئيسية</span><span>تحسين صفحة المنتج</span><span>تنظيف التجربة على الجوال</span></div></article>
+          <article class="offer-card reveal"><span class="offer-no">03 / GROWTH</span><h3>تحسين مستمر</h3><p>للمتاجر العاملة التي تحتاج دورة شهرية من القياس، الاختبار، والتحسين.</p><div class="offer-list"><span>تحليل السلوك والبيانات</span><span>اختبارات وتحسينات دورية</span><span>صفحات حملات موسمية</span><span>تطوير التكاملات</span></div></article>
+        </div>
+      </div>
+    </section>
+
+    <section class="cta-section" id="contact">
+      <div class="cta-orb" aria-hidden="true"></div>
+      <div class="container-shell">
+        <div class="cta-card" id="ctaCard">
+          <div class="cta-copy">
+            <span class="section-kicker">الخطوة التالية</span>
+            <h2>حوّل فكرتك إلى <span class="gradient-text">خطة متجر قابلة للتنفيذ.</span></h2>
+            <p>أرسل لنا نبذة مختصرة. سنحوّلها إلى تشخيص أولي يوضح المنصة المناسبة، نطاق العمل، والمراحل المقترحة.</p>
+            <div class="cta-points"><span>توصية أولية بالمنصة</span><span>تحديد الأولويات والمخاطر</span><span>مسار زمني مبدئي</span><span>تقدير نطاق مناسب للمشروع</span></div>
+          </div>
+
+          <form class="lead-form" id="leadForm" novalidate>
+            <div class="field"><label for="name">الاسم</label><input id="name" name="name" autocomplete="name" required placeholder="اسمك الكامل"></div>
+            <div class="field"><label for="contactMethod">وسيلة التواصل</label><input id="contactMethod" name="contact" required placeholder="رقم واتساب أو بريد إلكتروني"></div>
+            <div class="field"><label for="projectState">حالة المشروع</label><select id="projectState" name="state" required><option value="">اختر الحالة</option><option>متجر جديد</option><option>متجر قائم يحتاج إعادة تصميم</option><option>متجر قائم يحتاج تحسين نمو</option></select></div>
+            <div class="field"><label for="platform">المنصة الحالية أو المفضلة</label><select id="platform" name="platform"><option>غير محددة بعد</option><option>سلة</option><option>زد</option><option>WooCommerce</option><option>Shopify</option><option>حل مخصص</option></select></div>
+            <div class="field full"><label for="goal">أهم هدف تريد تحقيقه</label><textarea id="goal" name="goal" required placeholder="اكتب المنتجات، الجمهور، التحدي الحالي، والنتيجة التي تبحث عنها"></textarea></div>
+            <div class="form-submit"><button class="btn btn-primary" type="submit" id="submitBtn">إنشاء ملخص المشروع</button></div>
+            <div class="form-status" id="formStatus" role="status" aria-live="polite"></div>
+            <div class="success-panel" id="successPanel"><strong id="successTitle">تم إعداد ملخصك.</strong><small id="successText">يمكنك نسخه أو إرساله عبر البريد.</small><div class="summary-actions"><button type="button" id="copySummary">نسخ الملخص</button><a id="emailSummary" href="#">إرساله بالبريد</a></div></div>
+            <p class="form-note">لن تُرسل البيانات إلى أي خادم من هذه النسخة التجريبية. عند ربط الموقع، يمكن توصيل النموذج بـCRM أو البريد أو واتساب.</p>
+          </form>
+        </div>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container-shell">
+      <div class="footer-grid">
+        <div><a class="brand" href="#top"><span class="brand-mark" aria-hidden="true"><i></i><i></i><i></i></span><span class="brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني متاجر وتجارب ومنتجات رقمية تساعد المشاريع على الظهور والعمل والنمو.</p></div>
+        <div><h3>المتاجر</h3><a href="#story">الاستراتيجية</a><a href="#story">تجربة المستخدم</a><a href="#story">التطوير</a><a href="#story">القياس</a></div>
+        <div><h3>المسارات</h3><a href="#solutions">بناء متجر</a><a href="#solutions">إعادة التصميم</a><a href="#solutions">تحسين مستمر</a></div>
+        <div><h3>ابتكار تك</h3><a href="#trust">الجودة</a><a href="#contact">ابدأ مشروعك</a><a href="mailto:hello@ibtikar-tech.com">البريد</a></div>
+      </div>
+      <div class="footer-bottom"><span>© 2026 ابتكار تك. جميع الحقوق محفوظة.</span><span>استراتيجية · تجربة · تقنية · نمو</span></div>
+    </div>
+  </footer>
+
+  <div class="mobile-cta"><a class="btn btn-primary" href="#contact">ابدأ تشخيص متجرك</a></div>
+
+  <script>
+  (() => {
+    'use strict';
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+    const hasGSAP = typeof gsap !== 'undefined' && typeof ScrollTrigger !== 'undefined';
+    if (hasGSAP) gsap.registerPlugin(ScrollTrigger);
+
+    const header = document.getElementById('siteHeader');
+    const progressBar = document.getElementById('progressBar');
+    let lastScrollY = 0;
+    const updateScrollUI = () => {
+      const y = window.scrollY;
+      const max = document.documentElement.scrollHeight - window.innerHeight;
+      progressBar.style.transform = `scaleX(${max > 0 ? y / max : 0})`;
+      header.classList.toggle('is-hidden', y > lastScrollY && y > 180);
+      lastScrollY = y;
+    };
+    addEventListener('scroll', updateScrollUI, { passive: true });
+
+    const menuBtn = document.getElementById('menuBtn');
+    const mobileMenu = document.getElementById('mobileMenu');
+    menuBtn.addEventListener('click', () => {
+      const isOpen = mobileMenu.classList.toggle('open');
+      menuBtn.setAttribute('aria-expanded', String(isOpen));
+    });
+    mobileMenu.querySelectorAll('a').forEach(link => link.addEventListener('click', () => {
+      mobileMenu.classList.remove('open');
+      menuBtn.setAttribute('aria-expanded', 'false');
+    }));
+
+    const revealElements = document.querySelectorAll('.reveal');
+    if (hasGSAP && !reduced) {
+      revealElements.forEach(el => gsap.fromTo(el, { opacity: 0, y: 34 }, {
+        opacity: 1, y: 0, duration: 1, ease: 'power3.out',
+        scrollTrigger: { trigger: el, start: 'top 86%', once: true }
+      }));
+    } else {
+      revealElements.forEach(el => { el.style.opacity = '1'; el.style.transform = 'none'; });
+    }
+
+    const particleField = (canvas, palette, countDesktop = 58, countMobile = 30) => {
+      if (!canvas || reduced) return;
+      const ctx = canvas.getContext('2d');
+      let width = 1, height = 1, dpr = 1, raf = 0, points = [], visible = true;
+      const resize = () => {
+        const rect = canvas.getBoundingClientRect();
+        dpr = Math.min(devicePixelRatio || 1, innerWidth < 760 ? 1.05 : 1.45);
+        width = canvas.width = Math.max(1, Math.round(rect.width * dpr));
+        height = canvas.height = Math.max(1, Math.round(rect.height * dpr));
+        const count = innerWidth < 760 ? countMobile : countDesktop;
+        points = Array.from({ length: count }, (_, i) => ({
+          x: Math.random() * width,
+          y: Math.random() * height,
+          vx: (Math.random() - .5) * .16 * dpr,
+          vy: (Math.random() - .5) * .16 * dpr,
+          radius: (Math.random() * 1.25 + .45) * dpr,
+          color: palette[i % palette.length]
+        }));
+      };
+      const draw = () => {
+        if (!visible) return;
+        ctx.clearRect(0, 0, width, height);
+        for (let i = 0; i < points.length; i++) {
+          const p = points[i];
+          p.x += p.vx; p.y += p.vy;
+          if (p.x < 0 || p.x > width) p.vx *= -1;
+          if (p.y < 0 || p.y > height) p.vy *= -1;
+          ctx.beginPath(); ctx.fillStyle = `rgba(${p.color},.5)`; ctx.arc(p.x, p.y, p.radius, 0, Math.PI * 2); ctx.fill();
+          for (let j = i + 1; j < points.length; j++) {
+            const q = points[j];
+            const dist = Math.hypot(p.x - q.x, p.y - q.y);
+            const limit = 115 * dpr;
+            if (dist < limit) {
+              ctx.beginPath();
+              ctx.strokeStyle = `rgba(${p.color},${(1 - dist / limit) * .075})`;
+              ctx.lineWidth = .6 * dpr;
+              ctx.moveTo(p.x, p.y); ctx.lineTo(q.x, q.y); ctx.stroke();
+            }
+          }
+        }
+        raf = requestAnimationFrame(draw);
+      };
+      resize(); draw();
+      addEventListener('resize', resize, { passive: true });
+      document.addEventListener('visibilitychange', () => {
+        visible = !document.hidden;
+        if (visible) draw(); else cancelAnimationFrame(raf);
+      });
+    };
+    particleField(document.getElementById('heroCanvas'), ['39,216,244','91,132,255','155,99,255','241,90,175']);
+    particleField(document.getElementById('storyCanvas'), ['39,216,244','91,132,255','155,99,255'], 48, 20);
+
+    const stage = document.getElementById('productStage');
+    const commerceObj = document.getElementById('commerceObj');
+    const browserShell = document.getElementById('browserShell');
+    const stageAura = document.getElementById('stageAura');
+    if (stage && !reduced) {
+      stage.addEventListener('pointermove', event => {
+        const rect = stage.getBoundingClientRect();
+        const nx = (event.clientX - rect.left) / rect.width - .5;
+        const ny = (event.clientY - rect.top) / rect.height - .5;
+        commerceObj.style.setProperty('--ry', `${(-5 + nx * 12).toFixed(2)}deg`);
+        commerceObj.style.setProperty('--rx', `${(2 - ny * 9).toFixed(2)}deg`);
+        stageAura.style.setProperty('--ax', `${(-nx * 45).toFixed(1)}px`);
+        stageAura.style.setProperty('--ay', `${(-ny * 32).toFixed(1)}px`);
+        browserShell.style.setProperty('--mx', `${((nx + .5) * 100).toFixed(1)}%`);
+        browserShell.style.setProperty('--my', `${((ny + .5) * 100).toFixed(1)}%`);
+      });
+      stage.addEventListener('pointerleave', () => {
+        commerceObj.style.setProperty('--ry', '-5deg');
+        commerceObj.style.setProperty('--rx', '2deg');
+        stageAura.style.setProperty('--ax', '0px');
+        stageAura.style.setProperty('--ay', '0px');
+      });
+    }
+
+    const gyroBtn = document.getElementById('gyroBtn');
+    const enableGyro = async () => {
+      try {
+        if (typeof DeviceOrientationEvent !== 'undefined' && typeof DeviceOrientationEvent.requestPermission === 'function') {
+          const permission = await DeviceOrientationEvent.requestPermission();
+          if (permission !== 'granted') return;
+        }
+        addEventListener('deviceorientation', event => {
+          if (!event.gamma || !event.beta) return;
+          const ry = Math.max(-12, Math.min(12, event.gamma / 3));
+          const rx = Math.max(-8, Math.min(8, (event.beta - 45) / 5));
+          commerceObj.style.setProperty('--ry', `${ry.toFixed(2)}deg`);
+          commerceObj.style.setProperty('--rx', `${rx.toFixed(2)}deg`);
+        }, { passive: true });
+        gyroBtn.textContent = '✓';
+      } catch (_) {
+        gyroBtn.textContent = '×';
+      }
+    };
+    gyroBtn.addEventListener('click', enableGyro);
+
+    const storyData = [
+      { index:'01 / 05', kicker:'استراتيجية المتجر', title:'نبدأ من التجارة،', accent:'لا من القالب.', text:'نحلل المنتجات والجمهور والهامش ومسار الشراء والمنصة والتكاملات قبل اتخاذ أي قرار بصري أو تقني.', tags:['الجمهور','المنتجات','المنصة','الأهداف'], label:'STRATEGY MAP', mode:'strategy' },
+      { index:'02 / 05', kicker:'هندسة التجربة', title:'نختصر الطريق،', accent:'من الاكتشاف إلى السلة.', text:'نرتب التصنيفات والبحث والتنقل والصفحات لتقليل التردد ومساعدة العميل على الوصول إلى المنتج المناسب.', tags:['التنقل','البحث','التصنيفات','الجوال'], label:'UX FLOW', mode:'ux' },
+      { index:'03 / 05', kicker:'التصميم والتطوير', title:'هوية واضحة،', accent:'وتجربة قابلة للتوسع.', text:'نحوّل النظام البصري إلى واجهات متجاوبة ومكونات مرنة تحافظ على العلامة وتخدم التجارة.', tags:['UI System','Responsive','Components','Accessibility'], label:'BUILD SYSTEM', mode:'build' },
+      { index:'04 / 05', kicker:'الربط والتشغيل', title:'كل أداة في مكانها،', accent:'وكل حدث قابل للقياس.', text:'نربط المتجر بالدفع والشحن والتحليلات والإعلانات والمخزون وCRM وواتساب حسب احتياج المشروع.', tags:['Analytics','Ads','CRM','Automation'], label:'CONNECTED COMMERCE', mode:'connect' },
+      { index:'05 / 05', kicker:'الإطلاق والنمو', title:'نطلق، نقيس،', accent:'ثم نحسن بذكاء.', text:'نختبر المسارات الأساسية ونراقب الأداء والسلوك، ثم نبني أولويات التحسين على بيانات فعلية لا انطباعات.', tags:['QA','Core Web Vitals','Conversion','Roadmap'], label:'GROWTH LOOP', mode:'growth' }
+    ];
+
+    const sceneMarkup = mode => {
+      if (mode === 'strategy') return '<div class="scene-strategy"><div class="strategy-ring r1"></div><div class="strategy-ring r2"></div><div class="strategy-core">فكرة<br>المتجر</div><span class="strategy-node">الجمهور</span><span class="strategy-node">القيمة</span><span class="strategy-node">المنصة</span><span class="strategy-node">التكاملات</span></div>';
+      if (mode === 'ux') return '<div class="scene-ux"><div class="ux-nav"><i></i><i></i><i></i><i></i><i></i><i></i></div><div class="ux-main"><div class="ux-search">بحث وتصنيفات واضحة</div><div class="ux-products"><i></i><i></i><i></i><i></i><i></i><i></i></div></div></div>';
+      if (mode === 'build') return '<div class="scene-build"><div class="build-canvas"><div class="build-head"></div><div class="build-banner"></div><div class="build-grid"><i></i><i></i><i></i></div></div><div class="build-panel"><i></i><i></i><i></i><i></i><i></i></div></div>';
+      if (mode === 'connect') return '<div class="scene-connect"><i class="connect-line l1"></i><i class="connect-line l2"></i><i class="connect-line l3"></i><div class="connect-core">STORE<br>HUB</div><span class="connect-node n1">Analytics</span><span class="connect-node n2">Meta</span><span class="connect-node n3">CRM</span><span class="connect-node n4">Inventory</span><span class="connect-node n5">WhatsApp</span></div>';
+      return '<div class="scene-growth"><div class="growth-kpi"><small>التحويل</small><strong>+24%</strong><span>مثال توضيحي</span></div><div class="growth-kpi"><small>الجوال</small><strong>72%</strong><span>نسبة زيارات</span></div><div class="growth-kpi"><small>السلة</small><strong>286</strong><span>متوسط قيمة</span></div><div class="growth-chart"><i style="--h:28%"></i><i style="--h:40%"></i><i style="--h:35%"></i><i style="--h:56%"></i><i style="--h:53%"></i><i style="--h:75%"></i><i style="--h:90%"></i></div></div>';
+    };
+
+    const storyIndex = document.getElementById('storyIndex');
+    const storyKicker = document.getElementById('storyKicker');
+    const storyHeading = document.getElementById('storyHeading');
+    const storyText = document.getElementById('storyText');
+    const storyTags = document.getElementById('storyTags');
+    const visualScene = document.getElementById('visualScene');
+    const visualLabel = document.getElementById('visualLabel');
+    const visualCounter = document.getElementById('visualCounter');
+    const visualShell = document.getElementById('visualShell');
+    const storyDots = [...document.querySelectorAll('.story-dot')];
+    let currentStep = -1;
+
+    const setStory = (index, animate = true) => {
+      if (index === currentStep || !storyData[index]) return;
+      currentStep = index;
+      const data = storyData[index];
+      const update = () => {
+        storyIndex.textContent = data.index;
+        storyKicker.textContent = data.kicker;
+        storyHeading.innerHTML = `${data.title}<span class="gradient-text">${data.accent}</span>`;
+        storyText.textContent = data.text;
+        storyTags.innerHTML = data.tags.map(tag => `<span>${tag}</span>`).join('');
+        visualLabel.textContent = data.label;
+        visualCounter.textContent = data.index;
+        visualScene.innerHTML = sceneMarkup(data.mode);
+        storyDots.forEach((dot, i) => dot.classList.toggle('active', i === index));
+      };
+      if (animate && hasGSAP && !reduced) {
+        gsap.to([storyIndex, storyKicker, storyHeading, storyText, storyTags, visualScene], { opacity: 0, y: 16, duration: .22, ease: 'power2.in', onComplete: () => {
+          update();
+          gsap.fromTo([storyIndex, storyKicker, storyHeading, storyText, storyTags, visualScene], { opacity: 0, y: 18 }, { opacity: 1, y: 0, duration: .55, stagger: .04, ease: 'power3.out' });
+        }});
+      } else update();
+    };
+    setStory(0, false);
+
+    const mobileStoryList = document.getElementById('mobileStoryList');
+    mobileStoryList.innerHTML = storyData.map((item, i) => `<article class="mobile-story-card"><small>${item.index} · ${item.kicker}</small><h3>${item.title}<span class="gradient-text">${item.accent}</span></h3><p>${item.text}</p></article>`).join('');
+
+    storyDots.forEach((dot, i) => dot.addEventListener('click', () => {
+      const storyWrap = document.querySelector('.story-wrap');
+      const target = storyWrap.offsetTop + (storyWrap.offsetHeight - innerHeight) * (i / (storyData.length - 1));
+      scrollTo({ top: target, behavior: reduced ? 'auto' : 'smooth' });
+    }));
+
+    if (hasGSAP && !reduced) {
+      ScrollTrigger.matchMedia({
+        '(min-width: 761px)': () => {
+          ScrollTrigger.create({
+            trigger: '.story-wrap', start: 'top top', end: 'bottom bottom', scrub: true,
+            onUpdate: self => setStory(Math.min(storyData.length - 1, Math.floor(self.progress * storyData.length)))
+          });
+          gsap.to('.visual-shell', { rotateY: 2, rotateX: -1, ease: 'none', scrollTrigger: { trigger: '.story-wrap', start: 'top top', end: 'bottom bottom', scrub: true } });
+        }
+      });
+    }
+
+    if (visualShell && !reduced) {
+      visualShell.addEventListener('pointermove', event => {
+        const rect = visualShell.getBoundingClientRect();
+        visualShell.style.setProperty('--vx', `${((event.clientX - rect.left) / rect.width * 100).toFixed(1)}%`);
+        visualShell.style.setProperty('--vy', `${((event.clientY - rect.top) / rect.height * 100).toFixed(1)}%`);
+      });
+    }
+
+    document.querySelectorAll('.parallax-card').forEach(card => {
+      if (reduced) return;
+      card.addEventListener('pointermove', event => {
+        const rect = card.getBoundingClientRect();
+        const x = (event.clientX - rect.left) / rect.width;
+        const y = (event.clientY - rect.top) / rect.height;
+        card.style.setProperty('--cx', `${(x * 100).toFixed(1)}%`);
+        card.style.setProperty('--cy', `${(y * 100).toFixed(1)}%`);
+        card.style.transform = `perspective(900px) rotateX(${((.5 - y) * 5).toFixed(2)}deg) rotateY(${((x - .5) * 6).toFixed(2)}deg) translateY(-3px)`;
+      });
+      card.addEventListener('pointerleave', () => { card.style.transform = ''; });
+    });
+
+    const ctaCard = document.getElementById('ctaCard');
+    ctaCard.addEventListener('pointermove', event => {
+      const rect = ctaCard.getBoundingClientRect();
+      ctaCard.style.setProperty('--fx', `${((event.clientX - rect.left) / rect.width * 100).toFixed(1)}%`);
+      ctaCard.style.setProperty('--fy', `${((event.clientY - rect.top) / rect.height * 100).toFixed(1)}%`);
+    });
+
+    const form = document.getElementById('leadForm');
+    const submitBtn = document.getElementById('submitBtn');
+    const status = document.getElementById('formStatus');
+    const successPanel = document.getElementById('successPanel');
+    const copySummary = document.getElementById('copySummary');
+    const emailSummary = document.getElementById('emailSummary');
+    let generatedSummary = '';
+
+    const createShockwave = event => {
+      const rect = submitBtn.getBoundingClientRect();
+      const wave = document.createElement('span');
+      wave.className = 'shockwave';
+      wave.style.left = `${event.clientX ? event.clientX - rect.left : rect.width / 2}px`;
+      wave.style.top = `${event.clientY ? event.clientY - rect.top : rect.height / 2}px`;
+      wave.style.width = wave.style.height = '40px';
+      submitBtn.parentElement.appendChild(wave);
+      setTimeout(() => wave.remove(), 800);
+    };
+
+    form.addEventListener('submit', event => {
+      event.preventDefault();
+      createShockwave(event);
+      const data = new FormData(form);
+      const required = ['name','contact','state','goal'];
+      const missing = required.filter(key => !String(data.get(key) || '').trim());
+      if (missing.length) {
+        status.textContent = 'أكمل الحقول الأساسية حتى نكوّن الملخص.';
+        successPanel.classList.remove('show');
+        return;
+      }
+      const reference = `IT-${Date.now().toString().slice(-7)}`;
+      generatedSummary = `طلب مشروع متجر إلكتروني\nالمرجع: ${reference}\nالاسم: ${data.get('name')}\nالتواصل: ${data.get('contact')}\nحالة المشروع: ${data.get('state')}\nالمنصة: ${data.get('platform')}\nالهدف والتفاصيل: ${data.get('goal')}`;
+      status.textContent = `تم إنشاء الملخص بنجاح — المرجع ${reference}`;
+      successPanel.classList.add('show');
+      emailSummary.href = `mailto:hello@ibtikar-tech.com?subject=${encodeURIComponent('طلب متجر إلكتروني ' + reference)}&body=${encodeURIComponent(generatedSummary)}`;
+      if (hasGSAP && !reduced) gsap.fromTo(successPanel, { scale: .96, opacity: 0 }, { scale: 1, opacity: 1, duration: .55, ease: 'back.out(1.7)' });
+    });
+
+    copySummary.addEventListener('click', async () => {
+      try {
+        await navigator.clipboard.writeText(generatedSummary);
+        copySummary.textContent = 'تم النسخ ✓';
+        setTimeout(() => copySummary.textContent = 'نسخ الملخص', 1800);
+      } catch (_) {
+        status.textContent = 'تعذر النسخ تلقائيًا. استخدم زر البريد لإرسال الملخص.';
+      }
+    });
+
+    if (hasGSAP && !reduced) {
+      gsap.timeline({ defaults: { ease: 'power3.out' } })
+        .from('.hero-copy > *', { opacity: 0, y: 28, duration: .9, stagger: .09 })
+        .from('.commerce-obj', { opacity: 0, scale: .84, y: 60, rotateZ: -3, duration: 1.35 }, .15)
+        .from('.floating-pill', { opacity: 0, scale: .8, y: 18, duration: .7, stagger: .15 }, .85);
+      gsap.to('.commerce-obj', { y: -38, opacity: .18, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+      gsap.to('.hero-copy', { y: -42, opacity: .15, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+    }
+
+    if (hasGSAP) {
+      addEventListener('load', () => ScrollTrigger.refresh());
+      if (document.fonts && document.fonts.ready) document.fonts.ready.then(() => ScrollTrigger.refresh());
+    }
+  })();
+  </script>
+</body>
+</html>
