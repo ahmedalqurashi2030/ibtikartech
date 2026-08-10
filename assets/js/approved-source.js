@@ -174,6 +174,14 @@
   }
 
   if (document.body.classList.contains('source-ecommerce')) {
+    const storefrontCard = document.querySelector('#service-customize');
+    const storefrontLink = storefrontCard?.querySelector('.commerce-service-card__footer a');
+    if (storefrontLink) {
+      storefrontLink.href = 'storefront-customization.html';
+      storefrontLink.textContent = 'تفاصيل الخدمة';
+      storefrontLink.setAttribute('aria-label', 'فتح صفحة خدمة تخصيص واجهة المتجر');
+    }
+
     if (!document.querySelector('link[data-ecommerce-experience]')) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
