@@ -47,11 +47,12 @@
     return path.split('.').reduce((value, key) => value?.[key], window.IBTIKAR_CONFIG);
   }
 
-  function initConfigLinks() {
+  const isReadyValue = (value) => typeof value === 'string' && value.trim() && !value.includes('[TODO:');
+
+  function initConfigBindings() {
     document.querySelectorAll('[data-config-href]').forEach((link) => {
       const value = readConfig(link.dataset.configHref || '');
-      const valid = typeof value === 'string' && value && !value.includes('[TODO:');
-      if (valid) {
+      if (isReadyValue(value)) {
         link.href = value;
         link.removeAttribute('aria-disabled');
         link.classList.remove('is-disabled');
@@ -62,11 +63,22 @@
       link.classList.add('is-disabled');
       link.title = 'يتم تفعيل الرابط بعد اعتماد الرابط الرسمي.';
     });
+
+    document.querySelectorAll('[data-config-text]').forEach((node) => {
+      const value = readConfig(node.dataset.configText || '');
+      if (isReadyValue(value)) {
+        node.textContent = value;
+        node.classList.remove('is-pending');
+      } else {
+        node.textContent = node.dataset.pendingText || 'يُعتمد قبل النشر';
+        node.classList.add('is-pending');
+      }
+    });
   }
 
   const init = () => {
     initCatalog();
-    initConfigLinks();
+    initConfigBindings();
   };
 
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', init);
