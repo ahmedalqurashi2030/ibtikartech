@@ -1,0 +1,43 @@
+/* Salla specialization page — merchant journey, productized services, decision clarity. */
+.salla-page .platform-hero{padding-top:128px}
+.salla-page .platform-hero__grid{align-items:center}
+.salla-page .hero-copy h1 span{color:transparent;background:var(--ibt-gradient);-webkit-background-clip:text;background-clip:text}
+.salla-page .hero-proof{display:flex;flex-wrap:wrap;gap:9px;margin:24px 0 0;padding:0;list-style:none}
+.salla-page .hero-proof li{padding:8px 11px;border:1px solid var(--ibt-border);border-radius:12px;background:color-mix(in srgb,var(--ibt-surface) 82%,transparent);color:var(--ibt-muted);font-size:12px;font-weight:800}
+.salla-page .hero-proof strong{color:var(--ibt-text)}
+
+.salla-state-grid{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:14px}
+.salla-state-card{min-height:220px;padding:24px;display:flex;flex-direction:column;border:1px solid var(--ibt-border);border-radius:22px;background:linear-gradient(155deg,color-mix(in srgb,var(--ibt-surface) 94%,transparent),color-mix(in srgb,var(--ibt-bg-soft) 72%,transparent));box-shadow:var(--ibt-shadow-sm);transition:transform var(--ibt-duration) var(--ibt-ease),border-color var(--ibt-duration)}
+.salla-state-card:hover{transform:translateY(-5px);border-color:color-mix(in srgb,var(--ibt-cyan) 35%,var(--ibt-border))}
+.salla-state-card .state-number{display:inline-grid;place-items:center;width:34px;height:34px;border-radius:11px;background:color-mix(in srgb,var(--ibt-blue) 12%,transparent);color:var(--ibt-cyan);font-size:11px;font-weight:900}
+.salla-state-card h3{margin:18px 0 8px;font-size:20px}
+.salla-state-card p{margin:0;color:var(--ibt-muted);font-size:13px;line-height:1.8}
+.salla-state-card a{margin-top:auto;padding-top:18px;color:var(--ibt-cyan);font-size:12px;font-weight:900}
+
+.salla-service-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:16px}
+.salla-service-card{position:relative;min-height:360px;padding:25px;display:flex;flex-direction:column;border:1px solid var(--ibt-border);border-radius:24px;background:var(--ibt-surface);box-shadow:var(--ibt-shadow-sm);overflow:hidden}
+.salla-service-card::before{content:"";position:absolute;inset:0 auto auto 0;width:120px;height:120px;border-radius:50%;background:var(--ibt-gradient);filter:blur(50px);opacity:.08;pointer-events:none}
+.salla-service-card>*{position:relative}
+.salla-service-card .service-label{align-self:flex-start;padding:6px 9px;border:1px solid var(--ibt-border);border-radius:999px;background:var(--ibt-bg-soft);color:var(--ibt-cyan);font-size:10px;font-weight:900}
+.salla-service-card h3{margin:17px 0 9px;font-size:21px;line-height:1.35}
+.salla-service-card>p{margin:0;color:var(--ibt-muted);font-size:13px;line-height:1.85}
+.salla-service-meta{display:grid;grid-template-columns:1fr;gap:8px;margin:22px 0 0;padding:0;list-style:none}
+.salla-service-meta li{display:flex;align-items:flex-start;justify-content:space-between;gap:16px;padding:9px 0;border-bottom:1px solid var(--ibt-border);color:var(--ibt-muted);font-size:11px}
+.salla-service-meta li:last-child{border-bottom:0}
+.salla-service-meta b{color:var(--ibt-text);font-weight:900;text-align:left}
+.salla-service-card .service-link{margin-top:auto;padding-top:20px;color:var(--ibt-cyan);font-size:12px;font-weight:900}
+
+.salla-principles{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+.salla-principle{padding:23px;border:1px solid var(--ibt-border);border-radius:20px;background:color-mix(in srgb,var(--ibt-surface) 86%,transparent)}
+.salla-principle strong{display:block;margin-bottom:7px;font-size:15px}
+.salla-principle p{margin:0;color:var(--ibt-muted);font-size:12px;line-height:1.8}
+
+.salla-case-empty{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(280px,.9fr);gap:26px;align-items:center;padding:30px;border:1px dashed color-mix(in srgb,var(--ibt-blue) 42%,var(--ibt-border));border-radius:24px;background:color-mix(in srgb,var(--ibt-blue) 5%,var(--ibt-surface))}
+.salla-case-empty h3{margin:0 0 8px;font-size:22px}
+.salla-case-empty p{margin:0;color:var(--ibt-muted)}
+.salla-case-empty .case-policy{padding:18px;border:1px solid var(--ibt-border);border-radius:17px;background:var(--ibt-bg-soft);color:var(--ibt-muted);font-size:12px;line-height:1.8}
+
+.salla-note{margin-top:20px;padding:14px 16px;border-inline-start:3px solid var(--ibt-cyan);border-radius:12px;background:color-mix(in srgb,var(--ibt-cyan) 5%,var(--ibt-surface));color:var(--ibt-muted);font-size:12px}
+
+@media(max-width:1020px){.salla-state-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.salla-service-grid{grid-template-columns:repeat(2,minmax(0,1fr))}.salla-principles{grid-template-columns:1fr}.salla-case-empty{grid-template-columns:1fr}}
+@media(max-width:760px){.salla-page .platform-hero{padding-top:112px}.salla-state-grid,.salla-service-grid{grid-template-columns:1fr}.salla-state-card{min-height:190px}.salla-service-card{min-height:330px}.salla-service-meta li{flex-direction:column;gap:3px}.salla-service-meta b{text-align:right}.salla-case-empty{padding:22px}}
