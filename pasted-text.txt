@@ -1,0 +1,1071 @@
+# UX/UI EXCELLENCE & BEST-OF-EXISTING-PAGES DIRECTIVE
+
+هذه المهمة ليست مجرد Refactoring للكود أو توحيد Header وFooter.
+
+أنت مسؤول أيضًا عن الوصول إلى **أفضل تجربة مستخدم ممكنة للموقع بالكامل** بالاستفادة من جميع التصاميم والصفحات السابقة الموجودة في المشروع.
+
+تعامل مع جميع الصفحات الحالية باعتبارها:
+
+**Design & UX Evidence Library**
+
+وليس باعتبار أن صفحة واحدة فقط هي الصحيحة وكل ما عداها خاطئ.
+
+---
+
+# 1. استخدم أفضل ما في جميع الصفحات
+
+افحص كل صفحة موجودة بصريًا ووظيفيًا.
+
+قد تحتوي صفحة قديمة على:
+
+* Hero أفضل.
+* طريقة عرض خدمة أفضل.
+* spacing أفضل.
+* navigation interaction أفضل.
+* mobile behavior أفضل.
+* CTA أكثر وضوحًا.
+* section composition أجمل.
+* typography hierarchy أفضل.
+* product showcase أقوى.
+* cards أفضل.
+* slider أفضل.
+* FAQ أفضل.
+* form UX أفضل.
+* animation أنضج.
+* trust section أفضل.
+
+لا تتجاهل هذه الأشياء لمجرد أن الصفحة ليست النسخة الرئيسية.
+
+استخرج أفضل الممارسات والتفاصيل من جميع الأعمال السابقة.
+
+ثم استخدمها لبناء:
+
+> **One Unified Ibtikar Tech Experience**
+
+---
+
+# 2. الصفحة الرئيسية ليست مصدرًا أعمى لكل شيء
+
+اعتبر Homepage المرجع الأساسي لـ:
+
+* Brand identity.
+* Header.
+* Main navigation.
+* Footer.
+* core color direction.
+* overall visual personality.
+* global motion language.
+* brand atmosphere.
+
+لكن لا تعتبر كل قرار UX داخلها أفضل قرار تلقائيًا.
+
+إذا وجدت في صفحة أخرى تنفيذًا أفضل من حيث:
+
+* usability.
+* clarity.
+* hierarchy.
+* interaction.
+* accessibility.
+* responsiveness.
+* conversion.
+* visual balance.
+
+ادرسه واستخدم الأفضل.
+
+الهدف:
+
+**Best of all existing pages + one coherent design system.**
+
+---
+
+# 3. لا توحّد الأخطاء
+
+عندما تجد عنصرًا مختلفًا بين الصفحات:
+
+لا تختَر النسخة الموجودة في Homepage تلقائيًا.
+
+قارن النسخ المختلفة.
+
+مثال:
+
+إذا كان لدينا ثلاثة Buttons مختلفة:
+
+```text
+Homepage Button
+Service Page Button
+Product Page Button
+```
+
+قارن بينها من ناحية:
+
+* visual hierarchy.
+* readability.
+* touch target.
+* focus state.
+* hover state.
+* mobile usability.
+* RTL.
+* brand consistency.
+
+ثم اختر أو صمّم النسخة الأفضل.
+
+واجعلها Component Standard للمشروع.
+
+طبق نفس المنهج على:
+
+* Header.
+* navigation.
+* CTA.
+* forms.
+* cards.
+* accordions.
+* sliders.
+* tabs.
+* filters.
+* section headings.
+* breadcrumbs.
+* pricing elements.
+* project showcases.
+* product showcases.
+
+---
+
+# 4. UX Audit شامل لكل صفحة
+
+قبل Refactoring أي صفحة، قيّمها حسب المعايير التالية:
+
+## Information Architecture
+
+* هل ترتيب المعلومات منطقي؟
+* هل أهم شيء يظهر أولًا؟
+* هل يعرف المستخدم أين هو؟
+* هل يعرف ماذا يفعل بعد ذلك؟
+* هل يوجد تكرار؟
+* هل توجد معلومات في مكان غير مناسب؟
+
+---
+
+## Visual Hierarchy
+
+راجع:
+
+* H1.
+* H2.
+* section introductions.
+* body text.
+* CTA.
+* images.
+* supporting information.
+
+يجب أن يعرف المستخدم بصريًا خلال ثوانٍ:
+
+1. أين هو؟
+2. ماذا تقدم الصفحة؟
+3. لماذا يهمه ذلك؟
+4. ماذا يفعل بعد ذلك؟
+
+---
+
+# 5. User Journey
+
+لا تصمم Section بمعزل عن الصفحة.
+
+ادرس رحلة المستخدم الكاملة.
+
+مثلاً في صفحة خدمة:
+
+```text
+Entry
+↓
+Understand Service
+↓
+Recognize Problem
+↓
+Understand Solution
+↓
+See Capabilities
+↓
+See Evidence
+↓
+Reduce Risk
+↓
+Understand Process
+↓
+Take Action
+```
+
+وفي صفحة ثراء:
+
+```text
+Discover Product
+↓
+Understand Value
+↓
+See Theme Visually
+↓
+Explore Features
+↓
+Evaluate Fit
+↓
+Build Trust
+↓
+Resolve Questions
+↓
+Request / Purchase
+```
+
+صمّم ترتيب الأقسام لخدمة الرحلة، وليس لمجرد ملء الصفحة.
+
+---
+
+# 6. Conversion UX
+
+ابتكار تك موقع تجاري.
+
+لذلك قيّم كل صفحة من ناحية Conversion.
+
+راجع:
+
+* Primary CTA.
+* Secondary CTA.
+* CTA placement.
+* CTA labels.
+* distractions.
+* trust.
+* proof.
+* friction.
+* information gaps.
+* form complexity.
+
+لا تضع CTA في كل مكان بلا منطق.
+
+ولكن لا تجعل المستخدم أيضًا يبحث طويلًا عن الخطوة التالية.
+
+---
+
+# 7. Cognitive Load
+
+قلل الحمل المعرفي.
+
+تجنب:
+
+* نصوص ضخمة بلا تقسيم.
+* عشرات البطاقات المتشابهة.
+* خيارات كثيرة متساوية الأهمية.
+* animations متنافسة.
+* ألوان كثيرة.
+* أكثر من CTA رئيسي في نفس اللحظة.
+* information overload.
+
+استخدم:
+
+* progressive disclosure.
+* tabs عند الحاجة.
+* accordion عند الحاجة.
+* sliders عندما تكون مناسبة فعلًا.
+* grouping.
+* whitespace.
+* visual hierarchy.
+
+---
+
+# 8. أفضل تجربة للجوال Mobile-First Thinking
+
+لا تعامل Mobile على أنه Desktop تم تصغيره.
+
+راجع كل قسم منفردًا.
+
+اسأل:
+
+* هل يحتاج Slider بدل Grid؟
+* هل يحتاج Stack؟
+* هل الصورة ضرورية؟
+* هل يجب تغيير ترتيب المحتوى؟
+* هل CTA قريب من الإبهام؟
+* هل النص طويل جدًا؟
+* هل الـHero مرتفع جدًا؟
+* هل القائمة سهلة الاستخدام؟
+* هل الـdropdown منطقي على شاشة صغيرة؟
+
+يمكن أن يختلف Composition على Mobile إذا كان ذلك يحسن UX.
+
+لكن حافظ على نفس المحتوى والهوية.
+
+---
+
+# 9. لا تجعل Consistency تعني Repetition
+
+Consistency ≠ Copy/Paste.
+
+أريد اتساقًا في:
+
+* typography.
+* colors.
+* buttons.
+* containers.
+* spacing system.
+* navigation.
+* form behavior.
+* motion language.
+* icon language.
+* responsive philosophy.
+
+لكن أريد تنوعًا في:
+
+* section composition.
+* visual storytelling.
+* imagery.
+* layout.
+* presentation.
+
+---
+
+# 10. Component Families
+
+لا تجعل لدينا Component واحدًا فقط لكل شيء إذا كانت الحالات مختلفة.
+
+يمكن أن يكون لدينا عائلات منظمة مثل:
+
+```text
+Card
+├── Service Card
+├── Platform Card
+├── Project Card
+├── Resource Card
+└── Product Card
+```
+
+تشترك في Design Language.
+
+لكن لكل منها وظيفة وتصميم مناسب.
+
+---
+
+# 11. Advanced Visual Composition
+
+عند تصميم أو تحسين الأقسام، استخدم مهارات Senior UI Designer.
+
+فكر في:
+
+* composition.
+* rhythm.
+* balance.
+* contrast.
+* proportion.
+* alignment.
+* density.
+* scale.
+* whitespace.
+* focal points.
+* visual direction.
+* typography pairing.
+* image-to-text relationship.
+
+لا تعتمد فقط على:
+
+```text
+display:grid;
+grid-template-columns: repeat(3, 1fr);
+```
+
+كحل لكل شيء.
+
+---
+
+# 12. استخدم أفضل مهارات التصميم المتاحة
+
+قبل تنفيذ مهام التصميم والFrontend:
+
+افحص جميع:
+
+* Skills.
+* AGENTS.md.
+* project instructions.
+* design documentation.
+* available browser/testing capabilities.
+
+الموجودة في بيئة العمل.
+
+حدد المهارات ذات الصلة مثل:
+
+* Frontend Design.
+* UX/UI Design.
+* Web Design.
+* Responsive Design.
+* Accessibility.
+* Design Systems.
+* HTML/CSS architecture.
+* JavaScript UI.
+* Browser Testing.
+* Playwright.
+* Performance.
+* SEO.
+* Visual QA.
+
+استخدم المهارات الفعلية المتاحة في البيئة والمناسبة للمهمة.
+
+لا تدّعي استخدام Skill غير موجود.
+
+إذا توجد Skills متخصصة في:
+
+* Frontend Design
+* UI/UX
+* Browser QA
+* Accessibility
+* Responsive Design
+
+فاقرأ تعليماتها وطبّقها قبل التنفيذ.
+
+---
+
+# 13. Skill-Oriented Execution
+
+لا تستخدم Skill واحدة لكل المشروع.
+
+اختر المهارة المناسبة حسب المهمة.
+
+مثال:
+
+```text
+Architecture
+→ Frontend Architecture / Code Quality skills
+
+Visual Design
+→ Frontend Design / UI Design skills
+
+Responsive QA
+→ Browser / Responsive Testing skills
+
+Accessibility
+→ Accessibility skills
+
+Performance
+→ Web Performance skills
+
+Interactive Components
+→ JavaScript/UI skills
+```
+
+---
+
+# 14. Design Review Loop
+
+كل تصميم تنفذه يجب أن يدخل دورة مراجعة:
+
+```text
+Implement
+↓
+Render in Browser
+↓
+Inspect
+↓
+Compare
+↓
+Find UX/UI Problems
+↓
+Refine
+↓
+Render Again
+↓
+Verify
+```
+
+لا تعتبر أول نسخة نهائية.
+
+---
+
+# 15. استخدم Browser كأداة تصميم
+
+لا تكتفِ بقراءة HTML/CSS.
+
+افتح الصفحات فعليًا.
+
+راجع Screenshots.
+
+قارن الصفحات جنبًا إلى جنب.
+
+ابحث عن:
+
+* inconsistent spacing.
+* inconsistent header height.
+* inconsistent typography.
+* inconsistent button sizing.
+* different section widths.
+* visual density problems.
+* alignment issues.
+* weak hierarchy.
+* broken RTL.
+* strange mobile layouts.
+
+---
+
+# 16. Cross-Page UX Consistency Audit
+
+بعد توحيد مجموعة من الصفحات، افتحها بالتتابع كأنك مستخدم:
+
+```text
+Homepage
+↓
+Solutions
+↓
+Ecommerce
+↓
+Salla
+↓
+Tharaa
+↓
+Portfolio
+↓
+Quote
+```
+
+تحقق:
+
+هل يشعر المستخدم أنه لا يزال داخل نفس الموقع؟
+
+راجع:
+
+* Header.
+* page transitions.
+* visual language.
+* typography.
+* spacing.
+* CTA.
+* button behavior.
+* footer.
+* navigation states.
+* breadcrumbs.
+* mobile navigation.
+
+---
+
+# 17. Navigation Context
+
+يجب أن يعرف المستخدم موقعه الحالي.
+
+استخدم عند الحاجة:
+
+* active navigation state.
+* breadcrumb.
+* contextual page navigation.
+* clear H1.
+
+مثلاً:
+
+```text
+الحلول
+→ المتاجر الإلكترونية
+```
+
+أو:
+
+```text
+المنصات
+→ سلة
+```
+
+لكن لا تضف Breadcrumb إذا كان يضر بالتصميم أو لا يقدم قيمة حقيقية.
+
+---
+
+# 18. Design Tokens قبل الترقيعات
+
+إذا اكتشفت أن:
+
+```text
+10 صفحات تستخدم 10 أحجام مختلفة لـ H2
+```
+
+لا تصلح كل صفحة منفردة.
+
+أصلح النظام.
+
+ثم اجعل الصفحات تعتمد على النظام.
+
+نفس الأمر مع:
+
+* spacing.
+* colors.
+* radius.
+* containers.
+* buttons.
+* shadows.
+* transitions.
+
+---
+
+# 19. Design Decisions يجب أن تكون مبررة
+
+عندما تختار بين تصميمين موجودين:
+
+اسأل:
+
+لماذا هذا أفضل؟
+
+من منظور:
+
+* UX.
+* readability.
+* clarity.
+* brand.
+* conversion.
+* responsive behavior.
+* accessibility.
+* maintainability.
+
+لا تختَر بناءً على الذوق فقط.
+
+---
+
+# 20. UX Heuristic Review
+
+نفذ مراجعة Heuristic لكل الصفحات.
+
+تحقق من مبادئ مثل:
+
+* clarity.
+* consistency.
+* feedback.
+* error prevention.
+* recognition over recall.
+* user control.
+* efficiency.
+* simplicity.
+* recovery from errors.
+
+---
+
+# 21. Interaction Quality
+
+جميع العناصر التفاعلية يجب أن تحتوي الحالات اللازمة.
+
+مثلاً Button:
+
+```text
+Default
+Hover
+Focus-visible
+Active
+Disabled
+Loading
+```
+
+Input:
+
+```text
+Default
+Focus
+Filled
+Invalid
+Error
+Disabled
+Success
+```
+
+Accordion:
+
+```text
+Closed
+Hover
+Focus
+Open
+```
+
+لا تترك الواجهة في حالة Prototype ناقص.
+
+---
+
+# 22. Micro-Interactions
+
+استخدم micro-interactions لتحسين التجربة وليس للاستعراض.
+
+يمكن استخدامها في:
+
+* CTA.
+* navigation.
+* menu.
+* cards.
+* filters.
+* sliders.
+* form feedback.
+* accordions.
+
+لكن:
+
+لا تجعل كل عنصر يتحرك.
+
+---
+
+# 23. Motion Hierarchy
+
+الحركة أيضًا لها hierarchy.
+
+Primary motion:
+
+للأحداث المهمة.
+
+Secondary motion:
+
+لإعطاء feedback.
+
+Decorative motion:
+
+استخدمها بشكل محدود.
+
+لا تجعل:
+
+* Hero.
+* background.
+* cards.
+* text.
+* icons.
+* cursor.
+
+كلها تتحرك في اللحظة نفسها.
+
+---
+
+# 24. أفضل استخدام للصور
+
+لا تستخدم صورًا فقط لملء مساحة.
+
+اسأل:
+
+هل الصورة:
+
+* تشرح الخدمة؟
+* تعرض عملًا؟
+* تعرض المنتج؟
+* تبني الثقة؟
+* تساعد على الفهم؟
+
+إذا لم تقدم قيمة، فلا تستخدمها.
+
+---
+
+# 25. Visual Assets Hierarchy
+
+فضّل المحتوى الحقيقي:
+
+1. Actual project screenshot.
+2. Actual product interface.
+3. Device/browser mockup.
+4. Custom brand graphic.
+5. Relevant illustration.
+6. Generic stock image فقط عند الضرورة.
+
+---
+
+# 26. صفحات الخدمات المتشابهة
+
+عندما يكون لدينا خدمات متشابهة:
+
+لا تجعل المستخدم يعود لصفحة الخدمات في كل مرة.
+
+ادرس استخدام:
+
+* horizontal related-services slider.
+* next service.
+* previous service.
+* service navigation.
+* contextual recommendations.
+
+بحيث يسهل التنقل بينها.
+
+لكن لا تضف carousel فقط لأنه جميل.
+
+أضفه عندما يحسن التنقل.
+
+---
+
+# 27. Product-like Service Experience
+
+بعض خدمات ابتكار تك يمكن أن تستفيد من خصائص صفحات المنتجات.
+
+يمكن أن تحتوي عند المناسبة على:
+
+* starting price.
+* rating.
+* package information.
+* delivery estimate.
+* feature summary.
+* visual gallery.
+* related services.
+
+لكن لا تطبقها على كل خدمة بشكل إجباري.
+
+استخدمها فقط عندما تكون المعلومات حقيقية ومناسبة.
+
+---
+
+# 28. Premium Feel بدون التضحية بالوضوح
+
+الهدف:
+
+**Premium + Clear + Fast**
+
+وليس:
+
+**Fancy + Confusing**
+
+إذا تعارض تأثير بصري مع:
+
+* readability.
+* usability.
+* accessibility.
+* performance.
+
+اختر تجربة المستخدم.
+
+---
+
+# 29. Performance جزء من UX
+
+لا تعتبر الأداء مهمة تقنية منفصلة.
+
+قيّم كل قرار بصري من ناحية:
+
+* load time.
+* animation cost.
+* image weight.
+* JavaScript cost.
+* interaction responsiveness.
+
+لا تضف مكتبة ضخمة لأثر يمكن تنفيذه بسهولة.
+
+---
+
+# 30. Accessibility جزء من التصميم
+
+لا تؤجل accessibility للنهاية.
+
+أثناء التصميم راجع:
+
+* contrast.
+* font size.
+* touch targets.
+* focus.
+* keyboard.
+* semantic structure.
+* reduced motion.
+
+---
+
+# 31. Design Benchmark داخل المشروع
+
+قبل توحيد النظام:
+
+حدد أفضل مثال موجود حاليًا لكل عنصر.
+
+أنشئ داخل تقرير التصميم:
+
+```text
+BEST CURRENT IMPLEMENTATIONS
+
+Header:
+[page/file]
+
+Hero:
+[page/file]
+
+Buttons:
+[page/file]
+
+Service Presentation:
+[page/file]
+
+Typography:
+[page/file]
+
+Mobile Navigation:
+[page/file]
+
+FAQ:
+[page/file]
+
+CTA:
+[page/file]
+
+Footer:
+[page/file]
+
+Product Showcase:
+[page/file]
+
+Responsive Section:
+[page/file]
+```
+
+ثم اشرح:
+
+* لماذا اخترته؟
+* ماذا سنحتفظ منه؟
+* ماذا يحتاج تحسينًا؟
+
+---
+
+# 32. UX/UI SCORECARD
+
+قيّم الصفحات الرئيسية من 10 في:
+
+```text
+Visual Hierarchy
+Brand Consistency
+Navigation
+Content Clarity
+Conversion
+Mobile UX
+Accessibility
+Performance
+Interaction Quality
+Overall UX
+```
+
+لا أريد الأرقام للزينة.
+
+استخدم التقييم لتحديد الأولويات.
+
+---
+
+# 33. قبل إنشاء صفحة جديدة
+
+لا تبدأ التصميم مباشرة.
+
+راجع أولًا:
+
+1. الصفحات الموجودة.
+2. Components الموجودة.
+3. Design System.
+4. الصفحات الأقرب وظيفيًا.
+5. أفضل UX pattern مناسب.
+
+ثم صمّم الصفحة الجديدة وكأنها كانت جزءًا من الموقع منذ البداية.
+
+---
+
+# 34. صفحة جديدة يجب أن تبدو أصلية للموقع
+
+الاختبار:
+
+لو وضعت صفحة جديدة بجانب Homepage وصفحة خدمة قديمة محسنة:
+
+يجب ألا يستطيع المستخدم أن يشعر أنها:
+
+> "صفحة صممها AI في جلسة مختلفة."
+
+يجب أن يشعر أنها نفس:
+
+* المصمم.
+* النظام.
+* العلامة.
+* المنتج.
+
+---
+
+# 35. لا تجعل الصفحات كلها بنفس الإيقاع
+
+يمكن أن تكون:
+
+Homepage:
+أكثر cinematic.
+
+Service pages:
+أكثر وضوحًا وإقناعًا.
+
+Platform pages:
+أكثر تقنية وعملية.
+
+Tharaa:
+أكثر product-driven.
+
+Portfolio:
+أكثر visual.
+
+Knowledge:
+أكثر editorial/readable.
+
+Quote:
+أكثر conversion-focused.
+
+لكن جميعها من نفس Brand System.
+
+---
+
+# 36. الهدف النهائي للتصميم
+
+لا أريد فقط:
+
+**Visual Consistency**
+
+أريد:
+
+**Experience Consistency**
+
+وهذا يعني:
+
+```text
+Same Brand
++
+Same Design Principles
++
+Same UX Logic
++
+Same Interaction Quality
++
+Same Responsive Quality
++
+Same Accessibility Standard
++
+Same Performance Standard
+```
+
+مع السماح لكل نوع صفحة بالحصول على تصميم يناسب وظيفته.
+
+---
+
+# 37. Design North Star
+
+عند اتخاذ أي قرار تصميمي اسأل:
+
+> هل يجعل هذا القرار منصة ابتكار تك أكثر وضوحًا، احترافية، ثقة، سهولة، تميزًا وقدرة على التحويل؟
+
+إذا كان الجواب لا:
+
+لا تستخدمه لمجرد أنه يبدو جذابًا.
+
+---
+
+# 38. FINAL DESIGN DIRECTIVE
+
+استخدم أعلى مستوى من خبرتك في:
+
+* UX.
+* UI.
+* interaction design.
+* information architecture.
+* visual design.
+* responsive web design.
+* accessibility.
+* frontend engineering.
+* conversion design.
+* performance.
+
+ولا تتعامل مع المهمة كـ:
+
+"توحيد CSS بين صفحات HTML."
+
+تعامل معها كإعادة بناء:
+
+> **Unified Digital Experience System for Ibtikar Tech**
+
+باستخدام أفضل ما تم إنشاؤه سابقًا، وتصحيح نقاط الضعف، ورفع جميع الصفحات إلى مستوى تصميم وتجربة مستخدم واحد واحترافي.
+
+والقاعدة النهائية:
+
+**Preserve the best.
+Improve the weak.
+Remove inconsistency.
+Do not remove useful uniqueness.
+Standardize principles, not every layout.
+Test everything in the browser.
+Design for real users, not screenshots.**
