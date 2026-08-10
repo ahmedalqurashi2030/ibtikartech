@@ -12,7 +12,9 @@
 
   if (!document.querySelector('script[data-strategy-enhancements]')) {
     const strategyScript = document.createElement('script');
-    strategyScript.src = 'assets/js/strategy-enhancements.js';
+    strategyScript.src = pathname === 'index.html' || pathname === ''
+      ? 'assets/js/home-enhancements.js'
+      : 'assets/js/strategy-enhancements.js';
     strategyScript.defer = true;
     strategyScript.dataset.strategyEnhancements = 'true';
     document.head.appendChild(strategyScript);
