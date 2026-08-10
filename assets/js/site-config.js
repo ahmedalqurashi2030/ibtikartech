@@ -33,7 +33,10 @@ window.IBTIKAR_CONFIG = {
   products: {
     tharaa: {
       demoUrl: "[TODO: Tharaa Demo URL]",
-      purchaseUrl: "[TODO: Tharaa Purchase URL]"
+      purchaseUrl: "[TODO: Tharaa Purchase URL]",
+      priceLabel: "[TODO: Tharaa Official Price]",
+      version: "[TODO: Tharaa Current Version]",
+      lastUpdated: "[TODO: Tharaa Last Update]"
     }
   },
   events: {
