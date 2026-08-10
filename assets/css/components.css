@@ -43,6 +43,21 @@
   font-size: 13px;
 }
 
+.btn.is-disabled,
+.btn[aria-disabled="true"],
+a.is-disabled,
+a[aria-disabled="true"] {
+  opacity: .52;
+  cursor: not-allowed;
+  pointer-events: none;
+  box-shadow: none;
+  transform: none;
+}
+
+.is-pending {
+  color: var(--ibt-warning) !important;
+}
+
 .cta-card {
   position: relative;
   padding: 48px;
