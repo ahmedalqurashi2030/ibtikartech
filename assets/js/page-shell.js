@@ -1,12 +1,14 @@
 (() => {
   const headerSlot = document.querySelector('[data-shell-header]');
   const pathname = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  const platformPages = new Set(['salla.html', 'zid.html', 'shopify.html', 'woocommerce.html', 'wordpress.html']);
+  const legacyPlatformPages = new Set(['salla.html', 'zid.html', 'shopify.html', 'woocommerce.html', 'wordpress.html']);
   const productPages = new Set(['tharaa.html']);
   const knowledgePages = new Set(['knowledge.html']);
   let section = document.body.dataset.section || '';
 
-  if (platformPages.has(pathname)) section = 'platforms';
+  // Platform pages are no longer primary navigation destinations. Keep legacy files readable
+  // during transition, but classify them under services until links are fully retired.
+  if (legacyPlatformPages.has(pathname)) section = 'services';
   if (productPages.has(pathname)) section = 'products';
   if (knowledgePages.has(pathname)) section = 'knowledge';
 
@@ -34,7 +36,7 @@
     '<button class="ibt-shell-mega-toggle" type="button" aria-label="عرض قائمة الحلول والخدمات" aria-expanded="false" aria-controls="solutionsServicesMega" data-ibt-mega-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>',
     '<div class="ibt-shell-mega" id="solutionsServicesMega" aria-hidden="true" data-ibt-mega-menu><div class="ibt-shell-mega-grid">',
     '<a class="ibt-shell-mega-lead" href="services.html#goals"><span>ابدأ من هدفك</span><strong>اختر النتيجة قبل اسم الخدمة</strong><p>أطلق مشروعك، حسّن التجربة، ابنِ علامتك، اربط عملياتك أو ابدأ مسار النمو.</p></a>',
-    '<a class="ibt-shell-mega-link" href="ecommerce.html"><strong>إطلاق أو تطوير متجر</strong><span>تجربة تجارة إلكترونية من الواجهة حتى القياس.</span></a>',
+    '<a class="ibt-shell-mega-link" href="ecommerce.html"><strong>المتاجر الإلكترونية</strong><span>إطلاق، تطوير، تخصيص، تحسين وقياس ضمن المنصة المناسبة.</span></a>',
     '<a class="ibt-shell-mega-link" href="websites.html"><strong>المواقع وصفحات الهبوط</strong><span>حضور رقمي واضح يقود إلى التواصل والتحويل.</span></a>',
     '<a class="ibt-shell-mega-link" href="brand-content.html"><strong>الهوية والمحتوى</strong><span>علامة ومحتوى وواجهات متماسكة عبر نقاط الاتصال.</span></a>',
     '<a class="ibt-shell-mega-link" href="growth.html"><strong>التسويق والنمو</strong><span>SEO وقياس وتحسين مبني على البيانات.</span></a>',
@@ -42,22 +44,10 @@
     '</div></div></div>',
 
     '<div class="ibt-shell-nav-group" data-ibt-mega-root>',
-    '<a class="ibt-shell-nav-link" data-nav-key="platforms" href="salla.html">المنصات</a>',
-    '<button class="ibt-shell-mega-toggle" type="button" aria-label="عرض قائمة المنصات" aria-expanded="false" aria-controls="platformsMega" data-ibt-mega-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>',
-    '<div class="ibt-shell-mega" id="platformsMega" aria-hidden="true" data-ibt-mega-menu><div class="ibt-shell-mega-grid">',
-    '<a class="ibt-shell-mega-lead" href="salla.html"><span>التجارة الإلكترونية</span><strong>خبرة متخصصة حسب المنصة</strong><p>نحدد حدود المنصة والتخصيص المناسب قبل الوعد والتنفيذ.</p></a>',
-    '<a class="ibt-shell-mega-link" href="salla.html"><strong>Salla — سلة</strong><span>إطلاق، تصميم، تخصيص، قياس ودعم.</span></a>',
-    '<a class="ibt-shell-mega-link" href="zid.html"><strong>Zid — زد</strong><span>تجارب متاجر وربط وتحسين ضمن إمكانات المنصة.</span></a>',
-    '<a class="ibt-shell-mega-link" href="shopify.html"><strong>Shopify</strong><span>واجهات وتجارب تجارة قابلة للتوسع.</span></a>',
-    '<a class="ibt-shell-mega-link" href="woocommerce.html"><strong>WooCommerce</strong><span>متاجر WordPress مرنة وتكاملات مخصصة.</span></a>',
-    '<a class="ibt-shell-mega-link" href="wordpress.html"><strong>WordPress</strong><span>مواقع ومحتوى وحلول رقمية قابلة للإدارة.</span></a>',
-    '</div></div></div>',
-
-    '<div class="ibt-shell-nav-group" data-ibt-mega-root>',
     '<a class="ibt-shell-nav-link" data-nav-key="products" href="tharaa.html">منتجاتنا</a>',
     '<button class="ibt-shell-mega-toggle" type="button" aria-label="عرض منتجات ابتكار تك" aria-expanded="false" aria-controls="productsMega" data-ibt-mega-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>',
     '<div class="ibt-shell-mega" id="productsMega" aria-hidden="true" data-ibt-mega-menu><div class="ibt-shell-mega-grid">',
-    '<a class="ibt-shell-mega-lead" href="tharaa.html"><span>منتج أصلي من ابتكار تك</span><strong>ثيم ثراء لمتاجر سلة</strong><p>نحافظ على المعاينات والمكونات الأصلية ونبني حولها قرار شراء أوضح.</p></a>',
+    '<a class="ibt-shell-mega-lead" href="tharaa.html"><span>منتج أصلي من ابتكار تك</span><strong>ثيم ثراء لمتاجر سلة</strong><p>صفحة منتج مستقلة للمعاينة والمزايا والدعم وقرار الشراء.</p></a>',
     '<a class="ibt-shell-mega-link" href="tharaa.html#v4-preview"><strong>معاينة ثراء</strong><span>شاهد تجربة الواجهات والجوال قبل اتخاذ القرار.</span></a>',
     '<a class="ibt-shell-mega-link" href="contact.html#quote"><strong>تركيب وتخصيص ثراء</strong><span>خدمة تنفيذ منفصلة عن ترخيص الثيم.</span></a>',
     '</div></div></div>',
@@ -74,7 +64,6 @@
     '<nav class="ibt-shell-mobile-menu" id="ibtikarMobileMenu" aria-label="قائمة الجوال" aria-hidden="true">',
     '<a data-nav-key="home" href="index.html">الرئيسية</a>',
     '<details class="ibt-shell-mobile-group"><summary>الحلول والخدمات</summary><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع وصفحات الهبوط</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">التسويق والنمو</a><a href="custom-systems.html">الأنظمة والأتمتة</a></details>',
-    '<details class="ibt-shell-mobile-group"><summary>المنصات</summary><a href="salla.html">سلة</a><a href="zid.html">زد</a><a href="shopify.html">Shopify</a><a href="woocommerce.html">WooCommerce</a><a href="wordpress.html">WordPress</a></details>',
     '<details class="ibt-shell-mobile-group"><summary>منتجاتنا</summary><a href="tharaa.html">ثيم ثراء</a><a href="tharaa.html#v4-preview">معاينة ثراء</a><a href="contact.html#quote">تركيب وتخصيص ثراء</a></details>',
     '<a data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>',
     '<a data-nav-key="knowledge" href="knowledge.html">المعرفة</a>',
@@ -88,8 +77,8 @@
     '<footer class="ibt-shell-footer">',
     '<div class="ibt-shell-footer-grid">',
     '<div class="ibt-shell-footer-main"><a class="ibt-shell-brand" href="index.html"><span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني علامات وتجارب ومنتجات رقمية متكاملة تساعد المشاريع على الإطلاق والعمل والنمو.</p></div>',
-    '<div><h3>الحلول والخدمات</h3><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">التسويق والنمو</a></div>',
-    '<div><h3>المنصات</h3><a href="salla.html">سلة</a><a href="zid.html">زد</a><a href="shopify.html">Shopify</a><a href="woocommerce.html">WooCommerce</a></div>',
+    '<div><h3>الحلول والخدمات</h3><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">التسويق والنمو</a></div>',
+    '<div><h3>التجارة الإلكترونية</h3><a href="ecommerce.html#subservices">الخدمات الفرعية</a><a href="ecommerce.html#platforms">المنصات التي نعمل عليها</a><a href="storefront-customization.html">تخصيص واجهة المتجر</a><a href="product-page-optimization.html">تحسين صفحة المنتج</a></div>',
     '<div><h3>منتجاتنا</h3><a href="tharaa.html">ثيم ثراء</a><a href="tharaa.html#v4-preview">المعاينة</a><a href="contact.html#quote">تركيب وتخصيص ثراء</a></div>',
     '<div><h3>ابتكار تك</h3><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المعرفة</a><a href="about.html">عن ابتكار</a><a href="legal.html">السياسات</a></div>',
     '</div>',
