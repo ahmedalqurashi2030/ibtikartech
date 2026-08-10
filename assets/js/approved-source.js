@@ -172,4 +172,21 @@
       tabs[next].click();
     });
   }
+
+  if (document.body.classList.contains('source-ecommerce')) {
+    if (!document.querySelector('link[data-ecommerce-experience]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'assets/css/pages/ecommerce-experience-lab.css';
+      link.dataset.ecommerceExperience = 'true';
+      document.head.appendChild(link);
+    }
+    if (!document.querySelector('script[data-ecommerce-experience]')) {
+      const script = document.createElement('script');
+      script.src = 'assets/js/ecommerce-category.js';
+      script.async = false;
+      script.dataset.ecommerceExperience = 'true';
+      document.body.appendChild(script);
+    }
+  }
 })();
