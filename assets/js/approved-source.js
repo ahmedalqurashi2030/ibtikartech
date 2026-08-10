@@ -182,18 +182,6 @@
       storefrontLink.setAttribute('aria-label', 'فتح صفحة خدمة تخصيص واجهة المتجر');
     }
 
-    // Platforms remain contextual expertise inside the ecommerce category.
-    // Retire standalone platform-page navigation without deleting legacy files yet.
-    const platformSection = document.querySelector('#platforms');
-    const platformPageHrefs = new Set(['salla.html', 'zid.html', 'shopify.html', 'woocommerce.html', 'wordpress.html']);
-    platformSection?.querySelectorAll('a[href]').forEach((link) => {
-      const href = link.getAttribute('href');
-      if (!platformPageHrefs.has(href)) return;
-      link.href = '#subservices';
-      link.textContent = 'استكشف الخدمات المناسبة';
-      link.setAttribute('aria-label', `استكشف الخدمات المناسبة لمنصة ${link.closest('article')?.querySelector('h3')?.textContent?.trim() || ''}`.trim());
-    });
-
     if (!document.querySelector('link[data-ecommerce-experience]')) {
       const link = document.createElement('link');
       link.rel = 'stylesheet';
