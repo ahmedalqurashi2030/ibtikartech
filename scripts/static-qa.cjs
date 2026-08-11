@@ -76,6 +76,43 @@ if (exists(servicesExperiencePath)) {
   if (!code.includes("custom-systems.html#automation")) fail('Services cinema must deep-link the automation family.');
 }
 
+// A few approved cinematic source files still contain legacy demo contact strings in
+// their raw HTML. Runtime finalization rewrites them before public use and browser QA
+// separately fails if they become visible. Keep this debt tightly allow-listed so no
+// new/public page can copy those fake contact details by accident.
+const fakeContactTokens = [
+  '967000000000',
+  'mailto:hello@ibtikar-tech.com',
+  'mailto:support@tharaa.com',
+  't.me/tharaa_theme'
+];
+const legacyContactSourceAllowlist = new Set(['index.html', 'services.html', 'tharaa.html']);
+const legacyTokenPages = [];
+
+requiredPages.forEach((file) => {
+  if (!exists(file)) return;
+  const source = read(file);
+  const found = fakeContactTokens.filter((token) => source.toLowerCase().includes(token.toLowerCase()));
+  if (!found.length) return;
+  if (!legacyContactSourceAllowlist.has(file)) {
+    fail(`${file} contains forbidden fake/legacy contact token(s): ${found.join(', ')}`);
+    return;
+  }
+  legacyTokenPages.push(file);
+});
+
+if (exists(contentFinalizationPath)) {
+  const guard = read(contentFinalizationPath).toLowerCase();
+  fakeContactTokens.forEach((token) => {
+    if (!guard.includes(token.toLowerCase())) {
+      fail(`content-finalization.js must explicitly guard legacy contact token: ${token}`);
+    }
+  });
+  if (!guard.includes("contact.html#quote")) {
+    fail('content-finalization.js must route unverified legacy contact links to contact.html#quote.');
+  }
+}
+
 function validateAssetReferences(file) {
   const source = read(file);
   const refs = [];
@@ -108,6 +145,9 @@ requiredPages.forEach((file) => {
 
 note(`Checked ${requiredPages.length} public HTML routes.`);
 note(`Confirmed ${retiredPages.length} retired platform pages remain deleted.`);
+if (legacyTokenPages.length) {
+  note(`Legacy demo contact tokens remain confined to approved source files: ${[...new Set(legacyTokenPages)].join(', ')}.`);
+}
 
 notes.forEach((message) => console.log(`✓ ${message}`));
 if (failures.length) {
