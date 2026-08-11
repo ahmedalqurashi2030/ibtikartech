@@ -175,6 +175,7 @@ async function inspectPage(client, page, viewport, events) {
 
   const metrics = await evaluate(client, `(() => {
     const retired = ['salla.html','zid.html','shopify.html','woocommerce.html','wordpress.html'];
+    const fakeMarkers = ['967000000000','hello@ibtikar-tech.com','support@tharaa.com','t.me/tharaa_theme'];
     const links = [...document.querySelectorAll('a[href]')];
     const visible = (el) => {
       if (!el) return false;
@@ -186,11 +187,14 @@ async function inspectPage(client, page, viewport, events) {
       const r = el.getBoundingClientRect();
       return { tag: el.tagName.toLowerCase(), id: el.id || '', cls: String(el.className || '').slice(0,100), left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width) };
     }).filter((item) => item.right > innerWidth + 2 || item.left < -2 || item.width > innerWidth + 2).slice(0, 12);
-    const fakeContacts = links.filter((a) => /967000000000|hello@ibtikar-tech\.com|support@tharaa\.com|t\.me\/tharaa_theme/i.test(a.getAttribute('href') || '') && visible(a)).map((a) => a.getAttribute('href'));
+    const fakeContacts = links.filter((a) => {
+      const href = String(a.getAttribute('href') || '').toLowerCase();
+      return fakeMarkers.some((marker) => href.includes(marker)) && visible(a);
+    }).map((a) => a.getAttribute('href'));
     const retiredLinks = links.filter((a) => retired.some((route) => (a.getAttribute('href') || '').split('#')[0].toLowerCase() === route) && visible(a)).map((a) => a.getAttribute('href'));
     const duplicateIds = [...document.querySelectorAll('[id]')].map((el) => el.id).filter((id, index, all) => id && all.indexOf(id) !== index).filter((id, index, all) => all.indexOf(id) === index);
     const robots = document.querySelector('meta[name="robots"]')?.content || '';
-    const result = {
+    return {
       title: document.title,
       h1: document.querySelectorAll('h1').length,
       shellHeader: visible(document.querySelector('.ibt-shell-header')),
@@ -212,7 +216,6 @@ async function inspectPage(client, page, viewport, events) {
       tharaaLegacySupportVisible: visible(document.querySelector('#support')),
       productRelatedHrefs: [...document.querySelectorAll('.related-grid article a')].map((a) => a.getAttribute('href'))
     };
-    return result;
   })()`);
 
   return { page, viewport: viewport.name, metrics, events: [...events] };
@@ -294,7 +297,7 @@ function validate(result, failures) {
       }
       if (event.method === 'Log.entryAdded') {
         const entry = event.params.entry;
-        if (['error'].includes(entry.level)) events.push({ type: entry.level, text: entry.text, url: entry.url });
+        if (entry.level === 'error') events.push({ type: entry.level, text: entry.text, url: entry.url });
       }
       if (event.method === 'Network.responseReceived') {
         const response = event.params.response;
