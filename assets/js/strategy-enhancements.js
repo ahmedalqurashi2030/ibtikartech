@@ -36,29 +36,50 @@
      SERVICES
      The approved services page owns the cinematic presentation. This layer
      adds only an empty discovery container; services-experience.js fills it
-     with the final image-card slider. No filters, fake pricing, or old cards.
+     with the final image-card slider. It also retires legacy fake contact
+     routes while preserving the existing final CTA design.
      ------------------------------------------------------------------------ */
   function initServices() {
     if (PATH !== 'services.html') return;
     const main = $('main');
     const goalGrid = $('.goal-grid', main);
-    if (!main || !goalGrid || $('[data-strategy-service-catalog]', main)) return;
+    if (!main || !goalGrid) return;
 
     const goalSection = sectionOf(goalGrid);
     goalSection?.classList.add('strategy-existing-section', 'strategy-existing-section--goals');
 
-    const catalog = html(`
-      <section class="strategy-layer strategy-layer--catalog" data-strategy-service-catalog aria-labelledby="strategyCatalogTitle">
-        <div class="strategy-shell">
-          <div class="strategy-head">
-            <span class="strategy-kicker">بعض خدماتنا المتنوعة</span>
-            <h2 id="strategyCatalogTitle">خدمات محددة عندما تعرف ما الذي تريد تحسينه.</h2>
-            <p>أمثلة عملية من خدمات ابتكار تك، بينما يبقى القسم السينمائي أعلاه للعائلات الرئيسية.</p>
+    if (!$('[data-strategy-service-catalog]', main)) {
+      const catalog = html(`
+        <section class="strategy-layer strategy-layer--catalog" data-strategy-service-catalog aria-labelledby="strategyCatalogTitle">
+          <div class="strategy-shell">
+            <div class="strategy-head">
+              <span class="strategy-kicker">بعض خدماتنا المتنوعة</span>
+              <h2 id="strategyCatalogTitle">خدمات محددة عندما تعرف ما الذي تريد تحسينه.</h2>
+              <p>أمثلة عملية من خدمات ابتكار تك، بينما يبقى القسم السينمائي أعلاه للعائلات الرئيسية.</p>
+            </div>
+            <div class="strategy-service-catalog" aria-live="polite"></div>
           </div>
-          <div class="strategy-service-catalog" aria-live="polite"></div>
-        </div>
-      </section>`);
-    insertAfter(goalSection, catalog);
+        </section>`);
+      insertAfter(goalSection, catalog);
+    }
+
+    const finalCta = $('#contact', main);
+    if (finalCta) {
+      const actions = $$('.cta-actions a', finalCta);
+      if (actions[0]) {
+        actions[0].href = 'contact.html#quote';
+        actions[0].removeAttribute('target');
+        actions[0].removeAttribute('rel');
+        actions[0].textContent = 'ابدأ مشروعك';
+      }
+      if (actions[1]) {
+        actions[1].href = 'ecommerce.html';
+        actions[1].removeAttribute('target');
+        actions[1].removeAttribute('rel');
+        actions[1].textContent = 'استكشف حلول المتاجر';
+      }
+    }
+    $$('.whatsapp').forEach((link) => link.remove());
   }
 
   /* ------------------------------------------------------------------------
