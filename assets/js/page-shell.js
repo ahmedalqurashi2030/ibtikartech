@@ -1,12 +1,10 @@
 (() => {
   const headerSlot = document.querySelector('[data-shell-header]');
   const pathname = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
-  const platformPages = new Set(['salla.html', 'zid.html', 'shopify.html', 'woocommerce.html', 'wordpress.html']);
   const productPages = new Set(['tharaa.html']);
   const knowledgePages = new Set(['knowledge.html']);
   let section = document.body.dataset.section || '';
 
-  if (platformPages.has(pathname)) section = 'platforms';
   if (productPages.has(pathname)) section = 'products';
   if (knowledgePages.has(pathname)) section = 'knowledge';
 
@@ -76,7 +74,7 @@
     '<div class="ibt-shell-footer-grid">',
     '<div class="ibt-shell-footer-main"><a class="ibt-shell-brand" href="index.html"><span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني علامات وتجارب ومنتجات رقمية متكاملة تساعد المشاريع على الإطلاق والعمل والنمو.</p></div>',
     '<div><h3>الحلول والخدمات</h3><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">التسويق والنمو</a></div>',
-    '<div><h3>المنصات</h3><a href="salla.html">سلة</a><a href="zid.html">زد</a><a href="shopify.html">Shopify</a><a href="woocommerce.html">WooCommerce</a></div>',
+    '<div><h3>التجارة والمنصات</h3><a href="ecommerce.html#platforms">سلة · زد · Shopify · WooCommerce</a><a href="websites.html">WordPress والمواقع</a><a href="storefront-customization.html">تخصيص واجهة المتجر</a><a href="product-page-optimization.html">تحسين صفحة المنتج</a></div>',
     '<div><h3>منتجاتنا</h3><a href="tharaa.html">ثيم ثراء</a><a href="tharaa.html#v4-preview">المعاينة</a><a href="contact.html#quote">تركيب وتخصيص ثراء</a></div>',
     '<div><h3>ابتكار تك</h3><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المعرفة</a><a href="about.html">عن ابتكار</a><a href="legal.html">السياسات</a></div>',
     '</div>',
@@ -108,6 +106,20 @@
       injectFooter();
     }, { once: true });
   }
+
+  // Standalone platform pages are intentionally retired for now. Keep any older links
+  // inside preserved/reference markup useful instead of sending visitors to a 404.
+  const retiredPlatformRoutes = new Map([
+    ['salla.html', 'ecommerce.html#subservices'],
+    ['zid.html', 'ecommerce.html#subservices'],
+    ['shopify.html', 'ecommerce.html#subservices'],
+    ['woocommerce.html', 'ecommerce.html#subservices'],
+    ['wordpress.html', 'websites.html']
+  ]);
+  document.querySelectorAll('a[href]').forEach((link) => {
+    const href = (link.getAttribute('href') || '').toLowerCase();
+    if (retiredPlatformRoutes.has(href)) link.setAttribute('href', retiredPlatformRoutes.get(href));
+  });
 
   document.querySelectorAll('[data-nav-key]').forEach((link) => {
     const active = link.dataset.navKey === section;
