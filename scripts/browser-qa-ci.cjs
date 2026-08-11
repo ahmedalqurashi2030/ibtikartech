@@ -23,7 +23,7 @@ child.stderr.on('data', (chunk) => {
 
 child.on('error', (error) => {
   console.error(error.stack || error.message);
-  process.exit(1);
+  process.exit(75);
 });
 
 child.on('close', (code) => {
@@ -42,6 +42,21 @@ child.on('close', (code) => {
     console.warn('\n⚠ Browser QA found only the unconfigured favicon.ico request.');
     console.warn('⚠ This is non-blocking until the official favicon/brand asset is approved.');
     process.exit(0);
+  }
+
+  // A failure before any page-level assertion is normally a transient Chrome/CDP
+  // startup problem. Return a distinct code so the workflow retries only this case.
+  const inspectedAnyPage = output.includes('✓ inspected ');
+  const startupFailure = !inspectedAnyPage && (
+    output.includes('fetch failed') ||
+    output.includes('Chrome/Chromium executable not found') ||
+    output.includes('No Chrome page target found') ||
+    output.includes('ECONNREFUSED')
+  );
+
+  if (startupFailure) {
+    console.warn('\n⚠ Transient Chrome/CDP startup failure detected; workflow may retry once.');
+    process.exit(75);
   }
 
   process.exit(code || 1);
