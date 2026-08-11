@@ -1,0 +1,28 @@
+/* Production-content guardrails.
+   These selectors hide only content already identified as staging, duplicate,
+   unsupported, or not yet ready for public navigation. */
+
+body[data-page="index"] #testimonials,
+body[data-page="services"] [data-strategy-service-catalog],
+body[data-page="product-page-optimization"] [data-strategy-service-decision],
+body[data-page="product-page-optimization"] [data-strategy-service-scope],
+body[data-page="ecommerce"] #store-anatomy,
+body[data-page="tharaa"] [data-strategy-tharaa-decision],
+body[data-page="tharaa"] [data-strategy-tharaa-governance],
+body[data-page="tharaa"] #compare,
+body[data-page="tharaa"] #support,
+body[data-page="tharaa"] footer[data-approved-legacy-shell] {
+  display: none !important;
+}
+
+/* Works, knowledge, and draft legal content remain in the repository for completion,
+   but are intentionally removed from shared public navigation until approved. */
+.ibt-shell-header a[href="portfolio.html"],
+.ibt-shell-header a[href="knowledge.html"],
+.ibt-shell-mobile-menu a[href="portfolio.html"],
+.ibt-shell-mobile-menu a[href="knowledge.html"],
+.ibt-shell-footer a[href="portfolio.html"],
+.ibt-shell-footer a[href="knowledge.html"],
+.ibt-shell-footer a[href="legal.html"] {
+  display: none !important;
+}
