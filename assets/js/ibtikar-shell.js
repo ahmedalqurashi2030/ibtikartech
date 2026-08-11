@@ -12,6 +12,15 @@
     const menu = menuFor(toggle);
     if (!toggle || !menu) return;
     toggle.setAttribute('aria-expanded',String(open));
+    if (open) {
+      // Keep the approved opacity/transform animation, but do not let the
+      // visibility transition delay keyboard focus into the disclosed panel.
+      menu.style.transitionProperty = 'opacity, transform';
+      menu.style.visibility = 'visible';
+    } else {
+      menu.style.removeProperty('transition-property');
+      menu.style.removeProperty('visibility');
+    }
     menu.classList.toggle('is-open',open);
     menu.setAttribute('aria-hidden',String(!open));
     if (open) menu.removeAttribute('inert'); else menu.setAttribute('inert','');
