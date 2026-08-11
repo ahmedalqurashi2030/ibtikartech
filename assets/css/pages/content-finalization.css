@@ -27,3 +27,13 @@ body[data-page="services"] [data-strategy-service-catalog] .strategy-scope-note 
 .ibt-shell-footer a[href="legal.html"] {
   display: none !important;
 }
+
+/* Knowledge hub: make in-page guides feel intentional within the shared inner-page system. */
+body.knowledge-page main section[id]{scroll-margin-top:110px}
+body.knowledge-page .center-action{
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  gap:12px;
+  margin-top:32px;
+}
