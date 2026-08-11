@@ -48,9 +48,31 @@ const shellPath = 'assets/js/page-shell.js';
 const configPath = 'assets/js/site-config.js';
 const servicesExperiencePath = 'assets/js/services-experience.js';
 const contentFinalizationPath = 'assets/js/content-finalization.js';
+const continuousFlowCssPath = 'assets/css/pages/continuous-flow.css';
+const continuousFlowJsPath = 'assets/js/continuous-flow.js';
+const homeExperienceCssPath = 'assets/css/pages/home-experience-v2.css';
+const homeExperienceJsPath = 'assets/js/home-experience-v2.js';
+const platformLogoPaths = [
+  'assets/images/platforms/salla.svg',
+  'assets/images/platforms/zid.svg',
+  'assets/images/platforms/shopify.svg',
+  'assets/images/platforms/woocommerce.svg',
+  'assets/images/platforms/wordpress.svg',
+  'assets/images/platforms/custom-solutions.svg'
+];
 
-[shellPath, configPath, servicesExperiencePath, contentFinalizationPath].forEach((file) => {
-  if (!exists(file)) fail(`Required runtime missing: ${file}`);
+[
+  shellPath,
+  configPath,
+  servicesExperiencePath,
+  contentFinalizationPath,
+  continuousFlowCssPath,
+  continuousFlowJsPath,
+  homeExperienceCssPath,
+  homeExperienceJsPath,
+  ...platformLogoPaths
+].forEach((file) => {
+  if (!exists(file)) fail(`Required runtime/asset missing: ${file}`);
 });
 
 if (exists(shellPath)) {
@@ -60,6 +82,30 @@ if (exists(shellPath)) {
   if (!shell.includes('portfolio.html')) fail('Shared shell must expose أعمالنا.');
   if (!shell.includes('knowledge.html')) fail('Shared shell must expose المعرفة.');
   if (!shell.includes('tharaa.html')) fail('Shared shell must expose ثيم ثراء.');
+  if (!shell.includes('assets/css/pages/continuous-flow.css')) fail('Shared shell must load the continuous background stylesheet globally.');
+  if (!shell.includes('assets/js/continuous-flow.js')) fail('Shared shell must load the continuous background runtime globally.');
+  if (!shell.includes('assets/js/home-experience-v2.js')) fail('Shared shell must load the homepage v2 runtime on the homepage.');
+}
+
+if (exists(homeExperienceJsPath)) {
+  const home = read(homeExperienceJsPath);
+  platformLogoPaths.forEach((asset) => {
+    if (!home.includes(asset)) fail(`Homepage platform strip must reference ${asset}.`);
+  });
+  if (!home.includes('home-services-slider')) fail('Homepage runtime must activate the services slider class.');
+  if (!home.includes('data-home-services-prev') || !home.includes('data-home-services-next')) {
+    fail('Homepage services slider must expose previous/next controls.');
+  }
+  if (!home.includes("event.key === 'ArrowLeft'") || !home.includes("event.key === 'ArrowRight'")) {
+    fail('Homepage services slider must support keyboard arrow navigation.');
+  }
+}
+
+if (exists(continuousFlowJsPath)) {
+  const flow = read(continuousFlowJsPath);
+  if (!flow.includes('ibt-continuous-flow')) fail('Continuous flow runtime must activate the global page class.');
+  if (!flow.includes('ibt-flow-section--blend')) fail('Continuous flow runtime must classify ordinary sections.');
+  if (!flow.includes('ibt-flow-section--immersive')) fail('Continuous flow runtime must preserve immersive sections.');
 }
 
 if (exists(configPath)) {
@@ -150,6 +196,8 @@ requiredPages.forEach((file) => {
 
 note(`Checked ${requiredPages.length} public HTML routes.`);
 note(`Confirmed ${retiredPages.length} retired platform pages remain deleted.`);
+note(`Confirmed ${platformLogoPaths.length} local platform/logo assets for the homepage expertise strip.`);
+note('Continuous background runtime and homepage carousel assets are wired through the shared shell.');
 if (legacyTokenPages.length) {
   note(`Legacy demo contact tokens remain confined to approved source files: ${[...new Set(legacyTokenPages)].join(', ')}.`);
 }
