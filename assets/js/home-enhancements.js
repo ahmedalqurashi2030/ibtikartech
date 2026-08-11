@@ -41,6 +41,16 @@
     return `<a class="strategy-action${primary ? ' strategy-action--primary' : ''}" href="${href}">${label}</a>`;
   }
 
+  function removeLegacyHomeArtifacts() {
+    const marker = 'Ibtikar Tech Homepage V7';
+    [document.head, document.body, document.documentElement].forEach((root) => {
+      if (!root) return;
+      [...root.childNodes].forEach((node) => {
+        if (node.nodeType === Node.TEXT_NODE && (node.textContent || '').includes(marker)) node.remove();
+      });
+    });
+  }
+
   function repairHomeServices(main) {
     const cinema = $('.services-cinema', main);
     if (!cinema || cinema.dataset.homeServicesReady === 'true') return;
@@ -52,7 +62,7 @@
       { href: 'websites.html', label: 'استكشف المواقع وصفحات الهبوط' },
       { href: 'brand-content.html', label: 'استكشف الهوية والمحتوى' },
       { href: 'growth.html', label: 'استكشف الظهور والقياس والنمو' },
-      { href: 'custom-systems.html', label: 'استكشف الربط والأتمتة' },
+      { href: 'custom-systems.html#automation', label: 'استكشف الربط والأتمتة' },
       { href: 'custom-systems.html', label: 'استكشف الأنظمة والحلول المخصصة' }
     ];
 
@@ -148,6 +158,7 @@
   }
 
   function init() {
+    removeLegacyHomeArtifacts();
     ensureCss();
     initHome();
   }
