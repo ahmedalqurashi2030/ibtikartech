@@ -116,14 +116,6 @@
   }
 
   if (categoryPages.has(page)) {
-    if (!document.querySelector('link[data-category-signatures]')) {
-      const css = document.createElement('link');
-      css.rel = 'stylesheet';
-      css.href = 'assets/css/pages/category-signatures.css';
-      css.dataset.categorySignatures = 'true';
-      document.head.appendChild(css);
-    }
-
     const signatures = {
       websites: `
         <section class="category-signature" id="category-signature" aria-labelledby="categorySignatureTitle">
