@@ -3,7 +3,6 @@
   const pathname = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   const pageKey = pathname.replace(/\.html$/,'') || 'index';
   const productPages = new Set(['tharaa.html']);
-  const knowledgePages = new Set(['knowledge.html']);
   const retiredRoutes = new Map([
     ['salla.html','ecommerce.html#platforms'],
     ['zid.html','ecommerce.html#platforms'],
@@ -15,7 +14,6 @@
 
   document.body.dataset.page = pageKey;
   if (productPages.has(pathname)) section = 'products';
-  if (knowledgePages.has(pathname)) section = 'knowledge';
 
   const hasFinalStyleCarrier = document.querySelector('link[href$="inner.css"], link[href$="approved-source.css"], link[href$="frontend-final.css"]');
   if (!hasFinalStyleCarrier && !document.querySelector('link[data-frontend-final]')) {
@@ -61,15 +59,13 @@
             '<a class="ibt-shell-nav-link" data-nav-key="products" href="tharaa.html">منتجاتنا</a>',
             '<button class="ibt-shell-mega-toggle" type="button" aria-label="عرض منتجات ابتكار تك" aria-expanded="false" aria-controls="productsMega" data-ibt-mega-toggle><svg viewBox="0 0 24 24" aria-hidden="true"><path d="m6 9 6 6 6-6"></path></svg></button>',
             '<div class="ibt-shell-mega" id="productsMega" aria-hidden="true" data-ibt-mega-menu><div class="ibt-shell-mega-grid">',
-              '<a class="ibt-shell-mega-lead" href="tharaa.html"><span>منتج أصلي من ابتكار تك</span><strong>ثيم ثراء لمتاجر سلة</strong><p>مزايا وتجربة جوال ودعم وقرار شراء في صفحة منتج مستقلة.</p></a>',
+              '<a class="ibt-shell-mega-lead" href="tharaa.html"><span>منتج أصلي من ابتكار تك</span><strong>ثيم ثراء لمتاجر سلة</strong><p>مزايا وتجربة جوال وتخصيص ومعاينات تفاعلية في صفحة منتج مستقلة.</p></a>',
             '</div></div>',
           '</div>',
-          '<a class="ibt-shell-nav-link" data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>',
-          '<a class="ibt-shell-nav-link" data-nav-key="knowledge" href="knowledge.html">المعرفة</a>',
           '<a class="ibt-shell-nav-link" data-nav-key="about" href="about.html">عن ابتكار</a>',
         '</nav>',
         '<div class="ibt-shell-actions">',
-          '<a class="ibt-shell-cta" href="contact.html#quote">اطلب عرض سعر</a>',
+          '<a class="ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>',
           '<button class="ibt-shell-menu-toggle" type="button" aria-label="فتح القائمة" aria-expanded="false" aria-controls="ibtikarMobileMenu" data-ibt-menu-toggle><span></span><span></span><span></span></button>',
         '</div>',
       '</div>',
@@ -78,11 +74,8 @@
       '<a data-nav-key="home" href="index.html">الرئيسية</a>',
       '<details class="ibt-shell-mobile-group"><summary>الحلول والخدمات</summary><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع وصفحات الهبوط</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a><a href="custom-systems.html">الأنظمة والأتمتة</a></details>',
       '<details class="ibt-shell-mobile-group"><summary>منتجاتنا</summary><a href="tharaa.html">ثيم ثراء</a></details>',
-      '<a data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>',
-      '<a data-nav-key="knowledge" href="knowledge.html">المعرفة</a>',
       '<a data-nav-key="about" href="about.html">عن ابتكار</a>',
-      '<a href="contact.html#support">الدعم</a>',
-      '<a class="ibt-shell-mobile-cta ibt-shell-cta" href="contact.html#quote">اطلب عرض سعر</a>',
+      '<a class="ibt-shell-mobile-cta ibt-shell-cta" href="contact.html#quote">ابدأ مشروعك</a>',
     '</nav>'
   ].join('');
 
@@ -93,9 +86,9 @@
         '<div><h3>الحلول والخدمات</h3><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a></div>',
         '<div><h3>المتاجر والمنصات</h3><a href="ecommerce.html#platforms">المنصات التي نعمل عليها</a><div class="ibt-shell-footer-platforms" aria-label="المنصات"><span>سلة</span><span>زد</span><span>Shopify</span><span>WooCommerce</span></div><a href="storefront-customization.html">تخصيص واجهة المتجر</a><a href="product-page-optimization.html">تحسين صفحة المنتج</a></div>',
         '<div><h3>منتجاتنا</h3><a href="tharaa.html">ثيم ثراء</a></div>',
-        '<div><h3>ابتكار تك</h3><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المعرفة</a><a href="about.html">عن ابتكار</a><a href="legal.html">السياسات</a></div>',
+        '<div><h3>ابتكار تك</h3><a href="about.html">عن ابتكار</a><a href="contact.html#quote">ابدأ مشروعك</a></div>',
       '</div>',
-      '<div class="ibt-shell-footer-bottom"><span>© <span id="year"></span> ابتكار تك. جميع الحقوق محفوظة.</span><div><a href="contact.html#quote">طلب عرض سعر</a><a href="contact.html#support">الدعم</a><a href="legal.html">الخصوصية والسياسات</a></div></div>',
+      '<div class="ibt-shell-footer-bottom"><span>© <span id="year"></span> ابتكار تك. جميع الحقوق محفوظة.</span><div><a href="services.html">الحلول والخدمات</a><a href="tharaa.html">ثيم ثراء</a><a href="contact.html#quote">ابدأ مشروعك</a></div></div>',
     '</footer>'
   ].join('');
 
