@@ -52,7 +52,22 @@ jobs:
             custom-systems.html,tharaa.html,portfolio.html,knowledge.html,about.html,contact.html,
             store-launch.html,storefront-customization.html,store-redesign.html,
             product-page-optimization.html,ecommerce-growth.html,ecommerce-support.html,404.html
-        run: node scripts/browser-qa-ci.cjs
+        shell: bash
+        run: |
+          set +e
+          for attempt in 1 2; do
+            echo "Browser QA attempt ${attempt}/2"
+            node scripts/browser-qa-ci.cjs
+            status=$?
+            if [ "$status" -eq 0 ]; then
+              exit 0
+            fi
+            if [ "$attempt" -eq 1 ]; then
+              echo "First browser QA attempt failed; retrying once for transient Chrome/CDP startup failures."
+              sleep 2
+            fi
+          done
+          exit "$status"
 
       - name: Stop local site
         if: always()
