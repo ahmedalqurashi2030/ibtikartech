@@ -14,14 +14,13 @@
   document.body.dataset.page = page;
   if (categoryPages.has(page)) document.body.classList.add('category-hub');
 
-  // If a retired route is requested and the host serves the custom 404 page, recover gracefully.
   const requestedBasename = location.pathname.split('/').pop()?.toLowerCase();
   if (document.body.dataset.page === '404' && retiredRoutes.has(requestedBasename)) {
     location.replace(retiredRoutes.get(requestedBasename));
     return;
   }
 
-  // Rewrite stale links that can remain in approved/reference-derived markup without mutating those sources.
+  // Retired platform routes remain meaningful entry points through their parent service category.
   document.querySelectorAll('a[href]').forEach((link) => {
     const raw = link.getAttribute('href') || '';
     const clean = raw.split('#')[0].toLowerCase();
@@ -37,7 +36,47 @@
     }
   });
 
-  // Lightweight progress indicator on content pages. Cinematic approved source pages already own their progress language.
+  // Ecommerce is the platform context hub for this phase; all six service cards open decision pages.
+  if (page === 'ecommerce') {
+    const detailRoutes = new Map([
+      ['service-launch','store-launch.html'],
+      ['service-customize','storefront-customization.html'],
+      ['service-redesign','store-redesign.html'],
+      ['service-product','product-page-optimization.html'],
+      ['service-growth','ecommerce-growth.html'],
+      ['service-support','ecommerce-support.html']
+    ]);
+    detailRoutes.forEach((href,id) => {
+      const card = document.getElementById(id);
+      const link = card?.querySelector('.commerce-service-card__footer a');
+      if (!link) return;
+      link.href = href;
+      link.textContent = 'تفاصيل الخدمة';
+      link.setAttribute('aria-label', `فتح تفاصيل ${card.querySelector('h3')?.textContent?.trim() || 'الخدمة'}`);
+    });
+
+    const platformSection = document.getElementById('platforms');
+    const platformIntro = platformSection?.querySelector('.platform-heading p');
+    if (platformIntro) {
+      platformIntro.textContent = 'المنصة عامل تنفيذ داخل الخدمة، وليست مسارًا منفصلًا حاليًا. نحدد ما يناسب مشروعك وفق التشغيل والتخصيص والقيود، ويمكن إضافة صفحات متخصصة للمنصات مستقبلًا عندما تصبح لها قيمة مستقلة.';
+    }
+    platformSection?.querySelectorAll('.platform-card').forEach((card) => {
+      const link = card.querySelector('a');
+      if (!link) return;
+      link.href = '#subservices';
+      link.textContent = 'استكشف الخدمات المناسبة';
+      link.setAttribute('aria-label', `استكشف خدمات المتاجر المناسبة لـ ${card.querySelector('h3')?.textContent?.trim() || 'هذه المنصة'}`);
+    });
+
+    const finalCta = document.querySelector('.page-cta .cta-actions');
+    const secondary = finalCta?.querySelector('.btn-outline');
+    if (secondary && /salla\.html/i.test(secondary.getAttribute('href') || '')) {
+      secondary.href = '#platforms';
+      secondary.textContent = 'المنصات التي نعمل عليها';
+    }
+  }
+
+  // Lightweight progress indicator on content pages.
   if (document.body.classList.contains('inner-page') && !document.querySelector('.ibt-page-progress')) {
     const progress = document.createElement('div');
     progress.className = 'ibt-page-progress';
@@ -60,7 +99,7 @@
     update();
   }
 
-  // Enrich category cards with non-semantic visual scenes without adding fake screenshots or claims.
+  // Enrich category cards with abstract UI scenes; these are not presented as client work.
   if (categoryPages.has(page)) {
     const cards = [...document.querySelectorAll('#capabilities .route-card')];
     cards.forEach((card,index) => {
@@ -74,7 +113,6 @@
       if (small) small.after(visual); else card.prepend(visual);
     });
 
-    // Stable section IDs and a local task-oriented navigation.
     const main = document.querySelector('main');
     const hero = main?.querySelector('.platform-hero');
     const sections = [...(main?.querySelectorAll(':scope > section') || [])];
@@ -115,24 +153,20 @@
     }
   }
 
-  // Self-links in related navigation should read as current context, not as another destination.
   document.querySelectorAll('.related-nav a[href]').forEach((link) => {
     const href = (link.getAttribute('href') || '').split('#')[0].toLowerCase();
     if (href && href === pathname) link.setAttribute('aria-current','page');
   });
 
-  // Improve media loading without touching first-view hero imagery.
   document.querySelectorAll('main section:not(:first-of-type) img').forEach((img) => {
     if (!img.hasAttribute('loading')) img.loading = 'lazy';
     if (!img.hasAttribute('decoding')) img.decoding = 'async';
   });
 
-  // Keep hash navigation clear of the fixed shell/local nav.
   document.querySelectorAll('main section[id], main [id][tabindex="-1"]').forEach((target) => {
     target.style.scrollMarginTop = categoryPages.has(page) ? '150px' : '112px';
   });
 
-  // Respect reduced motion for programmatic hash navigation as well.
   if (!reducedMotion) {
     document.addEventListener('click',(event) => {
       const link = event.target.closest('a[href^="#"]');
