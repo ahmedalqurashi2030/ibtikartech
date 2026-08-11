@@ -15,13 +15,13 @@
   if (categoryPages.has(page)) document.body.classList.add('category-hub');
 
   const requestedBasename = location.pathname.split('/').pop()?.toLowerCase();
-  if (document.body.dataset.page === '404' && retiredRoutes.has(requestedBasename)) {
+  if (document.querySelector('.notfound') && retiredRoutes.has(requestedBasename)) {
     location.replace(retiredRoutes.get(requestedBasename));
     return;
   }
 
-  // Retired platform routes remain meaningful entry points through their parent service category.
-  document.querySelectorAll('a[href]').forEach((link) => {
+  const rewriteLink = (link) => {
+    if (!(link instanceof HTMLAnchorElement)) return;
     const raw = link.getAttribute('href') || '';
     const clean = raw.split('#')[0].toLowerCase();
     if (retiredRoutes.has(clean)) {
@@ -34,9 +34,39 @@
       rel.add('noreferrer');
       link.rel = [...rel].join(' ');
     }
-  });
+  };
 
-  // Ecommerce is the platform context hub for this phase; all six service cards open decision pages.
+  const syncDynamicContent = (scope = document) => {
+    if (scope instanceof HTMLAnchorElement) rewriteLink(scope);
+    scope.querySelectorAll?.('a[href]').forEach(rewriteLink);
+
+    // Normalize naming across category breadcrumbs.
+    scope.querySelectorAll?.('.breadcrumbs a[href="services.html"], .service-detail-breadcrumb a[href="services.html"]').forEach((link) => {
+      link.textContent = 'الحلول والخدمات';
+    });
+
+    // Services catalog used to point to a retired standalone Salla page.
+    if (page === 'services') {
+      scope.querySelectorAll?.('.strategy-service-card').forEach((card) => {
+        const heading = card.querySelector('h3');
+        if (!heading || !/خدمات سلة المتخصصة|حلول سلة ضمن المتاجر/.test(heading.textContent || '')) return;
+        heading.textContent = 'حلول سلة ضمن المتاجر الإلكترونية';
+        const paragraph = card.querySelector('p');
+        if (paragraph) paragraph.textContent = 'إطلاق وتخصيص وتجربة وقياس لمتاجر سلة داخل مسار التجارة الإلكترونية، دون صفحة منصة مستقلة في هذه المرحلة.';
+        const link = card.querySelector('a');
+        if (link) { link.href = 'ecommerce.html#platforms'; link.textContent = 'استكشف سلة ضمن المتاجر ←'; }
+      });
+    }
+  };
+
+  syncDynamicContent();
+  const dynamicObserver = new MutationObserver((mutations) => {
+    mutations.forEach((mutation) => mutation.addedNodes.forEach((node) => {
+      if (node.nodeType === Node.ELEMENT_NODE) syncDynamicContent(node);
+    }));
+  });
+  dynamicObserver.observe(document.body,{childList:true,subtree:true});
+
   if (page === 'ecommerce') {
     const detailRoutes = new Map([
       ['service-launch','store-launch.html'],
@@ -70,13 +100,12 @@
 
     const finalCta = document.querySelector('.page-cta .cta-actions');
     const secondary = finalCta?.querySelector('.btn-outline');
-    if (secondary && /salla\.html/i.test(secondary.getAttribute('href') || '')) {
+    if (secondary) {
       secondary.href = '#platforms';
       secondary.textContent = 'المنصات التي نعمل عليها';
     }
   }
 
-  // Lightweight progress indicator on content pages.
   if (document.body.classList.contains('inner-page') && !document.querySelector('.ibt-page-progress')) {
     const progress = document.createElement('div');
     progress.className = 'ibt-page-progress';
@@ -99,7 +128,6 @@
     update();
   }
 
-  // Enrich category cards with abstract UI scenes; these are not presented as client work.
   if (categoryPages.has(page)) {
     const cards = [...document.querySelectorAll('#capabilities .route-card')];
     cards.forEach((card,index) => {
