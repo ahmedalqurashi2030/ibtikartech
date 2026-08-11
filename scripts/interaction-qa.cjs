@@ -173,8 +173,13 @@ async function key(client, keyName, options = {}) {
     nativeVirtualKeyCode: meta.keyCode,
     modifiers
   };
-  await client.send('Input.dispatchKeyEvent', { type:'keyDown', ...common });
-  if (keyName === ' ') await client.send('Input.dispatchKeyEvent', { type:'char', text:' ', ...common });
+  const text = keyName === 'Enter' ? '\r' : keyName === ' ' ? ' ' : undefined;
+  const keyDown = { type:'keyDown', ...common };
+  if (text !== undefined) {
+    keyDown.text = text;
+    keyDown.unmodifiedText = text;
+  }
+  await client.send('Input.dispatchKeyEvent', keyDown);
   await client.send('Input.dispatchKeyEvent', { type:'keyUp', ...common });
 }
 
