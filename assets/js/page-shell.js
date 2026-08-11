@@ -4,6 +4,13 @@
   const pageKey = pathname.replace(/\.html$/,'') || 'index';
   const productPages = new Set(['tharaa.html']);
   const knowledgePages = new Set(['knowledge.html']);
+  const retiredRoutes = new Map([
+    ['salla.html','ecommerce.html#platforms'],
+    ['zid.html','ecommerce.html#platforms'],
+    ['shopify.html','ecommerce.html#platforms'],
+    ['woocommerce.html','ecommerce.html#platforms'],
+    ['wordpress.html','websites.html#capabilities']
+  ]);
   let section = document.body.dataset.section || '';
 
   document.body.dataset.page = pageKey;
@@ -117,6 +124,13 @@
       injectFooter();
     },{once:true});
   }
+
+  // Rewrite retired platform links immediately; final runtime also observes later injected markup.
+  document.querySelectorAll('a[href]').forEach((link) => {
+    const raw = link.getAttribute('href') || '';
+    const clean = raw.split('#')[0].toLowerCase();
+    if (retiredRoutes.has(clean)) link.href = retiredRoutes.get(clean);
+  });
 
   document.querySelectorAll('[data-nav-key]').forEach((link) => {
     const active = link.dataset.navKey === section;
