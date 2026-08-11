@@ -17,6 +17,16 @@
   if (productPages.has(pathname)) section = 'products';
   if (knowledgePages.has(pathname)) section = 'knowledge';
 
+  // Global continuous background design system. Load the CSS as early as the
+  // shared shell is available so route transitions never flash old section walls.
+  if (!document.querySelector('link[data-continuous-flow]')) {
+    const flowCss = document.createElement('link');
+    flowCss.rel = 'stylesheet';
+    flowCss.href = 'assets/css/pages/continuous-flow.css';
+    flowCss.dataset.continuousFlow = 'true';
+    document.head.appendChild(flowCss);
+  }
+
   // Tharaa preserves an older desktop ScrollTrigger that expects #libraryTrack
   // to exist before the rest of the inline page scripts initialize. The visual
   // library was removed, so create a fully-contained non-visual target early.
@@ -161,7 +171,26 @@
     document.body.appendChild(script);
   };
 
+  const loadContinuousFlow = () => {
+    if (document.querySelector('script[data-continuous-flow]')) return;
+    const script = document.createElement('script');
+    script.src = 'assets/js/continuous-flow.js';
+    script.async = false;
+    script.dataset.continuousFlow = 'true';
+    document.body.appendChild(script);
+  };
+
+  const loadHomeExperienceV2 = () => {
+    if ((pathname !== 'index.html' && pathname !== '') || document.querySelector('script[data-home-experience-v2]')) return;
+    const script = document.createElement('script');
+    script.src = 'assets/js/home-experience-v2.js';
+    script.async = false;
+    script.dataset.homeExperienceV2 = 'true';
+    document.body.appendChild(script);
+  };
+
   const loadFinalRuntime = () => {
+    loadContinuousFlow();
     if (!document.querySelector('script[data-frontend-final]')) {
       const script = document.createElement('script');
       script.src = 'assets/js/frontend-final.js';
@@ -170,6 +199,7 @@
       document.body.appendChild(script);
     }
     loadContentFinalization();
+    loadHomeExperienceV2();
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',loadFinalRuntime,{once:true});
   else loadFinalRuntime();
