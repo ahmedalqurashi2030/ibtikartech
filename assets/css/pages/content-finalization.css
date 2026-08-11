@@ -30,6 +30,14 @@ body[data-page="tharaa"] .ibt-legacy-animation-guard #libraryTrack {
   overflow:hidden !important;
 }
 
+/* The circular mobile showcase art intentionally extends beyond its inner column.
+   Clip only at the full section boundary so the composition remains visible but
+   never increases document width on tablet / RTL layouts. */
+body[data-page="tharaa"] #v4-mobile {
+  overflow:hidden !important;
+  overflow:clip !important;
+}
+
 /* The services discovery catalog stays visible: services-experience.js converts it
    into the lightweight “بعض خدماتنا المتنوعة” image-card slider. Only old filters
    and staging scope notes are suppressed. */
