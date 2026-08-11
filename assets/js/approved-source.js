@@ -172,4 +172,75 @@
       tabs[next].click();
     });
   }
+
+  if (document.body.classList.contains('source-services')) {
+    if (!document.querySelector('link[data-services-experience]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'assets/css/pages/services-experience.css';
+      link.dataset.servicesExperience = 'true';
+      document.head.appendChild(link);
+    }
+    if (!document.querySelector('script[data-services-experience]')) {
+      const script = document.createElement('script');
+      script.src = 'assets/js/services-experience.js';
+      script.async = false;
+      script.dataset.servicesExperience = 'true';
+      document.body.appendChild(script);
+    }
+  }
+
+  if (document.body.classList.contains('source-ecommerce')) {
+    const detailRoutes = new Map([
+      ['service-launch', 'store-launch.html'],
+      ['service-customize', 'storefront-customization.html'],
+      ['service-redesign', 'store-redesign.html'],
+      ['service-product', 'product-page-optimization.html'],
+      ['service-growth', 'ecommerce-growth.html'],
+      ['service-support', 'ecommerce-support.html']
+    ]);
+
+    detailRoutes.forEach((href, id) => {
+      const card = document.getElementById(id);
+      const serviceLink = card?.querySelector('.commerce-service-card__footer a');
+      if (!serviceLink) return;
+      serviceLink.href = href;
+      serviceLink.textContent = 'تفاصيل الخدمة';
+      serviceLink.setAttribute('aria-label', `فتح تفاصيل ${card.querySelector('h3')?.textContent?.trim() || 'الخدمة'}`);
+    });
+
+    const platformSection = document.querySelector('#platforms');
+    const platformIntro = platformSection?.querySelector('.platform-heading p');
+    if (platformIntro) {
+      platformIntro.textContent = 'المنصة عامل تنفيذ داخل الخدمة، وليست مسارًا منفصلًا حاليًا. نحدد الأنسب وفق تشغيل مشروعك وحدود التخصيص، ويمكن بناء صفحات منصات متخصصة مستقبلًا عندما تصبح لها قيمة مستقلة.';
+    }
+    platformSection?.querySelectorAll('.platform-card').forEach((card) => {
+      const link = card.querySelector('a');
+      if (!link) return;
+      link.href = '#subservices';
+      link.textContent = 'استكشف الخدمات المناسبة';
+      link.setAttribute('aria-label', `استكشف خدمات المتاجر المناسبة لـ ${card.querySelector('h3')?.textContent?.trim() || 'هذه المنصة'}`);
+    });
+
+    const finalSecondaryCta = document.querySelector('.page-cta .cta-actions .btn-outline');
+    if (finalSecondaryCta) {
+      finalSecondaryCta.href = '#platforms';
+      finalSecondaryCta.textContent = 'المنصات التي نعمل عليها';
+    }
+
+    if (!document.querySelector('link[data-ecommerce-experience]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'assets/css/pages/ecommerce-experience-lab.css';
+      link.dataset.ecommerceExperience = 'true';
+      document.head.appendChild(link);
+    }
+    if (!document.querySelector('script[data-ecommerce-experience]')) {
+      const script = document.createElement('script');
+      script.src = 'assets/js/ecommerce-category.js';
+      script.async = false;
+      script.dataset.ecommerceExperience = 'true';
+      document.body.appendChild(script);
+    }
+  }
 })();

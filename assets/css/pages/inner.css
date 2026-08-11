@@ -1,6 +1,8 @@
 @import url("../base.css");
 @import url("../components.css");
 @import url("./platform.css");
+@import url("./frontend-final.css");
+@import url("./category-signatures.css");
 
 :root {
   color-scheme: dark;

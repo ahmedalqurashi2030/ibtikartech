@@ -30,10 +30,22 @@ window.IBTIKAR_CONFIG = {
     endpoint: "[TODO: Form Backend URL]",
     honeypotField: "ibt_website"
   },
+  commercial: {
+    currency: "SAR",
+    showUnverifiedNumbers: false,
+    servicePricingPolicy: "scope-first",
+    serviceDurationPolicy: "approve-before-publish",
+    evidencePolicy: "documented-only"
+  },
   products: {
     tharaa: {
       demoUrl: "[TODO: Tharaa Demo URL]",
-      purchaseUrl: "[TODO: Tharaa Purchase URL]"
+      purchaseUrl: "[TODO: Tharaa Purchase URL]",
+      price: "[TODO: Official Tharaa Price]",
+      version: "[TODO: Current Tharaa Version]",
+      lastUpdated: "[TODO: Tharaa Last Updated Date]",
+      changelogUrl: "[TODO: Tharaa Changelog URL]",
+      documentationUrl: "[TODO: Tharaa Documentation URL]"
     }
   },
   events: {

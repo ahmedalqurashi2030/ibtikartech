@@ -179,8 +179,6 @@ html[data-theme="dark"] .ibt-shell-nav {
 
 html[data-theme="dark"] .ibt-shell-mega { background: rgba(12, 18, 40, .96); }
 
-.ibt-shell-nav-group:hover .ibt-shell-mega,
-.ibt-shell-nav-group:focus-within .ibt-shell-mega,
 .ibt-shell-mega.is-open {
   opacity: 1;
   visibility: visible;
@@ -430,8 +428,7 @@ html[data-theme="dark"] .ibt-shell-mega { background: rgba(12, 18, 40, .96); }
   .ibt-shell-nav-link { transition: none !important; }
 }
 
-
-/* V11 refined separate solutions/services header */
+/* V11 refined combined solutions/services header */
 .ibt-shell-nav{width:min(calc(100% - 28px),1240px);height:70px;padding:0 12px;border-radius:24px;background:linear-gradient(180deg,color-mix(in srgb,var(--ibt-bg) 88%,transparent),color-mix(in srgb,var(--ibt-bg-soft) 72%,transparent));box-shadow:0 18px 60px rgba(10,20,52,.15),inset 0 1px 0 rgba(255,255,255,.45)}
 html[data-theme="dark"] .ibt-shell-nav{background:linear-gradient(180deg,rgba(14,22,48,.86),rgba(8,14,34,.78));box-shadow:0 18px 60px rgba(0,0,0,.32),inset 0 1px 0 rgba(255,255,255,.07)}
 .ibt-shell-desktop-nav{gap:4px;padding:6px;border-radius:18px;background:color-mix(in srgb,var(--ibt-bg-soft) 68%,transparent);box-shadow:inset 0 0 0 1px color-mix(in srgb,var(--ibt-border) 70%,transparent)}
@@ -443,7 +440,7 @@ html[data-theme="dark"] .ibt-shell-nav{background:linear-gradient(180deg,rgba(14
 .ibt-shell-mega-toggle{width:26px;height:40px;margin-inline-start:-8px;border-radius:12px}
 .ibt-shell-mega-toggle[aria-expanded="true"] svg{transform:rotate(180deg)}
 .ibt-shell-mega{top:calc(100% + 18px);right:50%;width:min(940px,calc(100vw - 44px));padding:18px;border-radius:26px;transform:translateX(50%) translateY(14px) scale(.985);background:color-mix(in srgb,var(--ibt-bg) 96%,transparent);backdrop-filter:blur(28px) saturate(1.35)}
-.ibt-shell-nav-group:hover .ibt-shell-mega,.ibt-shell-nav-group:focus-within .ibt-shell-mega,.ibt-shell-mega.is-open{transform:translateX(50%) translateY(0) scale(1)}
+.ibt-shell-mega.is-open{transform:translateX(50%) translateY(0) scale(1)}
 .ibt-shell-mega::before{right:50%;margin-right:-11px}
 .ibt-shell-mega-grid{grid-template-columns:1.05fr repeat(3,1fr);gap:10px}
 .ibt-shell-mega-grid--services{grid-template-columns:1.05fr repeat(3,1fr)}
