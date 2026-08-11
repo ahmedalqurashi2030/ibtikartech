@@ -2,79 +2,70 @@
   'use strict';
 
   if (!document.body.classList.contains('source-services')) return;
-  if (window.__ibtikarServicesExperienceV4) return;
-  window.__ibtikarServicesExperienceV4 = true;
+  if (window.__ibtikarServicesExperienceV5) return;
+  window.__ibtikarServicesExperienceV5 = true;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const main = document.querySelector('main');
   if (!main) return;
 
-  const SERVICE_FAMILIES = [
+  const PRIMARY_FAMILIES = [
+    { mode:'store', index:'01', title:'المتاجر الإلكترونية', href:'ecommerce.html' },
+    { mode:'site', index:'02', title:'المواقع وصفحات الهبوط', href:'websites.html' },
+    { mode:'app', index:'03', title:'التطبيقات والأنظمة المخصصة', href:'custom-systems.html' },
+    { mode:'brand', index:'04', title:'الهوية والمحتوى', href:'brand-content.html' },
+    { mode:'growth', index:'05', title:'الظهور والقياس والنمو', href:'growth.html' },
+    { mode:'auto', index:'06', title:'الربط والأتمتة', href:'custom-systems.html' }
+  ];
+
+  const DISCOVERY_SERVICES = [
     {
-      mode: 'store',
-      index: '01',
-      eyebrow: 'COMMERCE',
-      title: 'المتاجر الإلكترونية',
-      description: 'إطلاق وتطوير تجربة متجر واضحة من الواجهة وصفحة المنتج حتى القياس والتحسين.',
-      href: 'ecommerce.html',
-      image: 'assets/images/services/ecommerce/store-launch.svg',
-      imageAlt: 'تصميم توضيحي لخدمة إطلاق وتطوير المتاجر الإلكترونية',
-      tags: ['إطلاق', 'تخصيص', 'CRO']
+      family:'store', index:'01', eyebrow:'COMMERCE / LAUNCH', title:'إطلاق متجر إلكتروني',
+      description:'تجهيز المتجر من الهيكل والصفحات والهوية التطبيقية حتى الاختبار قبل الإطلاق.',
+      href:'store-launch.html', image:'assets/images/services/ecommerce/store-launch.svg',
+      imageAlt:'تصميم توضيحي لخدمة إطلاق متجر إلكتروني', tags:['إطلاق','هيكلة','QA']
     },
     {
-      mode: 'site',
-      index: '02',
-      eyebrow: 'WEB',
-      title: 'المواقع وصفحات الهبوط',
-      description: 'مواقع شركات وصفحات هبوط سريعة ومنظمة توضّح القيمة وتقود إلى الإجراء.',
-      href: 'websites.html',
-      image: 'assets/images/services/discovery/web-experience.svg',
-      imageAlt: 'تصميم توضيحي لواجهة موقع إلكتروني حديث',
-      tags: ['Web', 'Landing', 'Content']
+      family:'store', index:'02', eyebrow:'COMMERCE / UI', title:'تخصيص واجهة المتجر',
+      description:'تطوير الواجهة والثيم والجوال بعد فحص الوضع الحالي والتعارضات وحدود المنصة.',
+      href:'storefront-customization.html', image:'assets/images/services/ecommerce/storefront-customization.svg',
+      imageAlt:'تصميم توضيحي لخدمة تخصيص واجهة متجر', tags:['Theme','UI','Mobile']
     },
     {
-      mode: 'app',
-      index: '03',
-      eyebrow: 'PRODUCTS',
-      title: 'التطبيقات والأنظمة المخصصة',
-      description: 'منتجات ولوحات وأنظمة رقمية مبنية حول العمليات الحقيقية للمشروع.',
-      href: 'custom-systems.html',
-      image: 'assets/images/services/discovery/custom-systems.svg',
-      imageAlt: 'تصميم توضيحي للأنظمة المخصصة ولوحات التحكم',
-      tags: ['Apps', 'Dashboards', 'APIs']
+      family:'store', index:'03', eyebrow:'COMMERCE / REDESIGN', title:'إعادة تصميم متجر قائم',
+      description:'إعادة ترتيب تجربة المتجر مع الحفاظ على ما يعمل وتحديد أثر التغيير قبل التنفيذ.',
+      href:'store-redesign.html', image:'assets/images/services/ecommerce/store-redesign.svg',
+      imageAlt:'تصميم توضيحي لخدمة إعادة تصميم متجر قائم', tags:['UX','Redesign','Audit']
     },
     {
-      mode: 'brand',
-      index: '04',
-      eyebrow: 'BRAND',
-      title: 'الهوية والمحتوى',
-      description: 'هوية بصرية ولفظية ومحتوى يحافظ على اتساق العلامة عبر نقاط الاتصال.',
-      href: 'brand-content.html',
-      image: 'assets/images/services/discovery/brand-content.svg',
-      imageAlt: 'تصميم توضيحي للهوية البصرية والمحتوى الرقمي',
-      tags: ['Brand', 'Identity', 'Content']
+      family:'store', index:'04', eyebrow:'CONVERSION UX', title:'تحسين صفحة المنتج',
+      description:'ترتيب الصور والمعلومات والخيارات والثقة والإجراء الأساسي حول أسئلة العميل قبل الشراء.',
+      href:'product-page-optimization.html', image:'assets/images/services/ecommerce/product-experience.svg',
+      imageAlt:'تصميم توضيحي لتحسين تجربة صفحة المنتج', tags:['Product UX','CRO','Mobile']
     },
     {
-      mode: 'growth',
-      index: '05',
-      eyebrow: 'GROWTH',
-      title: 'الظهور والقياس والنمو',
-      description: 'SEO وتتبع وقياس وتحسين مستمر يساعد على اتخاذ قرارات مبنية على البيانات.',
-      href: 'growth.html',
-      image: 'assets/images/services/discovery/growth-measurement.svg',
-      imageAlt: 'تصميم توضيحي للتحليلات والقياس والنمو',
-      tags: ['SEO', 'GA4', 'Optimization']
+      family:'site', index:'05', eyebrow:'WEB EXPERIENCE', title:'موقع أو صفحة هبوط',
+      description:'محتوى وتجربة عربية واضحة تقود الزائر إلى تواصل أو طلب أو إجراء محدد.',
+      href:'websites.html', image:'assets/images/services/discovery/web-experience.svg',
+      imageAlt:'تصميم توضيحي لموقع وصفحة هبوط حديثة', tags:['Web','Landing','RTL']
     },
     {
-      mode: 'auto',
-      index: '06',
-      eyebrow: 'AUTOMATION',
-      title: 'الربط والأتمتة',
-      description: 'ربط الأنظمة والقنوات والبيانات لتقليل العمل اليدوي ورفع كفاءة التشغيل.',
-      href: 'custom-systems.html',
-      image: 'assets/images/services/discovery/automation-connect.svg',
-      imageAlt: 'تصميم توضيحي لربط الأنظمة والأتمتة',
-      tags: ['Automation', 'Webhooks', 'CRM']
+      family:'brand', index:'06', eyebrow:'BRAND & CONTENT', title:'هوية ومحتوى رقمي',
+      description:'نظام بصري ولفظي ومحتوى عربي متماسك يمكن تطبيقه على الموقع والمتجر ونقاط الاتصال.',
+      href:'brand-content.html', image:'assets/images/services/discovery/brand-content.svg',
+      imageAlt:'تصميم توضيحي للهوية والمحتوى الرقمي', tags:['Brand','Arabic','Content']
+    },
+    {
+      family:'growth', index:'07', eyebrow:'VISIBILITY & MEASUREMENT', title:'SEO وقياس وتحسين',
+      description:'أساس ظهور وقياس واضح ثم قائمة تحسين مرتبة حسب البيانات والأثر المتوقع.',
+      href:'growth.html', image:'assets/images/services/discovery/growth-measurement.svg',
+      imageAlt:'تصميم توضيحي للقياس والتحليلات والنمو', tags:['SEO','GA4','Backlog']
+    },
+    {
+      family:'auto', index:'08', eyebrow:'AUTOMATION', title:'ربط وأتمتة العمليات',
+      description:'ربط القنوات والبيانات والخطوات المتكررة لتقليل العمل اليدوي ضمن تدفق واضح.',
+      href:'custom-systems.html', image:'assets/images/services/discovery/automation-connect.svg',
+      imageAlt:'تصميم توضيحي لربط الأنظمة والأتمتة', tags:['APIs','Automation','Webhooks']
     }
   ];
 
@@ -103,7 +94,7 @@
 
     const items = [...lab.querySelectorAll('.service-item')];
     items.forEach((item, index) => {
-      const family = SERVICE_FAMILIES[index];
+      const family = PRIMARY_FAMILIES[index];
       if (!family) return;
       const link = item.querySelector(':scope > a');
       if (link) {
@@ -113,11 +104,10 @@
     });
 
     if (!heading || heading.querySelector('.cinema-chapters')) return;
-
     const chapters = document.createElement('nav');
     chapters.className = 'cinema-chapters';
     chapters.setAttribute('aria-label', 'التنقل بين الخدمات الرئيسية');
-    chapters.innerHTML = SERVICE_FAMILIES.map((family, index) => `
+    chapters.innerHTML = PRIMARY_FAMILIES.map((family, index) => `
       <button type="button" data-cinema-chapter="${index}" aria-current="${index === 0 ? 'true' : 'false'}">
         <span>${family.index}</span><b>${family.title}</b>
       </button>`).join('');
@@ -128,40 +118,35 @@
       const activeIndex = Math.max(0, items.indexOf(activeItem));
       buttons.forEach((button, index) => button.setAttribute('aria-current', String(index === activeIndex)));
     };
-
     buttons.forEach((button, index) => {
       button.addEventListener('click', () => {
         const item = items[index];
         if (!item) return;
-        item.scrollIntoView({
-          behavior: reducedMotion ? 'auto' : 'smooth',
-          block: 'center'
-        });
+        item.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block: 'center' });
       });
     });
-
     const activeObserver = new MutationObserver(() => {
       const active = items.find((item) => item.classList.contains('active')) || items[0];
       if (active) setActive(active);
     });
-    items.forEach((item) => activeObserver.observe(item, { attributes: true, attributeFilter: ['class'] }));
+    items.forEach((item) => activeObserver.observe(item, { attributes:true, attributeFilter:['class'] }));
     if (items[0]) setActive(items[0]);
   }
 
   function buildFastDiscoverySlides(track) {
-    track.innerHTML = SERVICE_FAMILIES.map((family) => `
-      <article class="fast-discovery-slide" data-family="${family.mode}">
+    track.innerHTML = DISCOVERY_SERVICES.map((service) => `
+      <article class="fast-discovery-slide" data-family="${service.family}">
         <div class="fast-discovery-slide__top">
-          <span class="fast-discovery-slide__number">${family.index}</span>
-          <small>${family.eyebrow}</small>
+          <span class="fast-discovery-slide__number">${service.index}</span>
+          <small>${service.eyebrow}</small>
         </div>
         <div class="fast-discovery-slide__image">
-          <img src="${family.image}" alt="${family.imageAlt}" loading="lazy" decoding="async">
+          <img src="${service.image}" alt="${service.imageAlt}" loading="lazy" decoding="async">
         </div>
-        <h3>${family.title}</h3>
-        <p>${family.description}</p>
-        <div class="fast-discovery-slide__tags">${family.tags.map((tag) => `<span>${tag}</span>`).join('')}</div>
-        <a href="${family.href}">فتح صفحة الخدمة <span aria-hidden="true">←</span></a>
+        <h3>${service.title}</h3>
+        <p>${service.description}</p>
+        <div class="fast-discovery-slide__tags">${service.tags.map((tag) => `<span>${tag}</span>`).join('')}</div>
+        <a href="${service.href}">فتح تفاصيل الخدمة <span aria-hidden="true">←</span></a>
       </article>`).join('');
   }
 
@@ -176,10 +161,9 @@
     const title = heading?.querySelector('h2');
     const description = heading?.querySelector('p');
     if (kicker) kicker.textContent = 'بعض خدماتنا المتنوعة';
-    if (title) title.textContent = 'استكشف الخدمة المناسبة لمشروعك.';
-    if (description) description.textContent = 'مجموعة مختارة من خدمات ابتكار تك في شرائح واضحة وسريعة. اسحب البطاقات أو استخدم الأسهم ثم افتح صفحة الخدمة لمعرفة التفاصيل.';
+    if (title) title.textContent = 'خدمات محددة عندما تعرف ما الذي تريد تحسينه.';
+    if (description) description.textContent = 'أمثلة عملية من خدمات ابتكار تك، بدون تكرار العائلات الرئيسية أعلاه. اسحب الشرائح أو استخدم الأسهم ثم افتح الخدمة المناسبة.';
 
-    // This section is intentionally a clean service slider: no filters, search, canvas or sticky cinema.
     catalogSection.querySelector('.strategy-filterbar')?.remove();
     catalogSection.querySelector('.strategy-scope-note')?.remove();
 
@@ -193,7 +177,7 @@
     const controls = document.createElement('div');
     controls.className = 'fast-discovery-controls';
     controls.innerHTML = `
-      <div class="fast-discovery-controls__status" aria-live="polite"><b data-fast-current>01</b><span>/ 06</span></div>
+      <div class="fast-discovery-controls__status" aria-live="polite"><b data-fast-current>01</b><span>/ ${String(DISCOVERY_SERVICES.length).padStart(2,'0')}</span></div>
       <div class="fast-discovery-controls__actions" aria-label="التنقل بين الشرائح">
         <button type="button" data-fast-prev aria-label="الشريحة السابقة">→</button>
         <button type="button" data-fast-next aria-label="الشريحة التالية">←</button>
@@ -213,10 +197,7 @@
       slides.forEach((slide, index) => {
         const slideRect = slide.getBoundingClientRect();
         const distance = Math.abs(slideRect.left + slideRect.width / 2 - center);
-        if (distance < nearestDistance) {
-          nearestDistance = distance;
-          nearest = index;
-        }
+        if (distance < nearestDistance) { nearestDistance = distance; nearest = index; }
       });
       activeIndex = nearest;
       slides.forEach((slide, index) => slide.classList.toggle('is-active', index === activeIndex));
@@ -227,11 +208,7 @@
 
     const goTo = (index) => {
       activeIndex = Math.max(0, Math.min(slides.length - 1, index));
-      slides[activeIndex]?.scrollIntoView({
-        behavior: reducedMotion ? 'auto' : 'smooth',
-        block: 'nearest',
-        inline: 'center'
-      });
+      slides[activeIndex]?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block:'nearest', inline:'center' });
       window.setTimeout(syncActive, reducedMotion ? 0 : 260);
     };
 
@@ -242,7 +219,7 @@
     track.addEventListener('scroll', () => {
       clearTimeout(scrollTimer);
       scrollTimer = window.setTimeout(syncActive, 80);
-    }, { passive: true });
+    }, { passive:true });
 
     let pointerId = null;
     let startX = 0;
@@ -277,15 +254,9 @@
       event.stopPropagation();
       dragMoved = false;
     }, true);
-
     track.addEventListener('keydown', (event) => {
-      if (event.key === 'ArrowLeft') {
-        event.preventDefault();
-        goTo(activeIndex + 1);
-      } else if (event.key === 'ArrowRight') {
-        event.preventDefault();
-        goTo(activeIndex - 1);
-      }
+      if (event.key === 'ArrowLeft') { event.preventDefault(); goTo(activeIndex + 1); }
+      else if (event.key === 'ArrowRight') { event.preventDefault(); goTo(activeIndex - 1); }
     });
 
     moveBeforeFinalSection(catalogSection);
@@ -298,8 +269,7 @@
     const catalog = main.querySelector('[data-strategy-service-catalog]');
     if (catalog) enhanceFastDiscovery(catalog);
   };
-
   syncFastDiscovery();
   const observer = new MutationObserver(() => syncFastDiscovery());
-  observer.observe(main, { childList: true, subtree: true });
+  observer.observe(main, { childList:true, subtree:true });
 })();
