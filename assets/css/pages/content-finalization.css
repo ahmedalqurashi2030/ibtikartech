@@ -3,6 +3,8 @@
    unsupported, or not yet ready for public navigation. */
 
 body[data-page="index"] #testimonials,
+body[data-page="index"] .brief-modal,
+body[data-page="index"] .whatsapp-float,
 body[data-page="product-page-optimization"] [data-strategy-service-decision],
 body[data-page="product-page-optimization"] [data-strategy-service-scope],
 body[data-page="ecommerce"] #store-anatomy,
