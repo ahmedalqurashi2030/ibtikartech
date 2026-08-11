@@ -49,6 +49,25 @@
     track.dataset.realLogos = 'true';
   }
 
+  function retireLegacyServicesMotion(section) {
+    if (!section || section.dataset.legacyMotionRetired === 'true') return;
+    section.dataset.legacyMotionRetired = 'true';
+
+    const scrollTrigger = window.ScrollTrigger;
+    if (!scrollTrigger?.getAll) return;
+
+    scrollTrigger.getAll().forEach((trigger) => {
+      const triggerElement = trigger?.trigger || trigger?.vars?.trigger;
+      if (triggerElement === section || (triggerElement instanceof Element && section.contains(triggerElement))) {
+        try { trigger.kill(false); } catch (_) {}
+      }
+    });
+
+    requestAnimationFrame(() => {
+      try { scrollTrigger.refresh(); } catch (_) {}
+    });
+  }
+
   function enhanceServicesSlider() {
     const section = document.querySelector('.services-cinema');
     const deck = section?.querySelector('.services-mobile-deck');
@@ -62,6 +81,8 @@
     track.setAttribute('aria-roledescription', 'carousel');
     track.setAttribute('aria-label', 'اسحب أو استخدم الأسهم للتنقل بين خدمات ابتكار تك');
     track.tabIndex = 0;
+
+    retireLegacyServicesMotion(section);
 
     const heading = deck.querySelector('.section-heading');
     const toolbar = document.createElement('div');
@@ -81,13 +102,14 @@
     const next = toolbar.querySelector('[data-home-services-next]');
     const reducedMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
     let activeIndex = 0;
-    let lockUntil = 0;
     let frame = 0;
     let pointerId = null;
     let startX = 0;
     let startScroll = 0;
     let moved = false;
     let suppressClickUntil = 0;
+    let commandedIndex = null;
+    let commandTimer = 0;
 
     cards.forEach((card, index) => {
       card.setAttribute('aria-setsize', String(cards.length));
@@ -111,28 +133,18 @@
 
     const targetLeft = (index) => {
       const card = cards[index];
+      if (!card) return 0;
       const max = Math.max(0, track.scrollWidth - track.clientWidth);
-      return Math.max(0, Math.min(max, card.offsetLeft - cards[0].offsetLeft));
-    };
-
-    const goTo = (index, { focus = false } = {}) => {
-      const target = Math.max(0, Math.min(cards.length - 1, index));
-      lockUntil = performance.now() + (reducedMotion ? 40 : 520);
-      syncState(target);
-      track.scrollTo({ left: targetLeft(target), behavior: reducedMotion ? 'auto' : 'smooth' });
-      if (focus) cards[target].focus({ preventScroll: true });
+      const left = card.offsetLeft - cards[0].offsetLeft;
+      return Math.max(0, Math.min(max, left));
     };
 
     const nearestIndex = () => {
-      const max = Math.max(0, track.scrollWidth - track.clientWidth);
-      if (track.scrollLeft <= 3) return 0;
-      if (max - track.scrollLeft <= 3) return cards.length - 1;
-      const center = track.getBoundingClientRect().left + track.clientWidth / 2;
+      const left = track.scrollLeft;
       let nearest = 0;
       let distance = Infinity;
-      cards.forEach((card, index) => {
-        const rect = card.getBoundingClientRect();
-        const value = Math.abs(rect.left + rect.width / 2 - center);
+      cards.forEach((_, index) => {
+        const value = Math.abs(targetLeft(index) - left);
         if (value < distance) {
           distance = value;
           nearest = index;
@@ -141,9 +153,43 @@
       return nearest;
     };
 
+    const clearCommand = () => {
+      commandedIndex = null;
+      clearTimeout(commandTimer);
+      commandTimer = 0;
+    };
+
+    const goTo = (index, { focus = false } = {}) => {
+      const target = Math.max(0, Math.min(cards.length - 1, index));
+      const left = targetLeft(target);
+      commandedIndex = target;
+      clearTimeout(commandTimer);
+      syncState(target);
+      track.scrollTo({ left, behavior: reducedMotion ? 'auto' : 'smooth' });
+      if (focus) cards[target].focus({ preventScroll: true });
+
+      commandTimer = window.setTimeout(() => {
+        if (commandedIndex !== target) return;
+        track.scrollTo({ left, behavior: 'auto' });
+        syncState(target, { announce: false });
+        clearCommand();
+      }, reducedMotion ? 80 : 820);
+    };
+
     const syncFromScroll = () => {
       frame = 0;
-      if (performance.now() < lockUntil || pointerId !== null) return;
+      if (pointerId !== null) return;
+
+      if (commandedIndex !== null) {
+        const target = targetLeft(commandedIndex);
+        if (Math.abs(track.scrollLeft - target) <= 4) {
+          const settled = commandedIndex;
+          clearCommand();
+          syncState(settled, { announce: false });
+        }
+        return;
+      }
+
       syncState(nearestIndex(), { announce: false });
     };
 
@@ -173,6 +219,7 @@
 
     track.addEventListener('pointerdown', (event) => {
       if (event.pointerType === 'touch' || event.button !== 0) return;
+      clearCommand();
       pointerId = event.pointerId;
       startX = event.clientX;
       startScroll = track.scrollLeft;
@@ -197,11 +244,7 @@
       track.classList.remove('is-dragging');
       if (wasMoved) {
         suppressClickUntil = performance.now() + 360;
-        requestAnimationFrame(() => {
-          const nearest = nearestIndex();
-          syncState(nearest);
-          track.scrollTo({ left: targetLeft(nearest), behavior: reducedMotion ? 'auto' : 'smooth' });
-        });
+        requestAnimationFrame(() => goTo(nearestIndex()));
       }
     };
 
@@ -218,12 +261,14 @@
     window.addEventListener('resize', () => {
       clearTimeout(resizeTimer);
       resizeTimer = window.setTimeout(() => {
+        clearCommand();
         track.scrollTo({ left: targetLeft(activeIndex), behavior: 'auto' });
+        syncState(activeIndex, { announce: false });
       }, 100);
     }, { passive: true });
 
-    syncState(0, { announce: false });
     track.scrollLeft = 0;
+    syncState(0, { announce: false });
   }
 
   function init() {
