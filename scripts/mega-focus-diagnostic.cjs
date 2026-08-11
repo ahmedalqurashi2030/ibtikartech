@@ -68,9 +68,9 @@ async function snapshot(client,label){
     const f=m?.querySelector('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])');
     const a=document.activeElement;
     const desc=(el)=>el?{tag:el.tagName,id:el.id||'',cls:String(el.className||''),href:el.getAttribute?.('href')||'',text:String(el.textContent||'').trim().slice(0,70),tabIndex:el.tabIndex,inert:el.hasAttribute?.('inert')||false}:null;
-    return {label,expanded:t?.getAttribute('aria-expanded'),menuOpen:m?.classList.contains('is-open'),menuHidden:m?.getAttribute('aria-hidden'),menuInert:m?.hasAttribute('inert'),active:desc(a),first:desc(f),activeIsToggle:a===t,activeInsideMenu:m?.contains(a)};
+    return {expanded:t?.getAttribute('aria-expanded'),menuOpen:m?.classList.contains('is-open'),menuHidden:m?.getAttribute('aria-hidden'),menuInert:m?.hasAttribute('inert'),active:desc(a),first:desc(f),activeIsToggle:a===t,activeInsideMenu:m?.contains(a)};
   })()`);
-  console.log(JSON.stringify(state));
+  console.log(`${label}: ${JSON.stringify(state)}`);
 }
 
 (async()=>{
