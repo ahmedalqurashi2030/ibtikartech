@@ -97,7 +97,7 @@
     if (secondary) { secondary.href = '#platforms'; secondary.textContent = 'المنصات التي نعمل عليها'; }
   }
 
-  if (document.body.classList.contains('inner-page') && !document.querySelector('.ibt-page-progress')) {
+  if (document.body.classList.contains('inner-page') && !document.body.classList.contains('approved-source-page') && !document.querySelector('.ibt-page-progress')) {
     const progress = document.createElement('div');
     progress.className = 'ibt-page-progress';
     progress.setAttribute('aria-hidden','true');
