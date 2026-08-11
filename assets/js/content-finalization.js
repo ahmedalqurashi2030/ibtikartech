@@ -53,7 +53,7 @@
   const hideUnreadySharedNavigation = () => {
     const shell = $$('.ibt-shell-header, .ibt-shell-mobile-menu, .ibt-shell-footer');
     shell.forEach((root) => {
-      $$('a[href="knowledge.html"], a[href="legal.html"]', root).forEach((link) => link.remove());
+      $$('a[href="legal.html"]', root).forEach((link) => link.remove());
     });
   };
 
@@ -242,7 +242,7 @@
   };
 
   const markUnreadyEditorialPages = () => {
-    if (['knowledge.html', 'legal.html', 'contact.html'].includes(path)) setNoIndex();
+    if (['legal.html', 'contact.html'].includes(path)) setNoIndex();
   };
 
   const apply = () => {
