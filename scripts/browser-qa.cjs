@@ -22,6 +22,7 @@ const pages = (process.env.QA_PAGES || [
 
 const viewports = [
   { name: 'desktop', width: 1440, height: 960, mobile: false, deviceScaleFactor: 1 },
+  { name: 'tablet', width: 820, height: 1180, mobile: false, deviceScaleFactor: 1 },
   { name: 'mobile', width: 390, height: 844, mobile: true, deviceScaleFactor: 1 }
 ];
 
@@ -168,6 +169,41 @@ async function evaluate(client, expression) {
   return result?.value;
 }
 
+async function dispatchTab(client) {
+  const key = { key: 'Tab', code: 'Tab', windowsVirtualKeyCode: 9, nativeVirtualKeyCode: 9 };
+  await client.send('Input.dispatchKeyEvent', { type: 'keyDown', ...key });
+  await client.send('Input.dispatchKeyEvent', { type: 'keyUp', ...key });
+}
+
+async function keyboardSmoke(client) {
+  await evaluate(client, `(() => { document.activeElement?.blur?.(); window.scrollTo(0, 0); return true; })()`);
+  const trail = [];
+  for (let index = 0; index < 8; index += 1) {
+    await dispatchTab(client);
+    await wait(35);
+    const descriptor = await evaluate(client, `(() => {
+      const el = document.activeElement;
+      if (!el || el === document.body || el === document.documentElement) return 'document';
+      const classes = String(el.className || '').trim().split(' ').filter(Boolean).slice(0, 2).join('.');
+      return [
+        el.tagName.toLowerCase(),
+        el.id ? '#' + el.id : '',
+        classes ? '.' + classes : '',
+        el.getAttribute('href') || '',
+        el.getAttribute('aria-label') || '',
+        String(el.textContent || '').trim().slice(0, 40)
+      ].join('|');
+    })()`);
+    trail.push(descriptor);
+  }
+  const interactive = trail.filter((item) => item && item !== 'document');
+  return {
+    moved: new Set(interactive).size >= 2,
+    uniqueCount: new Set(interactive).size,
+    trail
+  };
+}
+
 async function inspectPage(client, page, viewport, events) {
   await client.send('Emulation.setDeviceMetricsOverride', viewport);
   await client.send('Page.navigate', { url: `${baseUrl}/${page}` });
@@ -218,6 +254,7 @@ async function inspectPage(client, page, viewport, events) {
     };
   })()`);
 
+  metrics.keyboard = await keyboardSmoke(client);
   return { page, viewport: viewport.name, metrics, events: [...events] };
 }
 
@@ -235,9 +272,11 @@ function validate(result, failures) {
   if (metrics.duplicateIds.length) failures.push(`${prefix}: duplicate IDs: ${metrics.duplicateIds.join(', ')}`);
   if (metrics.legacyBriefVisible) failures.push(`${prefix}: retired legacy brief is visible`);
   if (metrics.legacyWhatsappVisible) failures.push(`${prefix}: retired fake WhatsApp control is visible`);
+  if (!metrics.keyboard?.moved) failures.push(`${prefix}: keyboard Tab smoke did not move focus across at least two interactive elements`);
 
   const severeEvents = events.filter((event) => {
-    if (event.type === 'network') return event.status >= 400 && !/favicon/i.test(event.url || '');
+    if (/favicon/i.test(event.url || '')) return false;
+    if (event.type === 'network') return event.status >= 400;
     return ['exception', 'error'].includes(event.type);
   });
   if (severeEvents.length) failures.push(`${prefix}: runtime/network errors: ${JSON.stringify(severeEvents.slice(0,5))}`);
@@ -318,7 +357,7 @@ function validate(result, failures) {
         const result = await inspectPage(client, page, viewport, events);
         results.push(result);
         validate(result, failures);
-        console.log(`✓ inspected ${page} [${viewport.name}]`);
+        console.log(`✓ inspected ${page} [${viewport.name}] · keyboard focus ${result.metrics.keyboard.uniqueCount}`);
       }
     }
 
@@ -328,7 +367,7 @@ function validate(result, failures) {
       failures.forEach((failure) => console.error(`✗ ${failure}`));
       process.exitCode = 1;
     } else {
-      console.log(`✓ Browser QA passed for ${results.length} page/viewport combinations.`);
+      console.log(`✓ Browser QA passed for ${results.length} page/viewport combinations with keyboard Tab smoke.`);
     }
   } finally {
     chrome.kill();
