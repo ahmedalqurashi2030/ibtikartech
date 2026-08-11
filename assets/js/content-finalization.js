@@ -3,6 +3,16 @@
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
   const $ = (selector, scope = document) => scope.querySelector(selector);
 
+  const ensureContentCss = () => {
+    if (document.querySelector('link[data-content-finalization-css]')) return;
+    const link = document.createElement('link');
+    link.rel = 'stylesheet';
+    link.href = 'assets/css/pages/content-finalization.css';
+    link.dataset.contentFinalizationCss = 'true';
+    document.head.appendChild(link);
+  };
+  ensureContentCss();
+
   const setNoIndex = () => {
     let robots = document.querySelector('meta[name="robots"]');
     if (!robots) {
@@ -46,7 +56,6 @@
   const cleanHomepage = () => {
     if (path !== 'index.html' && path !== '') return;
 
-    // Placeholder testimonials must never look like real social proof in production.
     $('#testimonials')?.remove();
 
     $$('.command-list .command-item').forEach((button) => {
@@ -59,16 +68,11 @@
 
   const cleanServices = () => {
     if (path !== 'services.html') return;
-
-    // The injected catalog duplicated the approved visual service system and exposed internal staging language.
     $('[data-strategy-service-catalog]')?.remove();
   };
 
   const cleanProductPageService = () => {
     if (path !== 'product-page-optimization.html') return;
-
-    // The approved source page already contains fit/scope/deliverables/exclusions.
-    // Remove the later strategy layer that duplicated the same decision content.
     $('[data-strategy-service-decision]')?.remove();
     $('[data-strategy-service-scope]')?.remove();
   };
@@ -76,7 +80,6 @@
   const cleanEcommerce = () => {
     if (path !== 'ecommerce.html') return;
 
-    // Keep the stronger Commerce Health Lab; remove the second explanatory layer.
     $('#store-anatomy')?.remove();
     $$('a[href="#store-anatomy"]').forEach((link) => link.remove());
 
@@ -91,14 +94,9 @@
   const cleanTharaa = () => {
     if (path !== 'tharaa.html') return;
 
-    // Remove strategy placeholders that expose missing commercial metadata.
     $('[data-strategy-tharaa-decision]')?.remove();
     $('[data-strategy-tharaa-governance]')?.remove();
-
-    // Avoid unsupported competitor-style claims until they are evidence-backed.
     $('#compare')?.remove();
-
-    // Hidden legacy shell contained unverified support channels.
     $('footer[data-approved-legacy-shell]')?.remove();
 
     $$('.library-note').forEach((note) => {
@@ -125,7 +123,6 @@
       }
     });
 
-    // Until official documentation/support/changelog metadata is approved, do not present roadmap copy as shipped product facts.
     const support = $('#support');
     if (support) support.remove();
     $$('a[href="#support"]').forEach((link) => {
