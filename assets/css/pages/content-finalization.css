@@ -3,7 +3,6 @@
    unsupported, or not yet ready for public navigation. */
 
 body[data-page="index"] #testimonials,
-body[data-page="services"] [data-strategy-service-catalog],
 body[data-page="product-page-optimization"] [data-strategy-service-decision],
 body[data-page="product-page-optimization"] [data-strategy-service-scope],
 body[data-page="ecommerce"] #store-anatomy,
@@ -13,6 +12,14 @@ body[data-page="tharaa"] #compare,
 body[data-page="tharaa"] #support,
 body[data-page="tharaa"] footer[data-approved-legacy-shell] {
   display: none !important;
+}
+
+/* The services discovery catalog stays visible: services-experience.js converts it
+   into the lightweight “بعض خدماتنا المتنوعة” image-card slider. Only old filters
+   and staging scope notes are suppressed. */
+body[data-page="services"] [data-strategy-service-catalog] .strategy-filterbar,
+body[data-page="services"] [data-strategy-service-catalog] .strategy-scope-note {
+  display:none !important;
 }
 
 /* Works, knowledge, and draft legal content remain in the repository for completion,
