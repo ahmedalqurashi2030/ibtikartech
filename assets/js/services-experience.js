@@ -190,15 +190,25 @@
 
     const syncActive = () => {
       if (!slides.length) return;
-      const rect = track.getBoundingClientRect();
-      const center = rect.left + rect.width / 2;
+      const maxScroll = Math.max(0, track.scrollWidth - track.clientWidth);
+      const scrollLeft = Math.max(0, track.scrollLeft);
       let nearest = 0;
-      let nearestDistance = Infinity;
-      slides.forEach((slide, index) => {
-        const slideRect = slide.getBoundingClientRect();
-        const distance = Math.abs(slideRect.left + slideRect.width / 2 - center);
-        if (distance < nearestDistance) { nearestDistance = distance; nearest = index; }
-      });
+
+      if (scrollLeft <= 3) {
+        nearest = 0;
+      } else if (maxScroll - scrollLeft <= 3) {
+        nearest = slides.length - 1;
+      } else {
+        const rect = track.getBoundingClientRect();
+        const center = rect.left + rect.width / 2;
+        let nearestDistance = Infinity;
+        slides.forEach((slide, index) => {
+          const slideRect = slide.getBoundingClientRect();
+          const distance = Math.abs(slideRect.left + slideRect.width / 2 - center);
+          if (distance < nearestDistance) { nearestDistance = distance; nearest = index; }
+        });
+      }
+
       activeIndex = nearest;
       slides.forEach((slide, index) => slide.classList.toggle('is-active', index === activeIndex));
       controls.querySelector('[data-fast-current]').textContent = String(activeIndex + 1).padStart(2, '0');
