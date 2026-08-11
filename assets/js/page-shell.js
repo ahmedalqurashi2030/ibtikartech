@@ -17,6 +17,22 @@
   if (productPages.has(pathname)) section = 'products';
   if (knowledgePages.has(pathname)) section = 'knowledge';
 
+  // Tharaa preserves an older desktop ScrollTrigger that expects #libraryTrack
+  // to exist before the rest of the inline page scripts initialize. The visual
+  // library was removed, so create a non-visual compatibility target early.
+  if (pathname === 'tharaa.html' && !document.querySelector('#libraryTrack')) {
+    const guard = document.createElement('div');
+    guard.className = 'library ibt-legacy-animation-guard';
+    guard.dataset.ibtLegacyAnimationGuard = 'true';
+    guard.setAttribute('aria-hidden', 'true');
+    guard.style.cssText = 'position:absolute;inset:0 auto auto 0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;z-index:-1;';
+    const track = document.createElement('div');
+    track.id = 'libraryTrack';
+    track.style.cssText = 'width:calc(100vw + 320px);height:1px;';
+    guard.appendChild(track);
+    document.body.appendChild(guard);
+  }
+
   const hasFinalStyleCarrier = document.querySelector('link[href$="inner.css"], link[href$="approved-source.css"], link[href$="frontend-final.css"]');
   if (!hasFinalStyleCarrier && !document.querySelector('link[data-frontend-final]')) {
     const finalCss = document.createElement('link');
