@@ -70,7 +70,11 @@
 
   const cleanServices = () => {
     if (path !== 'services.html') return;
-    $('[data-strategy-service-catalog]')?.remove();
+    // The catalog is the lightweight “بعض خدماتنا المتنوعة” slider in the current services experience.
+    // Keep it; only legacy filtering/search UI is intentionally removed.
+    const catalog = $('[data-strategy-service-catalog]');
+    catalog?.querySelector('.strategy-filterbar')?.remove();
+    catalog?.querySelector('.strategy-scope-note')?.remove();
   };
 
   const cleanProductPageService = () => {
