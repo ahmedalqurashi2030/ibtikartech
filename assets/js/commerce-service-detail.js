@@ -4,6 +4,9 @@
   const mainImage = document.querySelector('[data-service-gallery-main]');
   const galleryButtons = [...document.querySelectorAll('[data-service-gallery-src]')];
 
+  document.querySelector('.service-decision-nav:not([aria-label])')?.setAttribute('aria-label','دليل قرار الخدمة');
+  document.querySelectorAll('.related-nav:not([aria-label])').forEach((nav) => nav.setAttribute('aria-label','خدمات ومسارات مرتبطة'));
+
   if (hero && mainImage && window.matchMedia('(pointer:fine)').matches && !reducedMotion) {
     hero.addEventListener('pointermove', (event) => {
       const rect = hero.getBoundingClientRect();
@@ -73,6 +76,7 @@
         tab.setAttribute('aria-controls', panel.id);
         panel.setAttribute('role', 'tabpanel');
         panel.setAttribute('aria-labelledby', tab.id);
+        panel.tabIndex = 0;
         panel.hidden = !active;
       }
       if (active && focus) tab.focus();
@@ -81,6 +85,7 @@
 
   if (tablist && tabs.length) {
     tablist.setAttribute('role', 'tablist');
+    if (!tablist.hasAttribute('aria-label')) tablist.setAttribute('aria-label','تفاصيل الخدمة');
     tabs.forEach((tab) => {
       tab.setAttribute('role', 'tab');
       tab.addEventListener('click', () => activateTab(tab.dataset.serviceDecisionTab));
