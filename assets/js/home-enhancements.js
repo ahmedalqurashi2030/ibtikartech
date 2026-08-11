@@ -94,6 +94,76 @@
     }
   }
 
+  function repairHomeEditorial() {
+    const heroStatus = $('.hero-console__status strong');
+    if (heroStatus) heroStatus.textContent = 'READY';
+
+    const scenes = $$('.services-cinema .service-scene-copy');
+    const growthScene = scenes[3];
+    if (growthScene) {
+      const heading = $('h3', growthScene);
+      const paragraph = $('p', growthScene);
+      const chips = $$('.chips span', growthScene);
+      if (heading) heading.textContent = 'ظهور وقياس يقودان إلى تحسين أوضح';
+      if (paragraph) paragraph.textContent = 'SEO وتحليلات وتتبع وتحسين تحويل؛ نربط البيانات بأسئلة واضحة ثم نرتب فرص التحسين حسب ما يمكن قياسه وتنفيذه.';
+      const labels = ['SEO', 'GA4', 'Analytics', 'CRO'];
+      chips.forEach((chip, index) => { if (labels[index]) chip.textContent = labels[index]; });
+    }
+
+    const mobileCards = $$('.services-mobile-card');
+    const mobileGrowth = mobileCards[3];
+    if (mobileGrowth) {
+      const heading = $('h3', mobileGrowth);
+      const paragraph = $('p', mobileGrowth);
+      if (heading) heading.textContent = 'الظهور والقياس والنمو';
+      if (paragraph) paragraph.textContent = 'SEO وقياس وتتبع وتحسينات مبنية على البيانات المتاحة.';
+    }
+
+    const tharaa = $('#tharaa');
+    if (tharaa) {
+      const primary = $('.ibtx-tharaa-summary__primary', tharaa);
+      const secondary = $('.ibtx-tharaa-summary__secondary', tharaa);
+      const previewLink = $('.ibtx-preview-toolbar__actions a', tharaa);
+      if (primary) {
+        primary.href = 'tharaa.html';
+        primary.textContent = 'استكشف صفحة ثراء';
+      }
+      if (secondary) {
+        secondary.href = 'contact.html#quote';
+        secondary.textContent = 'تركيب وتخصيص ثراء';
+      }
+      if (previewLink) {
+        previewLink.href = 'tharaa.html#v4-preview';
+        previewLink.setAttribute('aria-label', 'فتح معاينات ثيم ثراء');
+      }
+    }
+
+    const faq = $('#faq');
+    if (faq) {
+      const faqLink = $('.faq-intro a', faq);
+      if (faqLink) {
+        faqLink.href = 'contact.html#quote';
+        faqLink.textContent = 'لدي سؤال عن مشروعي';
+      }
+
+      $$('.accordion-item', faq).forEach((item) => {
+        const question = (item.querySelector('button')?.textContent || '').replace(/\s+/g, ' ').trim();
+        const answer = item.querySelector('.accordion-content p');
+        if (!answer) return;
+
+        if (question.includes('كم تستغرق مدة تنفيذ المشروع')) {
+          answer.textContent = 'تُحدد المدة بعد اعتماد النطاق والمحتوى والاعتمادات المطلوبة. نوضح الجدول قبل بدء التنفيذ بدل إعطاء مدة عامة لا تناسب كل مشروع.';
+        }
+        if (question.includes('هل يوجد دعم بعد التسليم')) {
+          answer.textContent = 'يمكن أن يدخل الدعم أو الصيانة ضمن العرض أو كخدمة مستقلة حسب المشروع. يوضح الاتفاق ما يشمله الدعم وقناته وأولوياته وما يعد تطويرًا جديدًا.';
+        }
+        if (question.includes('كيف أبدأ الطلب')) {
+          answer.textContent = 'في نسخة المعاينة الحالية افتح صفحة «ابدأ مشروعك» وجهّز مسودة الطلب على جهازك. يصبح الإرسال الفعلي متاحًا بعد ربط قناة الاستقبال الرسمية.';
+        }
+      });
+    }
+  }
+
   function repairHomeServices(main) {
     const cinema = $('.services-cinema', main);
     if (!cinema || cinema.dataset.homeServicesReady === 'true') return;
@@ -186,6 +256,7 @@
 
     repairHomeServices(main);
     repairHomeContact();
+    repairHomeEditorial();
 
     if (tharaa && !document.querySelector('[data-strategy-product-context]')) {
       tharaa.classList.add('strategy-existing-section', 'strategy-existing-section--product');
