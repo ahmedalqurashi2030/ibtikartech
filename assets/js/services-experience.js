@@ -37,7 +37,7 @@
     const description = heading?.querySelector('p');
     if (kicker) kicker.textContent = 'مشاهد الخدمات الإبداعية';
     if (title) title.textContent = 'اسحب بين الخدمات وشاهد كيف يتغير المشهد.';
-    if (description) description.textContent = 'ستة مشاهد تفاعلية تختصر طريقة تفكيرنا في كل مجال. اسحب البطاقات أو استخدم الأسهم، ثم افتح صفحة الخدمة عندما تريد التفاصيل.';
+    if (description) description.textContent = 'ستة مشاهد تفاعلية تختصر طريقة تفكيرنا في كل مجال. اسحب البطاقات أو استخدم الأسهم، واختر بطاقة لتبديل المشهد قبل فتح تفاصيل الخدمة.';
 
     const list = lab.querySelector('.service-list');
     if (!list) return;
@@ -47,7 +47,7 @@
     const toolbar = document.createElement('div');
     toolbar.className = 'services-scenes-toolbar';
     toolbar.innerHTML = `
-      <div class="services-scenes-toolbar__copy"><span>DRAG · SWIPE · EXPLORE</span><strong>اختر بطاقة لتغيير المشهد، أو افتح الخدمة مباشرة.</strong></div>
+      <div class="services-scenes-toolbar__copy"><span>DRAG · SWIPE · EXPLORE</span><strong>اختر بطاقة لتغيير المشهد، ثم افتح صفحة الخدمة من زرها.</strong></div>
       <div class="services-scenes-controls" aria-label="أزرار التنقل بين الخدمات">
         <button type="button" data-scenes-prev aria-label="الخدمة السابقة">←</button>
         <button type="button" data-scenes-next aria-label="الخدمة التالية">→</button>
@@ -71,7 +71,7 @@
       item.addEventListener('click',(event) => {
         if (list.dataset.dragMoved === 'true') return;
         if (event.target.closest('a,button,input,select,textarea')) return;
-        link?.click();
+        item.scrollIntoView({behavior:reducedMotion?'auto':'smooth',block:'nearest',inline:'center'});
       });
     });
 
@@ -83,8 +83,6 @@
     };
     const updateControls = () => {
       const max = Math.max(0,list.scrollWidth - list.clientWidth - 2);
-      prev.disabled = list.scrollLeft >= -2 && document.dir !== 'ltr' ? false : list.scrollLeft <= 2;
-      next.disabled = false;
       if (document.dir === 'rtl') {
         const logical = Math.abs(list.scrollLeft);
         prev.disabled = logical <= 2;
