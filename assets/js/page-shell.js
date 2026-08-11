@@ -19,16 +19,16 @@
 
   // Tharaa preserves an older desktop ScrollTrigger that expects #libraryTrack
   // to exist before the rest of the inline page scripts initialize. The visual
-  // library was removed, so create a non-visual compatibility target early.
+  // library was removed, so create a fully-contained non-visual target early.
   if (pathname === 'tharaa.html' && !document.querySelector('#libraryTrack')) {
     const guard = document.createElement('div');
     guard.className = 'library ibt-legacy-animation-guard';
     guard.dataset.ibtLegacyAnimationGuard = 'true';
     guard.setAttribute('aria-hidden', 'true');
-    guard.style.cssText = 'position:absolute;inset:0 auto auto 0;width:1px;height:1px;overflow:hidden;opacity:0;pointer-events:none;z-index:-1;';
+    guard.style.cssText = 'position:fixed!important;top:0!important;left:0!important;right:auto!important;bottom:auto!important;width:1px!important;max-width:1px!important;height:1px!important;max-height:1px!important;min-width:0!important;min-height:0!important;padding:0!important;margin:0!important;overflow:hidden!important;contain:strict;opacity:0!important;pointer-events:none!important;z-index:-1!important;transform:none!important;';
     const track = document.createElement('div');
     track.id = 'libraryTrack';
-    track.style.cssText = 'width:calc(100vw + 320px);height:1px;';
+    track.style.cssText = 'width:100vw;max-width:none;height:1px;min-height:0;padding:0;margin:0;overflow:hidden;';
     guard.appendChild(track);
     document.body.appendChild(guard);
   }
