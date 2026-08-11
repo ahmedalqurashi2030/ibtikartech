@@ -17,7 +17,8 @@
   if (productPages.has(pathname)) section = 'products';
   if (knowledgePages.has(pathname)) section = 'knowledge';
 
-  if (!document.querySelector('link[data-frontend-final]')) {
+  const hasFinalStyleCarrier = document.querySelector('link[href$="inner.css"], link[href$="approved-source.css"], link[href$="frontend-final.css"]');
+  if (!hasFinalStyleCarrier && !document.querySelector('link[data-frontend-final]')) {
     const finalCss = document.createElement('link');
     finalCss.rel = 'stylesheet';
     finalCss.href = 'assets/css/pages/frontend-final.css';
@@ -125,7 +126,6 @@
     },{once:true});
   }
 
-  // Rewrite retired platform links immediately; final runtime also observes later injected markup.
   document.querySelectorAll('a[href]').forEach((link) => {
     const raw = link.getAttribute('href') || '';
     const clean = raw.split('#')[0].toLowerCase();
