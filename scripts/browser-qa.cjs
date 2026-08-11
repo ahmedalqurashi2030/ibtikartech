@@ -221,8 +221,17 @@ async function inspectPage(client, page, viewport, events) {
     };
     const overflowers = [...document.querySelectorAll('body *')].map((el) => {
       const r = el.getBoundingClientRect();
-      return { tag: el.tagName.toLowerCase(), id: el.id || '', cls: String(el.className || '').slice(0,100), left: Math.round(r.left), right: Math.round(r.right), width: Math.round(r.width) };
-    }).filter((item) => item.right > innerWidth + 2 || item.left < -2 || item.width > innerWidth + 2).slice(0, 12);
+      return {
+        tag: el.tagName.toLowerCase(),
+        id: el.id || '',
+        cls: String(el.className || '').slice(0,100),
+        left: Math.round(r.left),
+        right: Math.round(r.right),
+        width: Math.round(r.width),
+        transform: getComputedStyle(el).transform,
+        position: getComputedStyle(el).position
+      };
+    }).filter((item) => item.right > innerWidth + 2 || item.left < -2 || item.width > innerWidth + 2).slice(0, 16);
     const fakeContacts = links.filter((a) => {
       const href = String(a.getAttribute('href') || '').toLowerCase();
       return fakeMarkers.some((marker) => href.includes(marker)) && visible(a);
@@ -265,7 +274,7 @@ function validate(result, failures) {
   if (!metrics.shellHeader) failures.push(`${prefix}: shared header not visible`);
   if (!metrics.shellFooter) failures.push(`${prefix}: shared footer not visible`);
   if (metrics.h1 !== 1) failures.push(`${prefix}: expected exactly one H1, found ${metrics.h1}`);
-  if (metrics.scrollWidth > metrics.clientWidth + 2) failures.push(`${prefix}: horizontal document overflow ${metrics.scrollWidth}px > ${metrics.clientWidth}px`);
+  if (metrics.scrollWidth > metrics.clientWidth + 2) failures.push(`${prefix}: horizontal document overflow ${metrics.scrollWidth}px > ${metrics.clientWidth}px · elements=${JSON.stringify(metrics.overflowers)}`);
   if (metrics.fakeContacts.length) failures.push(`${prefix}: visible fake contact links: ${metrics.fakeContacts.join(', ')}`);
   if (metrics.retiredLinks.length) failures.push(`${prefix}: visible retired platform links: ${metrics.retiredLinks.join(', ')}`);
   if (metrics.todoVisible) failures.push(`${prefix}: visible TODO placeholder text`);
