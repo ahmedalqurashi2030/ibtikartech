@@ -3,31 +3,31 @@ window.IBTIKAR_CONFIG = {
     nameAr: "ابتكار تك",
     nameEn: "Ibtikar Tech",
     taglineAr: "للحلول والخدمات الرقمية",
-    domain: "[TODO: Official Domain]",
+    domain: "",
     locale: "ar_SA",
     lang: "ar",
     dir: "rtl"
   },
   contact: {
-    whatsapp: "[TODO: Official WhatsApp Number]",
-    whatsappUrl: "https://wa.me/[TODO: Official WhatsApp Number]",
-    email: "[TODO: Official Email]",
-    phone: "[TODO: Official Phone]",
-    address: "[TODO: Company Address]"
+    whatsapp: "",
+    whatsappUrl: "",
+    email: "",
+    phone: "",
+    address: ""
   },
   social: {
-    twitter: "[TODO: Twitter URL]",
-    linkedin: "[TODO: LinkedIn URL]",
-    instagram: "[TODO: Instagram URL]"
+    twitter: "",
+    linkedin: "",
+    instagram: ""
   },
   analytics: {
-    ga4: "[TODO: GA4_ID]",
-    gtm: "[TODO: GTM_ID]",
-    metaPixel: "[TODO: META_PIXEL_ID]",
-    tiktokPixel: "[TODO: TIKTOK_PIXEL_ID]"
+    ga4: "",
+    gtm: "",
+    metaPixel: "",
+    tiktokPixel: ""
   },
   forms: {
-    endpoint: "[TODO: Form Backend URL]",
+    endpoint: "",
     honeypotField: "ibt_website"
   },
   commercial: {
@@ -39,13 +39,13 @@ window.IBTIKAR_CONFIG = {
   },
   products: {
     tharaa: {
-      demoUrl: "[TODO: Tharaa Demo URL]",
-      purchaseUrl: "[TODO: Tharaa Purchase URL]",
-      price: "[TODO: Official Tharaa Price]",
-      version: "[TODO: Current Tharaa Version]",
-      lastUpdated: "[TODO: Tharaa Last Updated Date]",
-      changelogUrl: "[TODO: Tharaa Changelog URL]",
-      documentationUrl: "[TODO: Tharaa Documentation URL]"
+      demoUrl: "",
+      purchaseUrl: "",
+      price: "",
+      version: "",
+      lastUpdated: "",
+      changelogUrl: "",
+      documentationUrl: ""
     }
   },
   events: {
