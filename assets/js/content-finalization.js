@@ -28,6 +28,21 @@
     });
   };
 
+  const normalizeGrowthNaming = () => {
+    $$('a, h2, h3, span').forEach((node) => {
+      if ((node.textContent || '').trim() === 'التسويق والنمو' && node.children.length === 0) {
+        node.textContent = 'الظهور والقياس والنمو';
+      }
+    });
+  };
+
+  const hideUnreadySharedNavigation = () => {
+    const shell = $$('.ibt-shell-header, .ibt-shell-mobile-menu, .ibt-shell-footer');
+    shell.forEach((root) => {
+      $$('a[href="portfolio.html"], a[href="knowledge.html"], a[href="legal.html"]', root).forEach((link) => link.remove());
+    });
+  };
+
   const cleanHomepage = () => {
     if (path !== 'index.html' && path !== '') return;
 
@@ -40,6 +55,13 @@
         button.remove();
       }
     });
+  };
+
+  const cleanServices = () => {
+    if (path !== 'services.html') return;
+
+    // The injected catalog duplicated the approved visual service system and exposed internal staging language.
+    $('[data-strategy-service-catalog]')?.remove();
   };
 
   const cleanProductPageService = () => {
@@ -118,7 +140,10 @@
 
   const apply = () => {
     replaceUnverifiedContactLinks();
+    normalizeGrowthNaming();
+    hideUnreadySharedNavigation();
     cleanHomepage();
+    cleanServices();
     cleanProductPageService();
     cleanEcommerce();
     cleanTharaa();
