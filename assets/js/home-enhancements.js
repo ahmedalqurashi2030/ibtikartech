@@ -3,12 +3,20 @@
   const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
   function ensureCss() {
-    if ($('link[data-strategy-enhancements]')) return;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'assets/css/pages/strategy-enhancements.css';
-    link.dataset.strategyEnhancements = 'true';
-    document.head.appendChild(link);
+    if (!$('link[data-strategy-enhancements]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'assets/css/pages/strategy-enhancements.css';
+      link.dataset.strategyEnhancements = 'true';
+      document.head.appendChild(link);
+    }
+    if (!$('link[data-home-services-fix]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'assets/css/pages/home-services-fix.css';
+      link.dataset.homeServicesFix = 'true';
+      document.head.appendChild(link);
+    }
   }
 
   function html(markup) {
@@ -106,7 +114,6 @@
     document.body.dataset.strategyHomeClean = 'true';
 
     // Homepage intentionally does not inject BUILD · BRAND · CONNECT · GROW or KNOWLEDGE.
-    // Their dedicated destinations remain available through navigation and inner pages.
     document.querySelector('[data-strategy-home-v3]')?.remove();
     document.querySelector('[data-strategy-home-knowledge]')?.remove();
 
