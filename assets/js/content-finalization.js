@@ -53,7 +53,7 @@
   const hideUnreadySharedNavigation = () => {
     const shell = $$('.ibt-shell-header, .ibt-shell-mobile-menu, .ibt-shell-footer');
     shell.forEach((root) => {
-      $$('a[href="portfolio.html"], a[href="knowledge.html"], a[href="legal.html"]', root).forEach((link) => link.remove());
+      $$('a[href="knowledge.html"], a[href="legal.html"]', root).forEach((link) => link.remove());
     });
   };
 
@@ -62,8 +62,12 @@
     $('#testimonials')?.remove();
     $$('.command-list .command-item').forEach((button) => {
       const text = (button.textContent || '').replace(/\s+/g, ' ').trim();
-      if (text.includes('آراء وتجارب العملاء') || text.includes('الباقات والأسعار') || text.includes('أعمالنا المختارة')) {
+      if (text.includes('آراء وتجارب العملاء') || text.includes('الباقات والأسعار')) {
         button.remove();
+      }
+      if (text.includes('أعمالنا المختارة')) {
+        button.dataset.target = '';
+        button.addEventListener('click', () => { location.href = 'portfolio.html'; }, { once: true });
       }
     });
   };
@@ -238,7 +242,7 @@
   };
 
   const markUnreadyEditorialPages = () => {
-    if (['portfolio.html', 'knowledge.html', 'legal.html', 'contact.html'].includes(path)) setNoIndex();
+    if (['knowledge.html', 'legal.html', 'contact.html'].includes(path)) setNoIndex();
   };
 
   const apply = () => {
