@@ -2,8 +2,8 @@
   'use strict';
 
   if (!document.body.classList.contains('source-services')) return;
-  if (window.__ibtikarServicesExperienceV5) return;
-  window.__ibtikarServicesExperienceV5 = true;
+  if (window.__ibtikarServicesExperienceV6) return;
+  window.__ibtikarServicesExperienceV6 = true;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const main = document.querySelector('main');
@@ -12,10 +12,10 @@
   const PRIMARY_FAMILIES = [
     { mode:'store', index:'01', title:'المتاجر الإلكترونية', href:'ecommerce.html' },
     { mode:'site', index:'02', title:'المواقع وصفحات الهبوط', href:'websites.html' },
-    { mode:'app', index:'03', title:'التطبيقات والأنظمة المخصصة', href:'custom-systems.html' },
+    { mode:'app', index:'03', title:'التطبيقات والأنظمة المخصصة', href:'custom-systems.html#apps' },
     { mode:'brand', index:'04', title:'الهوية والمحتوى', href:'brand-content.html' },
     { mode:'growth', index:'05', title:'الظهور والقياس والنمو', href:'growth.html' },
-    { mode:'auto', index:'06', title:'الربط والأتمتة', href:'custom-systems.html' }
+    { mode:'auto', index:'06', title:'الربط والأتمتة', href:'custom-systems.html#automation' }
   ];
 
   const DISCOVERY_SERVICES = [
@@ -64,7 +64,7 @@
     {
       family:'auto', index:'08', eyebrow:'AUTOMATION', title:'ربط وأتمتة العمليات',
       description:'ربط القنوات والبيانات والخطوات المتكررة لتقليل العمل اليدوي ضمن تدفق واضح.',
-      href:'custom-systems.html', image:'assets/images/services/discovery/automation-connect.svg',
+      href:'custom-systems.html#automation', image:'assets/images/services/discovery/automation-connect.svg',
       imageAlt:'تصميم توضيحي لربط الأنظمة والأتمتة', tags:['APIs','Automation','Webhooks']
     }
   ];
