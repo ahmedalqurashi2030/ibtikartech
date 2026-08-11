@@ -134,6 +134,21 @@
       const open = menu.classList.contains('open');
       if (open) closeMenu(true); else openMenu();
     });
+    // Explicitly mirror native button keyboard activation. This keeps Enter and
+    // Space reliable in assisted/headless input paths without causing duplicate clicks.
+    button.addEventListener('keydown',(event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        button.click();
+      } else if (event.key === ' ') {
+        event.preventDefault();
+      }
+    });
+    button.addEventListener('keyup',(event) => {
+      if (event.key !== ' ') return;
+      event.preventDefault();
+      button.click();
+    });
     menu.querySelectorAll('a').forEach((link) => link.addEventListener('click',() => closeMenu()));
     menu.querySelectorAll('details').forEach((details) => {
       details.addEventListener('toggle',() => {
