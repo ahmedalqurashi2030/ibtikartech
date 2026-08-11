@@ -212,7 +212,7 @@
     const platformSection = document.querySelector('#platforms');
     const platformIntro = platformSection?.querySelector('.platform-heading p');
     if (platformIntro) {
-      platformIntro.textContent = 'المنصة عامل تنفيذ داخل الخدمة، وليست مسارًا منفصلًا حاليًا. نحدد الأنسب وفق تشغيل مشروعك وحدود التخصيص، ويمكن بناء صفحات منصات متخصصة مستقبلًا عندما تصبح لها قيمة مستقلة.';
+      platformIntro.textContent = 'المنصة عامل تنفيذ داخل الخدمة. نحدد الأنسب وفق تشغيل مشروعك وحدود التخصيص، وتظهر خبرة المنصة داخل نطاق الخدمة نفسها.';
     }
     platformSection?.querySelectorAll('.platform-card').forEach((card) => {
       const link = card.querySelector('a');
