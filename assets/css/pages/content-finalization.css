@@ -22,13 +22,10 @@ body[data-page="services"] [data-strategy-service-catalog] .strategy-scope-note 
   display:none !important;
 }
 
-/* Works, knowledge, and draft legal content remain in the repository for completion,
+/* Knowledge and draft legal content remain in the repository for completion,
    but are intentionally removed from shared public navigation until approved. */
-.ibt-shell-header a[href="portfolio.html"],
 .ibt-shell-header a[href="knowledge.html"],
-.ibt-shell-mobile-menu a[href="portfolio.html"],
 .ibt-shell-mobile-menu a[href="knowledge.html"],
-.ibt-shell-footer a[href="portfolio.html"],
 .ibt-shell-footer a[href="knowledge.html"],
 .ibt-shell-footer a[href="legal.html"] {
   display: none !important;
