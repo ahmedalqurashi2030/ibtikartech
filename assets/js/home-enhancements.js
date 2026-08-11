@@ -51,6 +51,49 @@
     });
   }
 
+  function retireLegacyBrief() {
+    const modal = $('.brief-modal');
+    if (modal) {
+      modal.hidden = true;
+      modal.inert = true;
+      modal.setAttribute('aria-hidden', 'true');
+      modal.classList.remove('open');
+    }
+
+    $$('.whatsapp-float').forEach((link) => link.remove());
+
+    $$('[data-open-brief]').forEach((trigger) => {
+      if (trigger instanceof HTMLAnchorElement) trigger.href = 'contact.html#quote';
+      trigger.setAttribute('aria-label', 'ابدأ مشروعك عبر نموذج التأهيل');
+    });
+
+    document.addEventListener('click', (event) => {
+      const trigger = event.target.closest?.('[data-open-brief]');
+      if (!trigger) return;
+      event.preventDefault();
+      event.stopImmediatePropagation();
+      location.href = 'contact.html#quote';
+    }, true);
+  }
+
+  function repairHomeContact() {
+    const contact = $('#contact');
+    if (!contact) return;
+    const actions = $$('.cta-actions a', contact);
+    if (actions[0]) {
+      actions[0].href = 'contact.html#quote';
+      actions[0].removeAttribute('target');
+      actions[0].removeAttribute('rel');
+      actions[0].textContent = 'ابدأ مشروعك';
+    }
+    if (actions[1]) {
+      actions[1].href = 'services.html';
+      actions[1].removeAttribute('target');
+      actions[1].removeAttribute('rel');
+      actions[1].textContent = 'استكشف الحلول والخدمات';
+    }
+  }
+
   function repairHomeServices(main) {
     const cinema = $('.services-cinema', main);
     if (!cinema || cinema.dataset.homeServicesReady === 'true') return;
@@ -121,7 +164,6 @@
 
     document.body.dataset.strategyHomeClean = 'true';
 
-    // Keep the homepage focused: do not inject BUILD · BRAND · CONNECT · GROW or KNOWLEDGE.
     document.querySelector('[data-strategy-home-v3]')?.remove();
     document.querySelector('[data-strategy-home-knowledge]')?.remove();
 
@@ -143,6 +185,7 @@
     }
 
     repairHomeServices(main);
+    repairHomeContact();
 
     if (tharaa && !document.querySelector('[data-strategy-product-context]')) {
       tharaa.classList.add('strategy-existing-section', 'strategy-existing-section--product');
@@ -159,6 +202,7 @@
 
   function init() {
     removeLegacyHomeArtifacts();
+    retireLegacyBrief();
     ensureCss();
     initHome();
   }
