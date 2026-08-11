@@ -53,7 +53,7 @@
               '<a class="ibt-shell-mega-link" href="ecommerce.html"><strong>المتاجر الإلكترونية</strong><span>إطلاق وتخصيص وتجربة وقياس ودعم.</span></a>',
               '<a class="ibt-shell-mega-link" href="websites.html"><strong>المواقع وصفحات الهبوط</strong><span>محتوى وتجربة ويب تقود إلى إجراء واضح.</span></a>',
               '<a class="ibt-shell-mega-link" href="brand-content.html"><strong>الهوية والمحتوى</strong><span>علامة رقمية متماسكة عبر نقاط الاتصال.</span></a>',
-              '<a class="ibt-shell-mega-link" href="growth.html"><strong>التسويق والنمو</strong><span>SEO وقياس وتحسين مبني على البيانات.</span></a>',
+              '<a class="ibt-shell-mega-link" href="growth.html"><strong>الظهور والقياس والنمو</strong><span>SEO وقياس وتحسين مبني على البيانات.</span></a>',
               '<a class="ibt-shell-mega-link" href="custom-systems.html"><strong>الأنظمة والأتمتة</strong><span>ربط عمليات وحلول مخصصة عندما لا يكفي الجاهز.</span></a>',
             '</div></div>',
           '</div>',
@@ -76,7 +76,7 @@
     '</header>',
     '<nav class="ibt-shell-mobile-menu" id="ibtikarMobileMenu" aria-label="قائمة الجوال" aria-hidden="true">',
       '<a data-nav-key="home" href="index.html">الرئيسية</a>',
-      '<details class="ibt-shell-mobile-group"><summary>الحلول والخدمات</summary><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع وصفحات الهبوط</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">التسويق والنمو</a><a href="custom-systems.html">الأنظمة والأتمتة</a></details>',
+      '<details class="ibt-shell-mobile-group"><summary>الحلول والخدمات</summary><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع وصفحات الهبوط</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a><a href="custom-systems.html">الأنظمة والأتمتة</a></details>',
       '<details class="ibt-shell-mobile-group"><summary>منتجاتنا</summary><a href="tharaa.html">ثيم ثراء</a></details>',
       '<a data-nav-key="portfolio" href="portfolio.html">أعمالنا</a>',
       '<a data-nav-key="knowledge" href="knowledge.html">المعرفة</a>',
@@ -90,7 +90,7 @@
     '<footer class="ibt-shell-footer">',
       '<div class="ibt-shell-footer-grid">',
         '<div class="ibt-shell-footer-main"><a class="ibt-shell-brand" href="index.html"><span class="ibt-shell-logo" aria-hidden="true"><i></i><i></i><i></i></span><span class="ibt-shell-brand-copy"><strong>ابتكار تك</strong><small>للحلول والخدمات الرقمية</small></span></a><p>نبني علامات وتجارب ومنتجات رقمية مترابطة تساعد المشاريع على الإطلاق والعمل والنمو ضمن نطاق واضح.</p></div>',
-        '<div><h3>الحلول والخدمات</h3><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">التسويق والنمو</a></div>',
+        '<div><h3>الحلول والخدمات</h3><a href="services.html#goals">ابدأ من هدفك</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع</a><a href="brand-content.html">الهوية والمحتوى</a><a href="growth.html">الظهور والقياس والنمو</a></div>',
         '<div><h3>المتاجر والمنصات</h3><a href="ecommerce.html#platforms">المنصات التي نعمل عليها</a><div class="ibt-shell-footer-platforms" aria-label="المنصات"><span>سلة</span><span>زد</span><span>Shopify</span><span>WooCommerce</span></div><a href="storefront-customization.html">تخصيص واجهة المتجر</a><a href="product-page-optimization.html">تحسين صفحة المنتج</a></div>',
         '<div><h3>منتجاتنا</h3><a href="tharaa.html">ثيم ثراء</a></div>',
         '<div><h3>ابتكار تك</h3><a href="portfolio.html">أعمالنا</a><a href="knowledge.html">المعرفة</a><a href="about.html">عن ابتكار</a><a href="legal.html">السياسات</a></div>',
@@ -137,13 +137,24 @@
     else link.removeAttribute('aria-current');
   });
 
-  const loadFinalRuntime = () => {
-    if (document.querySelector('script[data-frontend-final]')) return;
+  const loadContentFinalization = () => {
+    if (document.querySelector('script[data-content-finalization]')) return;
     const script = document.createElement('script');
-    script.src = 'assets/js/frontend-final.js';
+    script.src = 'assets/js/content-finalization.js';
     script.async = false;
-    script.dataset.frontendFinal = 'true';
+    script.dataset.contentFinalization = 'true';
     document.body.appendChild(script);
+  };
+
+  const loadFinalRuntime = () => {
+    if (!document.querySelector('script[data-frontend-final]')) {
+      const script = document.createElement('script');
+      script.src = 'assets/js/frontend-final.js';
+      script.async = false;
+      script.dataset.frontendFinal = 'true';
+      document.body.appendChild(script);
+    }
+    loadContentFinalization();
   };
   if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded',loadFinalRuntime,{once:true});
   else loadFinalRuntime();
