@@ -61,7 +61,7 @@ async function evaluate(client, expression){
   const r=await client.send('Runtime.evaluate',{expression,returnByValue:true,awaitPromise:true});
   return r?.result?.result?.value;
 }
-async function snapshot(client,label){
+async function megaSnapshot(client,label){
   const state=await evaluate(client,`(() => {
     const t=document.querySelector('[data-ibt-mega-toggle][aria-controls="solutionsServicesMega"]');
     const m=document.getElementById('solutionsServicesMega');
@@ -69,6 +69,15 @@ async function snapshot(client,label){
     const a=document.activeElement;
     const desc=(el)=>el?{tag:el.tagName,id:el.id||'',cls:String(el.className||''),href:el.getAttribute?.('href')||'',text:String(el.textContent||'').trim().slice(0,70),tabIndex:el.tabIndex,inert:el.hasAttribute?.('inert')||false}:null;
     return {expanded:t?.getAttribute('aria-expanded'),menuOpen:m?.classList.contains('is-open'),menuHidden:m?.getAttribute('aria-hidden'),menuInert:m?.hasAttribute('inert'),active:desc(a),first:desc(f),activeIsToggle:a===t,activeInsideMenu:m?.contains(a)};
+  })()`);
+  console.log(`${label}: ${JSON.stringify(state)}`);
+}
+async function mobileSnapshot(client,label){
+  const state=await evaluate(client,`(() => {
+    const t=document.querySelector('.ibt-shell-menu-toggle[data-ibt-menu-toggle][aria-controls="ibtikarMobileMenu"]');
+    const m=document.getElementById('ibtikarMobileMenu');
+    const a=document.activeElement;
+    return {expanded:t?.getAttribute('aria-expanded'),menuOpen:m?.classList.contains('open'),menuHidden:m?.getAttribute('aria-hidden'),bodyOpen:document.body.classList.contains('menu-open'),activeTag:a?.tagName,activeClass:String(a?.className||''),activeIsToggle:a===t,activeInsideMenu:m?.contains(a)};
   })()`);
   console.log(`${label}: ${JSON.stringify(state)}`);
 }
@@ -81,16 +90,25 @@ async function snapshot(client,label){
   try{
     const targets=await poll(`http://127.0.0.1:${debugPort}/json`), page=targets.find((t)=>t.type==='page');
     client=connect(page.webSocketDebuggerUrl); await wait(120); await client.send('Page.enable'); await client.send('Runtime.enable');
+
     await client.send('Emulation.setDeviceMetricsOverride',{width:1440,height:960,mobile:false,deviceScaleFactor:1});
     await client.send('Page.navigate',{url:`${baseUrl}/index.html`}); await wait(1900);
     await evaluate(client,`(() => { const t=document.querySelector('[data-ibt-mega-toggle][aria-controls="solutionsServicesMega"]'); t.focus(); return true; })()`);
-    await snapshot(client,'before');
-    const common={key:'Enter',code:'Enter',windowsVirtualKeyCode:13,nativeVirtualKeyCode:13};
-    await client.send('Input.dispatchKeyEvent',{type:'keyDown',...common});
-    await wait(20); await snapshot(client,'after-keydown-20ms');
-    await client.send('Input.dispatchKeyEvent',{type:'keyUp',...common});
-    await wait(20); await snapshot(client,'after-keyup-20ms');
-    await wait(150); await snapshot(client,'after-170ms');
+    await megaSnapshot(client,'mega-before');
+    const enter={key:'Enter',code:'Enter',windowsVirtualKeyCode:13,nativeVirtualKeyCode:13};
+    await client.send('Input.dispatchKeyEvent',{type:'keyDown',...enter});
+    await wait(20); await megaSnapshot(client,'mega-after-keydown');
+    await client.send('Input.dispatchKeyEvent',{type:'keyUp',...enter});
+    await wait(50); await megaSnapshot(client,'mega-after-keyup');
+
+    await client.send('Emulation.setDeviceMetricsOverride',{width:390,height:844,mobile:true,deviceScaleFactor:1});
+    await client.send('Page.navigate',{url:`${baseUrl}/index.html`}); await wait(1900);
+    await evaluate(client,`(() => { const t=document.querySelector('.ibt-shell-menu-toggle[data-ibt-menu-toggle][aria-controls="ibtikarMobileMenu"]'); t.focus(); return true; })()`);
+    await mobileSnapshot(client,'mobile-before');
+    await client.send('Input.dispatchKeyEvent',{type:'keyDown',...enter,text:'\r',unmodifiedText:'\r'});
+    await wait(20); await mobileSnapshot(client,'mobile-after-keydown');
+    await client.send('Input.dispatchKeyEvent',{type:'keyUp',...enter});
+    await wait(120); await mobileSnapshot(client,'mobile-after-keyup');
   }catch(error){console.error(error.stack||error.message);process.exitCode=1;}
   finally{try{client?.close();}catch(_){} try{chrome.kill('SIGTERM');}catch(_){} await wait(100);safeRm(profileDir);}
 })();
