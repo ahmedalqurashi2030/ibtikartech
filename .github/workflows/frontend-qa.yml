@@ -62,10 +62,12 @@ jobs:
             if [ "$status" -eq 0 ]; then
               exit 0
             fi
-            if [ "$attempt" -eq 1 ]; then
-              echo "First browser QA attempt failed; retrying once for transient Chrome/CDP startup failures."
+            if [ "$status" -eq 75 ] && [ "$attempt" -eq 1 ]; then
+              echo "Transient Chrome/CDP startup failure; retrying once."
               sleep 2
+              continue
             fi
+            exit "$status"
           done
           exit "$status"
 
