@@ -10,7 +10,7 @@ permissions:
 jobs:
   frontend-qa:
     runs-on: ubuntu-latest
-    timeout-minutes: 15
+    timeout-minutes: 20
     steps:
       - name: Checkout
         uses: actions/checkout@v4
@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: '24'
 
       - name: JavaScript syntax
         shell: bash
@@ -47,7 +47,12 @@ jobs:
       - name: Headless Chrome regression QA
         env:
           BASE_URL: http://127.0.0.1:4173
-        run: node scripts/browser-qa.cjs
+          QA_PAGES: >-
+            index.html,services.html,ecommerce.html,websites.html,brand-content.html,growth.html,
+            custom-systems.html,tharaa.html,portfolio.html,knowledge.html,about.html,contact.html,
+            store-launch.html,storefront-customization.html,store-redesign.html,
+            product-page-optimization.html,ecommerce-growth.html,ecommerce-support.html,404.html
+        run: node scripts/browser-qa-ci.cjs
 
       - name: Stop local site
         if: always()
