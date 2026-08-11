@@ -1,0 +1,105 @@
+name: Frontend QA
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  frontend-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+
+      - name: JavaScript syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          find assets/js scripts -type f \( -name '*.js' -o -name '*.cjs' \) -print0 \
+            | xargs -0 -n1 node --check
+
+      - name: Static frontend QA
+        run: node scripts/static-qa.cjs
+
+      - name: Start local site
+        shell: bash
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/ibtikar-http.log 2>&1 &
+          echo $! > /tmp/ibtikar-http.pid
+          for i in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4173/index.html > /dev/null; then
+              exit 0
+            fi
+            sleep 0.25
+          done
+          cat /tmp/ibtikar-http.log
+          exit 1
+
+      - name: Deep interaction QA
+        env:
+          BASE_URL: http://127.0.0.1:4173
+        shell: bash
+        run: |
+          set +e
+          for attempt in 1 2; do
+            echo "Interaction QA attempt ${attempt}/2"
+            node scripts/interaction-qa.cjs
+            status=$?
+            if [ "$status" -eq 0 ]; then
+              exit 0
+            fi
+            if [ "$status" -eq 75 ] && [ "$attempt" -eq 1 ]; then
+              echo "Transient Chrome/CDP startup failure; retrying interaction QA once."
+              sleep 2
+              continue
+            fi
+            exit "$status"
+          done
+          exit "$status"
+
+      - name: Headless Chrome regression QA
+        env:
+          BASE_URL: http://127.0.0.1:4173
+          QA_PAGES: >-
+            index.html,services.html,ecommerce.html,websites.html,brand-content.html,growth.html,
+            custom-systems.html,tharaa.html,portfolio.html,knowledge.html,about.html,contact.html,
+            store-launch.html,storefront-customization.html,store-redesign.html,
+            product-page-optimization.html,ecommerce-growth.html,ecommerce-support.html,404.html
+        shell: bash
+        run: |
+          set +e
+          for attempt in 1 2; do
+            echo "Browser QA attempt ${attempt}/2"
+            node scripts/browser-qa-ci.cjs
+            status=$?
+            if [ "$status" -eq 0 ]; then
+              exit 0
+            fi
+            if [ "$status" -eq 75 ] && [ "$attempt" -eq 1 ]; then
+              echo "Transient Chrome/CDP startup failure; retrying once."
+              sleep 2
+              continue
+            fi
+            exit "$status"
+          done
+          exit "$status"
+
+      - name: Stop local site
+        if: always()
+        shell: bash
+        run: |
+          if [ -f /tmp/ibtikar-http.pid ]; then
+            kill "$(cat /tmp/ibtikar-http.pid)" 2>/dev/null || true
+          fi
+          if [ -f /tmp/ibtikar-http.log ]; then
+            tail -n 80 /tmp/ibtikar-http.log || true
+          fi

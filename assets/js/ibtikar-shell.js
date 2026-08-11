@@ -12,6 +12,15 @@
     const menu = menuFor(toggle);
     if (!toggle || !menu) return;
     toggle.setAttribute('aria-expanded',String(open));
+    if (open) {
+      // Keep the approved opacity/transform animation, but do not let the
+      // visibility transition delay keyboard focus into the disclosed panel.
+      menu.style.transitionProperty = 'opacity, transform';
+      menu.style.visibility = 'visible';
+    } else {
+      menu.style.removeProperty('transition-property');
+      menu.style.removeProperty('visibility');
+    }
     menu.classList.toggle('is-open',open);
     menu.setAttribute('aria-hidden',String(!open));
     if (open) menu.removeAttribute('inert'); else menu.setAttribute('inert','');
@@ -34,6 +43,21 @@
     applyMegaState(toggle,open);
   }
 
+  function focusFirstMegaItem(toggle) {
+    const menu = menuFor(toggle);
+    if (!menu?.classList.contains('is-open')) return;
+    const first = menu.querySelector('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])');
+    if (!first) return;
+    const focusIfOpen = () => {
+      if (!menu.classList.contains('is-open')) return;
+      first.focus({ preventScroll: true });
+    };
+    focusIfOpen();
+    window.setTimeout(() => {
+      if (menu.classList.contains('is-open') && !menu.contains(document.activeElement)) focusIfOpen();
+    }, 0);
+  }
+
   megaToggles.forEach((toggle) => {
     applyMegaState(toggle,false);
     toggle.addEventListener('click',(event) => {
@@ -44,7 +68,7 @@
       if (!['ArrowDown','Enter',' '].includes(event.key)) return;
       event.preventDefault();
       setMega(toggle,true);
-      requestAnimationFrame(() => menuFor(toggle)?.querySelector('a[href],button:not([disabled])')?.focus());
+      focusFirstMegaItem(toggle);
     });
   });
 
@@ -109,6 +133,21 @@
     button.addEventListener('click',() => {
       const open = menu.classList.contains('open');
       if (open) closeMenu(true); else openMenu();
+    });
+    // Explicitly mirror native button keyboard activation. This keeps Enter and
+    // Space reliable in assisted/headless input paths without causing duplicate clicks.
+    button.addEventListener('keydown',(event) => {
+      if (event.key === 'Enter') {
+        event.preventDefault();
+        button.click();
+      } else if (event.key === ' ') {
+        event.preventDefault();
+      }
+    });
+    button.addEventListener('keyup',(event) => {
+      if (event.key !== ' ') return;
+      event.preventDefault();
+      button.click();
     });
     menu.querySelectorAll('a').forEach((link) => link.addEventListener('click',() => closeMenu()));
     menu.querySelectorAll('details').forEach((details) => {
