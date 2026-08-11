@@ -1,0 +1,8 @@
+/* Homepage services reliability/accessibility patch. */
+body.source-home .services-mobile-card[role="link"]{cursor:pointer;outline:none;transition:border-color .22s ease,transform .22s ease,box-shadow .22s ease}
+body.source-home .services-mobile-card[role="link"]:hover{border-color:rgba(141,238,255,.28);transform:translateY(-3px);box-shadow:0 24px 70px rgba(0,0,0,.32)}
+body.source-home .services-mobile-card[role="link"]:focus-visible{border-color:#8deeff;box-shadow:0 0 0 3px rgba(34,211,238,.16),0 24px 70px rgba(0,0,0,.3)}
+body.source-home .home-service-mobile-action{display:inline-flex;align-items:center;margin-top:18px;color:#8deeff;font-size:12px;font-weight:900;letter-spacing:.01em}
+body.source-home .service-scene-copy .scene-link:focus-visible{outline:2px solid #8deeff;outline-offset:6px;border-radius:4px}
+@media(max-width:820px){body.source-home .services-mobile-track:focus-visible{outline:2px solid rgba(141,238,255,.6);outline-offset:5px;border-radius:18px}}
+@media(prefers-reduced-motion:reduce){body.source-home .services-mobile-card[role="link"]{transition:none!important}body.source-home .services-mobile-card[role="link"]:hover{transform:none}}
