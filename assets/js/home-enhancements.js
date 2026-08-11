@@ -1,13 +1,22 @@
 (() => {
   const $ = (selector, scope = document) => scope.querySelector(selector);
+  const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
   function ensureCss() {
-    if ($('link[data-strategy-enhancements]')) return;
-    const link = document.createElement('link');
-    link.rel = 'stylesheet';
-    link.href = 'assets/css/pages/strategy-enhancements.css';
-    link.dataset.strategyEnhancements = 'true';
-    document.head.appendChild(link);
+    if (!$('link[data-strategy-enhancements]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'assets/css/pages/strategy-enhancements.css';
+      link.dataset.strategyEnhancements = 'true';
+      document.head.appendChild(link);
+    }
+    if (!$('link[data-home-services-fix]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'assets/css/pages/home-services-fix.css';
+      link.dataset.homeServicesFix = 'true';
+      document.head.appendChild(link);
+    }
   }
 
   function html(markup) {
@@ -20,34 +29,93 @@
     return node?.closest?.('section') || node;
   }
 
-  function insertAfter(target, node) {
-    if (target?.parentNode && node) target.parentNode.insertBefore(node, target.nextSibling);
-  }
-
   function insertBefore(target, node) {
     if (target?.parentNode && node) target.parentNode.insertBefore(node, target);
+  }
+
+  function insertAfter(target, node) {
+    if (target?.parentNode && node) target.parentNode.insertBefore(node, target.nextSibling);
   }
 
   function action(href, label, primary = false) {
     return `<a class="strategy-action${primary ? ' strategy-action--primary' : ''}" href="${href}">${label}</a>`;
   }
 
+  function repairHomeServices(main) {
+    const cinema = $('.services-cinema', main);
+    if (!cinema || cinema.dataset.homeServicesReady === 'true') return;
+    cinema.dataset.homeServicesReady = 'true';
+    cinema.classList.add('strategy-existing-section', 'strategy-existing-section--services');
+
+    const routes = [
+      { href: 'ecommerce.html', label: 'استكشف المتاجر الإلكترونية' },
+      { href: 'websites.html', label: 'استكشف المواقع وصفحات الهبوط' },
+      { href: 'brand-content.html', label: 'استكشف الهوية والمحتوى' },
+      { href: 'growth.html', label: 'استكشف الظهور والقياس والنمو' },
+      { href: 'custom-systems.html', label: 'استكشف الربط والأتمتة' },
+      { href: 'custom-systems.html', label: 'استكشف الأنظمة والحلول المخصصة' }
+    ];
+
+    $$('.service-scene-copy', cinema).forEach((scene, index) => {
+      const route = routes[index];
+      if (!route) return;
+      const link = $('.scene-link', scene);
+      if (!link) return;
+      link.href = route.href;
+      link.textContent = route.label;
+      link.setAttribute('aria-label', route.label);
+    });
+
+    $$('.services-mobile-card', cinema).forEach((card, index) => {
+      const route = routes[index];
+      if (!route) return;
+      card.dataset.href = route.href;
+      card.setAttribute('role', 'link');
+      card.tabIndex = 0;
+      card.setAttribute('aria-label', `${card.querySelector('h3')?.textContent?.trim() || 'الخدمة'} — ${route.label}`);
+
+      if (!card.querySelector('.home-service-mobile-action')) {
+        const cue = document.createElement('span');
+        cue.className = 'home-service-mobile-action';
+        cue.textContent = `${route.label} ←`;
+        cue.setAttribute('aria-hidden', 'true');
+        card.appendChild(cue);
+      }
+
+      const open = () => { location.href = route.href; };
+      card.addEventListener('click', (event) => {
+        if (event.target.closest('a,button,input,select,textarea')) return;
+        open();
+      });
+      card.addEventListener('keydown', (event) => {
+        if (event.key !== 'Enter' && event.key !== ' ') return;
+        event.preventDefault();
+        open();
+      });
+    });
+
+    const mobileTrack = $('.services-mobile-track', cinema);
+    if (mobileTrack) {
+      mobileTrack.setAttribute('aria-label', 'الخدمات الرئيسية — اسحب للتنقل بين البطاقات');
+      mobileTrack.setAttribute('tabindex', '0');
+    }
+  }
+
   function initHome() {
     const main = $('main');
-    if (!main || $('[data-strategy-home-v3]')) return;
+    if (!main || document.body.dataset.strategyHomeClean === 'true') return;
 
-    const hero = sectionOf($('.hero', main));
     const needs = sectionOf($('.needs-grid', main));
-    const services = sectionOf($('.services-grid', main));
     const tharaa = sectionOf($('.tharaa-section, #tharaa, .thx', main));
     const faq = sectionOf($('.faq-grid', main));
 
-    if (!hero) return;
-    document.body.dataset.strategyHomeV3 = 'true';
-    hero.dataset.strategyHomeV3 = 'true';
+    document.body.dataset.strategyHomeClean = 'true';
 
-    // Keep one useful decision layer only: the visitor's current stage.
-    if (needs && !$('[data-strategy-stage]', main)) {
+    // Keep the homepage focused: do not inject BUILD · BRAND · CONNECT · GROW or KNOWLEDGE.
+    document.querySelector('[data-strategy-home-v3]')?.remove();
+    document.querySelector('[data-strategy-home-knowledge]')?.remove();
+
+    if (needs && !document.querySelector('[data-strategy-stage]')) {
       needs.classList.add('strategy-existing-section', 'strategy-existing-section--goals');
       const stage = html(`
         <section class="strategy-layer strategy-layer--stage" data-strategy-stage>
@@ -55,7 +123,7 @@
             <div class="strategy-head"><span class="strategy-kicker">أين أنت الآن؟</span><h2>ابدأ من حالة مشروعك، ثم نحدد الخدمة المناسبة.</h2><p>لا تحتاج أن تعرف الاسم التقني للحل. اختر الحالة الأقرب، وانتقل مباشرة إلى المسار المناسب.</p></div>
             <div class="strategy-stage-grid">
               <a href="services.html#goals" class="strategy-stage-card"><i>01</i><h3>أطلق مشروعًا جديدًا</h3><p>متجر، موقع أو منتج رقمي يحتاج نقطة بداية واضحة.</p><span>ابدأ من الهدف ←</span></a>
-              <a href="services.html#goals" class="strategy-stage-card"><i>02</i><h3>طوّر مشروعًا قائمًا</h3><p>نراجع الوضع الحالي ونرتب ما يستحق التحسين أولًا.</p><span>استكشف الحلول ←</span></a>
+              <a href="services.html#services" class="strategy-stage-card"><i>02</i><h3>طوّر مشروعًا قائمًا</h3><p>نراجع الوضع الحالي ونرتب ما يستحق التحسين أولًا.</p><span>استكشف الخدمات ←</span></a>
               <a href="contact.html#quote" class="strategy-stage-card"><i>03</i><h3>حل مشكلة محددة</h3><p>صفحة، تجربة، ربط أو قياس يحتاج نطاقًا مركزًا.</p><span>ابدأ الطلب ←</span></a>
               <a href="growth.html" class="strategy-stage-card"><i>04</i><h3>حسّن الظهور والقياس</h3><p>SEO وبيانات وتحسينات تساعد على اتخاذ قرار أفضل.</p><span>مسار النمو ←</span></a>
             </div>
@@ -64,11 +132,9 @@
       insertAfter(needs, stage);
     }
 
-    // Preserve the cinematic service presentation without adding another explanatory block.
-    if (services) services.classList.add('strategy-existing-section', 'strategy-existing-section--services');
+    repairHomeServices(main);
 
-    // Tharaa remains a product highlight; keep the cross-link focused on the product itself.
-    if (tharaa && !$('[data-strategy-product-context]', main)) {
+    if (tharaa && !document.querySelector('[data-strategy-product-context]')) {
       tharaa.classList.add('strategy-existing-section', 'strategy-existing-section--product');
       const productLabel = html(`
         <div class="strategy-product-context" data-strategy-product-context>
