@@ -20,12 +20,12 @@
     return node?.closest?.('section') || node;
   }
 
-  function insertBefore(target, node) {
-    if (target?.parentNode && node) target.parentNode.insertBefore(node, target);
-  }
-
   function insertAfter(target, node) {
     if (target?.parentNode && node) target.parentNode.insertBefore(node, target.nextSibling);
+  }
+
+  function insertBefore(target, node) {
+    if (target?.parentNode && node) target.parentNode.insertBefore(node, target);
   }
 
   function action(href, label, primary = false) {
@@ -39,101 +39,46 @@
     const hero = sectionOf($('.hero', main));
     const needs = sectionOf($('.needs-grid', main));
     const services = sectionOf($('.services-grid', main));
-    const platforms = $('.platforms', main);
     const tharaa = sectionOf($('.tharaa-section, #tharaa, .thx', main));
-    const portfolio = sectionOf($('.portfolio-grid', main));
-    const process = sectionOf($('.process-line', main));
     const faq = sectionOf($('.faq-grid', main));
-    const finalCta = $('.cta-section', main) || sectionOf($('.cta-card', main));
 
     if (!hero) return;
     document.body.dataset.strategyHomeV3 = 'true';
+    hero.dataset.strategyHomeV3 = 'true';
 
-    const promise = html(`
-      <section class="strategy-layer strategy-layer--home-intro" data-strategy-home-v3 aria-labelledby="strategyPromiseTitle">
-        <div class="strategy-shell">
-          <div class="strategy-compact-head">
-            <div><span class="strategy-kicker">BUILD · BRAND · CONNECT · GROW</span><h2 id="strategyPromiseTitle">منظومة واحدة، ونقطة البداية تتغير حسب هدفك.</h2></div>
-            <p>الرئيسية تشرح ابتكار تك كمنظومة متكاملة. التفاصيل التخصصية تبقى داخل صفحات التصنيفات مثل المتاجر الإلكترونية والمواقع والهوية.</p>
-          </div>
-          <div class="strategy-outcome-rail" aria-label="مسارات ابتكار تك">
-            <a href="services.html#goals"><b>01</b><span><strong>أطلق</strong><small>متجر، موقع أو منتج رقمي</small></span></a>
-            <a href="brand-content.html"><b>02</b><span><strong>ابنِ علامتك</strong><small>هوية ومحتوى وتجربة متماسكة</small></span></a>
-            <a href="custom-systems.html"><b>03</b><span><strong>اربط</strong><small>الأنظمة والبيانات والعمليات</small></span></a>
-            <a href="growth.html"><b>04</b><span><strong>نمِّ</strong><small>SEO وقياس وتحسين مستمر</small></span></a>
-          </div>
-        </div>
-      </section>`);
-    insertAfter(hero, promise);
-
-    if (needs) {
+    // Keep one useful decision layer only: the visitor's current stage.
+    if (needs && !$('[data-strategy-stage]', main)) {
       needs.classList.add('strategy-existing-section', 'strategy-existing-section--goals');
       const stage = html(`
         <section class="strategy-layer strategy-layer--stage" data-strategy-stage>
           <div class="strategy-shell">
-            <div class="strategy-head"><span class="strategy-kicker">أين أنت الآن؟</span><h2>مرحلة مشروعك تحدد نقطة البداية، لا اسم الخدمة.</h2><p>هذا القسم عام لكل ابتكار تك: مشروع جديد، مشروع قائم، مشكلة محددة، أو مرحلة توسع.</p></div>
+            <div class="strategy-head"><span class="strategy-kicker">أين أنت الآن؟</span><h2>ابدأ من حالة مشروعك، ثم نحدد الخدمة المناسبة.</h2><p>لا تحتاج أن تعرف الاسم التقني للحل. اختر الحالة الأقرب، وانتقل مباشرة إلى المسار المناسب.</p></div>
             <div class="strategy-stage-grid">
-              <a href="services.html#goals" class="strategy-stage-card"><i>01</i><h3>فكرة أو مشروع جديد</h3><p>نحدد الحل المناسب والبنية والمنصة والنطاق.</p><span>ابدأ من الهدف ←</span></a>
-              <a href="services.html#goals" class="strategy-stage-card"><i>02</i><h3>مشروع قائم يحتاج تطويرًا</h3><p>نراجع الوضع الحالي ونرتب الأولويات.</p><span>استكشف الحلول ←</span></a>
-              <a href="contact.html#quote" class="strategy-stage-card"><i>03</i><h3>مشكلة محددة</h3><p>نحوّل المشكلة إلى نطاق تنفيذ مركز.</p><span>اطلب تشخيصًا ←</span></a>
-              <a href="growth.html" class="strategy-stage-card"><i>04</i><h3>جاهز للتوسع</h3><p>قياس وربط وتحسين يساعد على اتخاذ قرارات أفضل.</p><span>مسار النمو ←</span></a>
+              <a href="services.html#goals" class="strategy-stage-card"><i>01</i><h3>أطلق مشروعًا جديدًا</h3><p>متجر، موقع أو منتج رقمي يحتاج نقطة بداية واضحة.</p><span>ابدأ من الهدف ←</span></a>
+              <a href="services.html#goals" class="strategy-stage-card"><i>02</i><h3>طوّر مشروعًا قائمًا</h3><p>نراجع الوضع الحالي ونرتب ما يستحق التحسين أولًا.</p><span>استكشف الحلول ←</span></a>
+              <a href="contact.html#quote" class="strategy-stage-card"><i>03</i><h3>حل مشكلة محددة</h3><p>صفحة، تجربة، ربط أو قياس يحتاج نطاقًا مركزًا.</p><span>ابدأ الطلب ←</span></a>
+              <a href="growth.html" class="strategy-stage-card"><i>04</i><h3>حسّن الظهور والقياس</h3><p>SEO وبيانات وتحسينات تساعد على اتخاذ قرار أفضل.</p><span>مسار النمو ←</span></a>
             </div>
           </div>
         </section>`);
       insertAfter(needs, stage);
     }
 
-    if (services) {
-      services.classList.add('strategy-existing-section', 'strategy-existing-section--services');
-      const context = html(`
-        <div class="strategy-cinema-context strategy-cinema-context--floating" data-strategy-services-context>
-          <div><span class="strategy-kicker">SERVICES / EXPERIENCE</span><strong>استكشف المنظومة بصريًا، ثم ادخل إلى التصنيف الذي يهمك.</strong><p>الرئيسية تعرض العائلات فقط؛ التفاصيل مثل السرعة والجوال وصفحة المنتج والمنصات تبقى في صفحة المتاجر الإلكترونية.</p></div>
-          <div class="strategy-chip-row"><a href="services.html">كل الحلول والخدمات</a><a href="ecommerce.html">المتاجر الإلكترونية</a><a href="websites.html">المواقع</a><a href="brand-content.html">الهوية والمحتوى</a></div>
-        </div>`);
-      insertBefore(services, context);
-    }
+    // Preserve the cinematic service presentation without adding another explanatory block.
+    if (services) services.classList.add('strategy-existing-section', 'strategy-existing-section--services');
 
-    if (tharaa) {
+    // Tharaa remains a product highlight; keep the cross-link focused on the product itself.
+    if (tharaa && !$('[data-strategy-product-context]', main)) {
       tharaa.classList.add('strategy-existing-section', 'strategy-existing-section--product');
       const productLabel = html(`
         <div class="strategy-product-context" data-strategy-product-context>
-          <div><span class="strategy-kicker">ORIGINAL PRODUCT</span><strong>ثراء منتج مستقل داخل منظومة ابتكار تك.</strong><p>يبقى له حضور واضح في الرئيسية لأنه منتج مملوك لابتكار تك، بينما تفاصيل المتاجر وخدمات سلة تبقى في صفحاتها المتخصصة.</p></div>
-          <div class="strategy-actions">${action('tharaa.html','صفحة ثراء',true)}${action('tharaa.html#v4-preview','المعاينة')}${action('contact.html#quote','تركيب وتخصيص')}</div>
+          <div><span class="strategy-kicker">ORIGINAL PRODUCT</span><strong>ثيم ثراء — منتج من ابتكار تك لمتاجر سلة.</strong><p>ثيم يركز على الهوية وتجربة المنتج والجوال للمتاجر التي تعتمد على الصورة والعرض الراقي.</p></div>
+          <div class="strategy-actions">${action('tharaa.html','استكشف ثيم ثراء',true)}</div>
         </div>`);
       insertBefore(tharaa, productLabel);
     }
 
-    if (portfolio) {
-      const evidence = html(`
-        <div class="strategy-evidence-bar" data-strategy-evidence>
-          <div><span class="strategy-kicker">EVIDENCE FIRST</span><strong>الأعمال تُعرض كحالات، لا كصور فقط.</strong></div>
-          <p>عند توفر الدليل: المشكلة → ما نفذناه → النتيجة القابلة للإثبات. لا نعرض نسب نمو أو شعارات عملاء بلا مصدر وإذن.</p>
-          <a href="portfolio.html">استكشف الأعمال ←</a>
-        </div>`);
-      insertAfter(portfolio, evidence);
-    }
-
-    if (process) {
-      const continuity = html(`
-        <div class="strategy-continuity" data-strategy-continuity>
-          <span>بعد التسليم</span><strong>التوثيق والدعم والتحسين جزء من الرحلة.</strong><p>الرئيسية تذكر المبدأ فقط؛ نطاق الدعم الفعلي يظهر في صفحة الخدمة أو المنتج المعني.</p>
-        </div>`);
-      insertAfter(process, continuity);
-    }
-
-    if (finalCta) {
-      const knowledge = html(`
-        <section class="strategy-layer strategy-layer--knowledge" data-strategy-home-knowledge>
-          <div class="strategy-shell">
-            <div class="strategy-compact-head"><div><span class="strategy-kicker">KNOWLEDGE</span><h2>المعرفة تساعد القرار قبل التواصل.</h2></div><p>مقالات وأدلة ودراسات حالة وFAQ وموارد مرتبطة بالحلول والمنتجات، دون تحويل الرئيسية إلى مركز محتوى كامل.</p></div>
-            <div class="strategy-knowledge-grid"><a href="knowledge.html#articles"><b>01</b><strong>مقالات</strong><span>أسئلة البحث والاختيار</span></a><a href="knowledge.html#guides"><b>02</b><strong>أدلة</strong><span>قبل شراء خدمة أو منتج</span></a><a href="knowledge.html#cases"><b>03</b><strong>دراسات حالة</strong><span>نتائج موثقة عند توفرها</span></a><a href="knowledge.html#faq"><b>04</b><strong>FAQ</strong><span>إجابات قرار سريعة</span></a><a href="knowledge.html#resources"><b>05</b><strong>موارد</strong><span>قوالب وأدوات مستقبلية</span></a></div>
-          </div>
-        </section>`);
-      insertBefore(finalCta, knowledge);
-    }
-
     if (faq) faq.classList.add('strategy-existing-section', 'strategy-existing-section--faq');
-    if (platforms) platforms.classList.add('strategy-platforms-original');
   }
 
   function init() {
