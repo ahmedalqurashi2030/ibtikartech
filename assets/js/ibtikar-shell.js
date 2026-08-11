@@ -38,7 +38,15 @@
     const menu = menuFor(toggle);
     if (!menu?.classList.contains('is-open')) return;
     const first = menu.querySelector('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])');
-    first?.focus({ preventScroll: true });
+    if (!first) return;
+    const focusIfOpen = () => {
+      if (!menu.classList.contains('is-open')) return;
+      first.focus({ preventScroll: true });
+    };
+    focusIfOpen();
+    window.setTimeout(() => {
+      if (menu.classList.contains('is-open') && !menu.contains(document.activeElement)) focusIfOpen();
+    }, 0);
   }
 
   megaToggles.forEach((toggle) => {
