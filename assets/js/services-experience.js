@@ -187,6 +187,15 @@
     const slides = [...track.querySelectorAll('.fast-discovery-slide')];
     let activeIndex = 0;
     let dragMoved = false;
+    let programmaticScrollUntil = 0;
+
+    const renderActive = (index) => {
+      activeIndex = Math.max(0, Math.min(slides.length - 1, index));
+      slides.forEach((slide, slideIndex) => slide.classList.toggle('is-active', slideIndex === activeIndex));
+      controls.querySelector('[data-fast-current]').textContent = String(activeIndex + 1).padStart(2, '0');
+      controls.querySelector('[data-fast-prev]').disabled = activeIndex === 0;
+      controls.querySelector('[data-fast-next]').disabled = activeIndex === slides.length - 1;
+    };
 
     const syncActive = () => {
       if (!slides.length) return;
@@ -209,17 +218,14 @@
         });
       }
 
-      activeIndex = nearest;
-      slides.forEach((slide, index) => slide.classList.toggle('is-active', index === activeIndex));
-      controls.querySelector('[data-fast-current]').textContent = String(activeIndex + 1).padStart(2, '0');
-      controls.querySelector('[data-fast-prev]').disabled = activeIndex === 0;
-      controls.querySelector('[data-fast-next]').disabled = activeIndex === slides.length - 1;
+      renderActive(nearest);
     };
 
     const goTo = (index) => {
-      activeIndex = Math.max(0, Math.min(slides.length - 1, index));
-      slides[activeIndex]?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block:'nearest', inline:'center' });
-      window.setTimeout(syncActive, reducedMotion ? 0 : 260);
+      const nextIndex = Math.max(0, Math.min(slides.length - 1, index));
+      renderActive(nextIndex);
+      programmaticScrollUntil = performance.now() + (reducedMotion ? 100 : 420);
+      slides[nextIndex]?.scrollIntoView({ behavior: reducedMotion ? 'auto' : 'smooth', block:'nearest', inline:'nearest' });
     };
 
     controls.querySelector('[data-fast-prev]').addEventListener('click', () => goTo(activeIndex - 1));
@@ -227,6 +233,7 @@
 
     let scrollTimer = 0;
     track.addEventListener('scroll', () => {
+      if (performance.now() < programmaticScrollUntil) return;
       clearTimeout(scrollTimer);
       scrollTimer = window.setTimeout(syncActive, 80);
     }, { passive:true });
@@ -236,6 +243,7 @@
     let startScroll = 0;
     track.addEventListener('pointerdown', (event) => {
       if (event.pointerType === 'touch' || event.button !== 0) return;
+      programmaticScrollUntil = 0;
       pointerId = event.pointerId;
       startX = event.clientX;
       startScroll = track.scrollLeft;
@@ -264,16 +272,15 @@
       event.stopPropagation();
       dragMoved = false;
     }, true);
+    track.addEventListener('wheel', () => { programmaticScrollUntil = 0; }, { passive:true });
+    track.addEventListener('touchstart', () => { programmaticScrollUntil = 0; }, { passive:true });
     track.addEventListener('keydown', (event) => {
       if (event.key === 'ArrowLeft') { event.preventDefault(); goTo(activeIndex + 1); }
       else if (event.key === 'ArrowRight') { event.preventDefault(); goTo(activeIndex - 1); }
     });
 
     moveBeforeFinalSection(catalogSection);
-    slides.forEach((slide, index) => slide.classList.toggle('is-active', index === 0));
-    controls.querySelector('[data-fast-current]').textContent = '01';
-    controls.querySelector('[data-fast-prev]').disabled = true;
-    controls.querySelector('[data-fast-next]').disabled = slides.length <= 1;
+    renderActive(0);
   }
 
   enhancePrimaryCinema();
