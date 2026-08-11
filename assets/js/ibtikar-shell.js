@@ -48,6 +48,13 @@
     link.setAttribute('aria-controls',menu.id);
 
     root.addEventListener('focusin',() => setMega(toggle,true));
+    root.addEventListener('focusout',(event) => {
+      const next = event.relatedTarget;
+      if (next && root.contains(next)) return;
+      requestAnimationFrame(() => {
+        if (!root.contains(document.activeElement)) setMega(toggle,false);
+      });
+    });
     if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
       root.addEventListener('pointerenter',() => setMega(toggle,true));
       root.addEventListener('pointerleave',() => setMega(toggle,false));
@@ -130,8 +137,10 @@
   });
 
   managedThemeButtons.forEach((button) => {
-    const saved = localStorage.getItem('ibtikar-theme');
-    if (saved) document.documentElement.dataset.theme = saved;
+    try {
+      const saved = localStorage.getItem('ibtikar-theme');
+      if (saved) document.documentElement.dataset.theme = saved;
+    } catch (_) {}
     button.addEventListener('click',() => {
       const next = document.documentElement.dataset.theme === 'dark' ? 'light' : 'dark';
       document.documentElement.dataset.theme = next;
