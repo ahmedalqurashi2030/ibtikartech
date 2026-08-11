@@ -260,7 +260,10 @@
     });
 
     moveBeforeFinalSection(catalogSection);
-    syncActive();
+    slides.forEach((slide, index) => slide.classList.toggle('is-active', index === 0));
+    controls.querySelector('[data-fast-current]').textContent = '01';
+    controls.querySelector('[data-fast-prev]').disabled = true;
+    controls.querySelector('[data-fast-next]').disabled = slides.length <= 1;
   }
 
   enhancePrimaryCinema();
