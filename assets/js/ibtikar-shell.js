@@ -34,6 +34,13 @@
     applyMegaState(toggle,open);
   }
 
+  function focusFirstMegaItem(toggle) {
+    const menu = menuFor(toggle);
+    if (!menu?.classList.contains('is-open')) return;
+    const first = menu.querySelector('a[href],button:not([disabled]),[tabindex]:not([tabindex="-1"])');
+    first?.focus({ preventScroll: true });
+  }
+
   megaToggles.forEach((toggle) => {
     applyMegaState(toggle,false);
     toggle.addEventListener('click',(event) => {
@@ -44,7 +51,7 @@
       if (!['ArrowDown','Enter',' '].includes(event.key)) return;
       event.preventDefault();
       setMega(toggle,true);
-      requestAnimationFrame(() => menuFor(toggle)?.querySelector('a[href],button:not([disabled])')?.focus());
+      focusFirstMegaItem(toggle);
     });
   });
 
