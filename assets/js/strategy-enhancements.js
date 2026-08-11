@@ -3,6 +3,7 @@
 
   const PATH = (location.pathname.split('/').pop() || 'index.html').toLowerCase();
   const $ = (selector, scope = document) => scope.querySelector(selector);
+  const $$ = (selector, scope = document) => [...scope.querySelectorAll(selector)];
 
   function ensureCss() {
     if ($('link[data-strategy-enhancements]')) return;
@@ -61,6 +62,48 @@
   }
 
   /* ------------------------------------------------------------------------
+     PRODUCT PAGE OPTIMIZATION
+     The approved source page keeps its original visual layout. Here we only
+     correct legacy navigation and related-service routes so every CTA lands
+     on the current information architecture.
+     ------------------------------------------------------------------------ */
+  function initProductPage() {
+    if (PATH !== 'product-page-optimization.html') return;
+
+    const breadcrumb = $('.svc-breadcrumb');
+    const breadcrumbLinks = breadcrumb ? $$('a', breadcrumb) : [];
+    if (breadcrumbLinks[0]) {
+      breadcrumbLinks[0].href = 'index.html';
+      breadcrumbLinks[0].textContent = 'الرئيسية';
+    }
+    if (breadcrumbLinks[1]) {
+      breadcrumbLinks[1].href = 'services.html';
+      breadcrumbLinks[1].textContent = 'الحلول والخدمات';
+    }
+
+    $$('.related-grid article').forEach((card) => {
+      const title = (card.querySelector('h3')?.textContent || '').trim();
+      const link = card.querySelector('a');
+      if (!link) return;
+      if (title.includes('تحسين تجربة الجوال')) link.href = 'storefront-customization.html';
+      if (title.includes('تصميم البنرات والمحتوى')) link.href = 'brand-content.html';
+      if (title.includes('التحليلات والتتبع')) link.href = 'ecommerce-growth.html';
+      if (title.includes('تطوير المتجر القائم')) link.href = 'store-redesign.html';
+    });
+
+    const contactSection = $('#service-contact');
+    if (contactSection) {
+      $$('a', contactSection).forEach((link, index) => {
+        link.href = 'contact.html#quote';
+        link.removeAttribute('target');
+        link.removeAttribute('rel');
+        if (index === 0) link.textContent = 'ابدأ تقييم صفحة المنتج';
+        if (index === 1) link.textContent = 'ابدأ مشروعك';
+      });
+    }
+  }
+
+  /* ------------------------------------------------------------------------
      THARAA
      Keep only two useful merchandising layers that do not depend on missing
      price/version/support metadata: sector fit and launch recipes.
@@ -115,6 +158,7 @@
   function init() {
     ensureCss();
     initServices();
+    initProductPage();
     initTharaa();
   }
 
