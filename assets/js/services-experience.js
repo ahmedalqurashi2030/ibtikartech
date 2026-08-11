@@ -2,8 +2,8 @@
   'use strict';
 
   if (!document.body.classList.contains('source-services')) return;
-  if (window.__ibtikarServicesExperienceV3) return;
-  window.__ibtikarServicesExperienceV3 = true;
+  if (window.__ibtikarServicesExperienceV4) return;
+  window.__ibtikarServicesExperienceV4 = true;
 
   const reducedMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
   const main = document.querySelector('main');
@@ -17,6 +17,8 @@
       title: 'المتاجر الإلكترونية',
       description: 'إطلاق وتطوير تجربة متجر واضحة من الواجهة وصفحة المنتج حتى القياس والتحسين.',
       href: 'ecommerce.html',
+      image: 'assets/images/services/ecommerce/store-launch.svg',
+      imageAlt: 'تصميم توضيحي لخدمة إطلاق وتطوير المتاجر الإلكترونية',
       tags: ['إطلاق', 'تخصيص', 'CRO']
     },
     {
@@ -26,6 +28,8 @@
       title: 'المواقع وصفحات الهبوط',
       description: 'مواقع شركات وصفحات هبوط سريعة ومنظمة توضّح القيمة وتقود إلى الإجراء.',
       href: 'websites.html',
+      image: 'assets/images/services/discovery/web-experience.svg',
+      imageAlt: 'تصميم توضيحي لواجهة موقع إلكتروني حديث',
       tags: ['Web', 'Landing', 'Content']
     },
     {
@@ -35,6 +39,8 @@
       title: 'التطبيقات والأنظمة المخصصة',
       description: 'منتجات ولوحات وأنظمة رقمية مبنية حول العمليات الحقيقية للمشروع.',
       href: 'custom-systems.html',
+      image: 'assets/images/services/discovery/custom-systems.svg',
+      imageAlt: 'تصميم توضيحي للأنظمة المخصصة ولوحات التحكم',
       tags: ['Apps', 'Dashboards', 'APIs']
     },
     {
@@ -44,6 +50,8 @@
       title: 'الهوية والمحتوى',
       description: 'هوية بصرية ولفظية ومحتوى يحافظ على اتساق العلامة عبر نقاط الاتصال.',
       href: 'brand-content.html',
+      image: 'assets/images/services/discovery/brand-content.svg',
+      imageAlt: 'تصميم توضيحي للهوية البصرية والمحتوى الرقمي',
       tags: ['Brand', 'Identity', 'Content']
     },
     {
@@ -53,6 +61,8 @@
       title: 'الظهور والقياس والنمو',
       description: 'SEO وتتبع وقياس وتحسين مستمر يساعد على اتخاذ قرارات مبنية على البيانات.',
       href: 'growth.html',
+      image: 'assets/images/services/discovery/growth-measurement.svg',
+      imageAlt: 'تصميم توضيحي للتحليلات والقياس والنمو',
       tags: ['SEO', 'GA4', 'Optimization']
     },
     {
@@ -62,6 +72,8 @@
       title: 'الربط والأتمتة',
       description: 'ربط الأنظمة والقنوات والبيانات لتقليل العمل اليدوي ورفع كفاءة التشغيل.',
       href: 'custom-systems.html',
+      image: 'assets/images/services/discovery/automation-connect.svg',
+      imageAlt: 'تصميم توضيحي لربط الأنظمة والأتمتة',
       tags: ['Automation', 'Webhooks', 'CRM']
     }
   ];
@@ -143,8 +155,8 @@
           <span class="fast-discovery-slide__number">${family.index}</span>
           <small>${family.eyebrow}</small>
         </div>
-        <div class="fast-discovery-slide__visual" aria-hidden="true">
-          <i></i><i></i><i></i><i></i>
+        <div class="fast-discovery-slide__image">
+          <img src="${family.image}" alt="${family.imageAlt}" loading="lazy" decoding="async">
         </div>
         <h3>${family.title}</h3>
         <p>${family.description}</p>
@@ -163,18 +175,18 @@
     const kicker = heading?.querySelector('.strategy-kicker');
     const title = heading?.querySelector('h2');
     const description = heading?.querySelector('p');
-    if (kicker) kicker.textContent = 'FAST DISCOVERY';
-    if (title) title.textContent = 'الخدمات الرئيسية في شرائح سريعة.';
-    if (description) description.textContent = 'هذا القسم للاكتشاف السريع فقط: اسحب الشرائح أو استخدم الأسهم، ثم افتح صفحة الخدمة. التفاصيل والمشهد الإبداعي موجودان في القسم السينمائي أعلاه.';
+    if (kicker) kicker.textContent = 'بعض خدماتنا المتنوعة';
+    if (title) title.textContent = 'استكشف الخدمة المناسبة لمشروعك.';
+    if (description) description.textContent = 'مجموعة مختارة من خدمات ابتكار تك في شرائح واضحة وسريعة. اسحب البطاقات أو استخدم الأسهم ثم افتح صفحة الخدمة لمعرفة التفاصيل.';
 
-    // FAST DISCOVERY is intentionally a simple slider, not a search/catalog or cinematic scene.
+    // This section is intentionally a clean service slider: no filters, search, canvas or sticky cinema.
     catalogSection.querySelector('.strategy-filterbar')?.remove();
     catalogSection.querySelector('.strategy-scope-note')?.remove();
 
     const track = catalogSection.querySelector('.strategy-service-catalog');
     if (!track) return;
     track.className = 'fast-discovery-track';
-    track.setAttribute('aria-label', 'شرائح الخدمات الرئيسية');
+    track.setAttribute('aria-label', 'بعض خدمات ابتكار تك المتنوعة');
     track.tabIndex = 0;
     buildFastDiscoverySlides(track);
 
@@ -192,7 +204,6 @@
     let activeIndex = 0;
     let dragMoved = false;
 
-    const visibleWidth = () => slides[0]?.getBoundingClientRect().width || 320;
     const syncActive = () => {
       if (!slides.length) return;
       const rect = track.getBoundingClientRect();
@@ -277,8 +288,6 @@
       }
     });
 
-    // Avoid accidental auto-cinema behavior: no autoplay, canvas or sticky state is attached here.
-    track.style.setProperty('--fast-slide-width', `${Math.round(visibleWidth())}px`);
     moveBeforeFinalSection(catalogSection);
     syncActive();
   }
