@@ -173,6 +173,23 @@
     });
   }
 
+  if (document.body.classList.contains('source-services')) {
+    if (!document.querySelector('link[data-services-experience]')) {
+      const link = document.createElement('link');
+      link.rel = 'stylesheet';
+      link.href = 'assets/css/pages/services-experience.css';
+      link.dataset.servicesExperience = 'true';
+      document.head.appendChild(link);
+    }
+    if (!document.querySelector('script[data-services-experience]')) {
+      const script = document.createElement('script');
+      script.src = 'assets/js/services-experience.js';
+      script.async = false;
+      script.dataset.servicesExperience = 'true';
+      document.body.appendChild(script);
+    }
+  }
+
   if (document.body.classList.contains('source-ecommerce')) {
     const detailRoutes = new Map([
       ['service-launch', 'store-launch.html'],
