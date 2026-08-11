@@ -1,0 +1,61 @@
+name: Frontend QA
+
+on:
+  push:
+  pull_request:
+
+permissions:
+  contents: read
+
+jobs:
+  frontend-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 15
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: JavaScript syntax
+        shell: bash
+        run: |
+          set -euo pipefail
+          find assets/js scripts -type f \( -name '*.js' -o -name '*.cjs' \) -print0 \
+            | xargs -0 -n1 node --check
+
+      - name: Static frontend QA
+        run: node scripts/static-qa.cjs
+
+      - name: Start local site
+        shell: bash
+        run: |
+          python3 -m http.server 4173 --bind 127.0.0.1 > /tmp/ibtikar-http.log 2>&1 &
+          echo $! > /tmp/ibtikar-http.pid
+          for i in {1..30}; do
+            if curl --fail --silent http://127.0.0.1:4173/index.html > /dev/null; then
+              exit 0
+            fi
+            sleep 0.25
+          done
+          cat /tmp/ibtikar-http.log
+          exit 1
+
+      - name: Headless Chrome regression QA
+        env:
+          BASE_URL: http://127.0.0.1:4173
+        run: node scripts/browser-qa.cjs
+
+      - name: Stop local site
+        if: always()
+        shell: bash
+        run: |
+          if [ -f /tmp/ibtikar-http.pid ]; then
+            kill "$(cat /tmp/ibtikar-http.pid)" 2>/dev/null || true
+          fi
+          if [ -f /tmp/ibtikar-http.log ]; then
+            tail -n 80 /tmp/ibtikar-http.log || true
+          fi
