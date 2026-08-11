@@ -39,13 +39,10 @@
   const syncDynamicContent = (scope = document) => {
     if (scope instanceof HTMLAnchorElement) rewriteLink(scope);
     scope.querySelectorAll?.('a[href]').forEach(rewriteLink);
-
-    // Normalize naming across category breadcrumbs.
     scope.querySelectorAll?.('.breadcrumbs a[href="services.html"], .service-detail-breadcrumb a[href="services.html"]').forEach((link) => {
       link.textContent = 'الحلول والخدمات';
     });
 
-    // Services catalog used to point to a retired standalone Salla page.
     if (page === 'services') {
       scope.querySelectorAll?.('.strategy-service-card').forEach((card) => {
         const heading = card.querySelector('h3');
@@ -87,9 +84,7 @@
 
     const platformSection = document.getElementById('platforms');
     const platformIntro = platformSection?.querySelector('.platform-heading p');
-    if (platformIntro) {
-      platformIntro.textContent = 'المنصة عامل تنفيذ داخل الخدمة، وليست مسارًا منفصلًا حاليًا. نحدد ما يناسب مشروعك وفق التشغيل والتخصيص والقيود، ويمكن إضافة صفحات متخصصة للمنصات مستقبلًا عندما تصبح لها قيمة مستقلة.';
-    }
+    if (platformIntro) platformIntro.textContent = 'المنصة عامل تنفيذ داخل الخدمة، وليست مسارًا منفصلًا حاليًا. نحدد ما يناسب مشروعك وفق التشغيل والتخصيص والقيود، ويمكن إضافة صفحات متخصصة للمنصات مستقبلًا عندما تصبح لها قيمة مستقلة.';
     platformSection?.querySelectorAll('.platform-card').forEach((card) => {
       const link = card.querySelector('a');
       if (!link) return;
@@ -97,13 +92,9 @@
       link.textContent = 'استكشف الخدمات المناسبة';
       link.setAttribute('aria-label', `استكشف خدمات المتاجر المناسبة لـ ${card.querySelector('h3')?.textContent?.trim() || 'هذه المنصة'}`);
     });
-
     const finalCta = document.querySelector('.page-cta .cta-actions');
     const secondary = finalCta?.querySelector('.btn-outline');
-    if (secondary) {
-      secondary.href = '#platforms';
-      secondary.textContent = 'المنصات التي نعمل عليها';
-    }
+    if (secondary) { secondary.href = '#platforms'; secondary.textContent = 'المنصات التي نعمل عليها'; }
   }
 
   if (document.body.classList.contains('inner-page') && !document.querySelector('.ibt-page-progress')) {
@@ -119,16 +110,44 @@
       bar.style.transform = `scaleX(${Math.max(0,Math.min(1,scrollY/max))})`;
       ticking = false;
     };
-    addEventListener('scroll',() => {
-      if (ticking) return;
-      ticking = true;
-      requestAnimationFrame(update);
-    },{passive:true});
+    addEventListener('scroll',() => { if (!ticking) { ticking = true; requestAnimationFrame(update); } },{passive:true});
     addEventListener('resize',update,{passive:true});
     update();
   }
 
   if (categoryPages.has(page)) {
+    if (!document.querySelector('link[data-category-signatures]')) {
+      const css = document.createElement('link');
+      css.rel = 'stylesheet';
+      css.href = 'assets/css/pages/category-signatures.css';
+      css.dataset.categorySignatures = 'true';
+      document.head.appendChild(css);
+    }
+
+    const signatures = {
+      websites: `
+        <section class="category-signature" id="category-signature" aria-labelledby="categorySignatureTitle">
+          <div class="category-signature__grid"><div class="category-signature__copy"><span>WEBSITE ARCHITECTURE LAB</span><h2 id="categorySignatureTitle">الموقع القوي يبدأ من المعمار، لا من شكل الصفحة الأولى.</h2><p>نربط الرسالة بهندسة المحتوى ومسار المستخدم والأداء والـSEO والتحويل، ثم نختار التقنية التي تخدم هذا النظام بدل أن تقوده.</p><div class="category-signature__chips"><span>Message</span><span>Information Architecture</span><span>Performance</span><span>SEO</span><span>Conversion</span></div></div><div class="signature-stage" aria-hidden="true"><div class="signature-stage__bar"><span>IBTIKAR / WEBSITE BLUEPRINT</span><div class="signature-stage__dots"><i></i><i></i><i></i></div></div><div class="website-blueprint"><div class="website-sitemap"><strong>SITEMAP</strong><span>الرئيسية</span><span>الحلول</span><span>دراسة حالة</span><span>المعرفة</span><span>التواصل</span></div><div class="website-canvas"><div class="website-nav"></div><div class="website-hero-block"></div><div class="website-blocks"><i></i><i></i><i></i></div></div></div></div></div>
+        </section>`,
+      'brand-content': `
+        <section class="category-signature" id="category-signature" aria-labelledby="categorySignatureTitle">
+          <div class="category-signature__grid"><div class="category-signature__copy"><span>BRAND SYSTEM STUDIO</span><h2 id="categorySignatureTitle">الهوية ليست شعارًا؛ هي قواعد تجعل العلامة تتصرف بصوت وشكل واحد.</h2><p>نربط الاستراتيجية باللغة البصرية ونبرة المحتوى والواجهات الرقمية، بحيث يستطيع الفريق إنتاج نقاط اتصال جديدة دون أن تبدأ العلامة من الصفر في كل مرة.</p><div class="category-signature__chips"><span>Strategy</span><span>Visual Language</span><span>Voice</span><span>Content</span><span>Digital UI</span></div></div><div class="signature-stage" aria-hidden="true"><div class="signature-stage__bar"><span>IBTIKAR / BRAND SYSTEM</span><div class="signature-stage__dots"><i></i><i></i><i></i></div></div><div class="brand-studio"><div class="brand-board"><div class="brand-palette"><i></i><i></i><i></i><i></i></div><div class="brand-type"><strong>ابتكار تك</strong><span>TYPE / HIERARCHY / RHYTHM</span></div><div class="brand-voice"><span>واضح</span><span>خبير</span><span>عملي</span><span>تقني</span><span>بشري</span></div></div><div class="brand-preview"><div class="brand-preview__mark"></div><strong>نظام واحد</strong><small>BRAND → CONTENT → INTERFACE</small></div></div></div></div>
+        </section>`,
+      growth: `
+        <section class="category-signature" id="category-signature" aria-labelledby="categorySignatureTitle">
+          <div class="category-signature__grid"><div class="category-signature__copy"><span>MEASUREMENT LOOP</span><h2 id="categorySignatureTitle">النمو دورة تعلّم، لا قناة إعلانية واحدة.</h2><p>نبدأ من القياس والفرضية، نختار التدخل المناسب، نراقب الإشارة ثم نقرر: نثبت، نعدل أو نتوقف. بهذا يصبح SEO والمحتوى والتحسين أدوات داخل نظام قرار.</p><div class="category-signature__chips"><span>Acquire</span><span>Measure</span><span>Learn</span><span>Improve</span><span>Repeat</span></div></div><div class="signature-stage" aria-hidden="true"><div class="signature-stage__bar"><span>IBTIKAR / GROWTH LOOP</span><div class="signature-stage__dots"><i></i><i></i><i></i></div></div><div class="growth-loop"><div class="growth-ring"><div class="growth-core">MEASURE<br>→ LEARN</div><span class="growth-node"><b>ACQUIRE</b>بحث ومحتوى</span><span class="growth-node"><b>ENGAGE</b>تجربة ورسالة</span><span class="growth-node"><b>CONVERT</b>قرار وإجراء</span><span class="growth-node"><b>IMPROVE</b>فرضية جديدة</span></div><div class="growth-signal"></div></div></div></div>
+        </section>`,
+      'custom-systems': `
+        <section class="category-signature" id="category-signature" aria-labelledby="categorySignatureTitle">
+          <div class="category-signature__grid"><div class="category-signature__copy"><span>WORKFLOW ARCHITECTURE</span><h2 id="categorySignatureTitle">الأتمتة الجيدة تبدأ من فهم العملية قبل كتابة الكود.</h2><p>نرسم نقطة البداية والقرار والأنظمة والاستثناءات والأثر المطلوب، ثم نحدد أين يكفي ربط بسيط وأين يحتاج المشروع إلى منطق أو نظام مخصص.</p><div class="category-signature__chips"><span>Trigger</span><span>Rules</span><span>Systems</span><span>Exceptions</span><span>Audit</span></div></div><div class="signature-stage" aria-hidden="true"><div class="signature-stage__bar"><span>IBTIKAR / WORKFLOW MAP</span><div class="signature-stage__dots"><i></i><i></i><i></i></div></div><div class="workflow-map"><div class="workflow-row"><div class="workflow-node"><span><b>01 / INPUT</b>حدث أو طلب</span></div><div class="workflow-node"><span><b>02 / RULE</b>شرط وقرار</span></div><div class="workflow-node"><span><b>03 / CONNECT</b>ربط الأنظمة</span></div><div class="workflow-node"><span><b>04 / EXCEPTION</b>حالة غير عادية</span></div><div class="workflow-node"><span><b>05 / OUTPUT</b>نتيجة موثقة</span></div></div><div class="workflow-audit"><span>صلاحيات محدودة</span><span>Logs وحالات فشل</span><span>Fallback يدوي</span></div></div></div></div>
+        </section>`
+    };
+
+    const main = document.querySelector('main');
+    const hero = main?.querySelector('.platform-hero');
+    const capabilities = document.getElementById('capabilities');
+    if (capabilities && signatures[page] && !document.getElementById('category-signature')) capabilities.insertAdjacentHTML('beforebegin',signatures[page]);
+
     const cards = [...document.querySelectorAll('#capabilities .route-card')];
     cards.forEach((card,index) => {
       if (card.querySelector('.route-card__visual')) return;
@@ -141,10 +160,7 @@
       if (small) small.after(visual); else card.prepend(visual);
     });
 
-    const main = document.querySelector('main');
-    const hero = main?.querySelector('.platform-hero');
     const sections = [...(main?.querySelectorAll(':scope > section') || [])];
-    const capabilities = document.getElementById('capabilities');
     const method = sections.find((section) => section !== hero && section !== capabilities && section.querySelector('.timeline'));
     const fit = sections.find((section) => section.querySelector('.platform-grid--2') && /مناسب|حدود/.test(section.textContent || ''));
     const related = sections.find((section) => section.querySelector('.related-nav'));
@@ -159,6 +175,7 @@
       nav.className = 'category-local-nav';
       nav.setAttribute('aria-label','التنقل داخل الصفحة');
       const links = [
+        document.getElementById('category-signature') ? ['#category-signature','كيف نفكر'] : null,
         ['#capabilities','ما ننفذ'],
         method ? ['#method','طريقة العمل'] : null,
         fit ? ['#fit','هل يناسبك؟'] : null,
