@@ -38,7 +38,6 @@
     });
   });
 
-  // The text label remains a real link; the adjacent arrow owns menu toggling.
   megaRoots.forEach((root) => {
     const link = root.querySelector(':scope > .ibt-shell-nav-link');
     const toggle = root.querySelector('[data-ibt-mega-toggle]');
@@ -46,14 +45,11 @@
     if (!link || !toggle || !menu) return;
     link.setAttribute('aria-haspopup','true');
     link.setAttribute('aria-controls',menu.id);
-
     root.addEventListener('focusin',() => setMega(toggle,true));
     root.addEventListener('focusout',(event) => {
       const next = event.relatedTarget;
       if (next && root.contains(next)) return;
-      requestAnimationFrame(() => {
-        if (!root.contains(document.activeElement)) setMega(toggle,false);
-      });
+      requestAnimationFrame(() => { if (!root.contains(document.activeElement)) setMega(toggle,false); });
     });
     if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
       root.addEventListener('pointerenter',() => setMega(toggle,true));
@@ -61,10 +57,7 @@
     }
   });
 
-  document.addEventListener('click',(event) => {
-    if (!event.target.closest('[data-ibt-mega-root]')) closeMega();
-  });
-
+  document.addEventListener('click',(event) => { if (!event.target.closest('[data-ibt-mega-root]')) closeMega(); });
   document.addEventListener('keydown',(event) => {
     if (event.key === 'Escape' && lastMegaToggle) {
       const open = menuFor(lastMegaToggle)?.classList.contains('is-open');
@@ -76,7 +69,7 @@
   managedMenuButtons.forEach((button) => {
     const menu = document.getElementById(button.getAttribute('aria-controls'));
     if (!menu) return;
-
+    let previousOverflow = '';
     const focusables = () => [...menu.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')]
       .filter((item) => !item.hidden && item.getClientRects().length);
 
@@ -85,15 +78,18 @@
       menu.setAttribute('aria-hidden','true');
       button.setAttribute('aria-expanded','false');
       document.body.classList.remove('menu-open');
+      document.body.style.overflow = previousOverflow;
       if (restoreFocus) button.focus();
     };
 
     const openMenu = () => {
       closeMega();
+      previousOverflow = document.body.style.overflow;
       menu.classList.add('open','is-open');
       menu.setAttribute('aria-hidden','false');
       button.setAttribute('aria-expanded','true');
       document.body.classList.add('menu-open');
+      document.body.style.overflow = 'hidden';
       requestAnimationFrame(() => focusables()[0]?.focus());
     };
 
@@ -101,7 +97,6 @@
       const open = menu.classList.contains('open');
       if (open) closeMenu(true); else openMenu();
     });
-
     menu.querySelectorAll('a').forEach((link) => link.addEventListener('click',() => closeMenu()));
     menu.querySelectorAll('details').forEach((details) => {
       details.addEventListener('toggle',() => {
@@ -109,31 +104,18 @@
         menu.querySelectorAll('details[open]').forEach((other) => { if (other !== details) other.open = false; });
       });
     });
-
     document.addEventListener('keydown',(event) => {
       if (!menu.classList.contains('open')) return;
-      if (event.key === 'Escape') {
-        event.preventDefault();
-        closeMenu(true);
-        return;
-      }
+      if (event.key === 'Escape') { event.preventDefault(); closeMenu(true); return; }
       if (event.key !== 'Tab') return;
       const items = focusables();
       if (!items.length) return;
       const first = items[0];
       const last = items[items.length - 1];
-      if (event.shiftKey && document.activeElement === first) {
-        event.preventDefault();
-        last.focus();
-      } else if (!event.shiftKey && document.activeElement === last) {
-        event.preventDefault();
-        first.focus();
-      }
+      if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
+      else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     });
-
-    window.addEventListener('resize',() => {
-      if (innerWidth > 1100 && menu.classList.contains('open')) closeMenu();
-    },{passive:true});
+    window.addEventListener('resize',() => { if (innerWidth > 1100 && menu.classList.contains('open')) closeMenu(); },{passive:true});
   });
 
   managedThemeButtons.forEach((button) => {
