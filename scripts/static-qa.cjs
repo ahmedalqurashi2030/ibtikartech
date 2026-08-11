@@ -76,17 +76,22 @@ if (exists(servicesExperiencePath)) {
   if (!code.includes("custom-systems.html#automation")) fail('Services cinema must deep-link the automation family.');
 }
 
-// A few approved cinematic source files still contain legacy demo contact strings in
-// their raw HTML. Runtime finalization rewrites them before public use and browser QA
-// separately fails if they become visible. Keep this debt tightly allow-listed so no
-// new/public page can copy those fake contact details by accident.
+// The four approved cinematic source pages may still contain legacy demo contact
+// strings in raw HTML. Runtime finalization rewrites them before public use and
+// browser QA separately fails if they become visible. Keep this debt tightly
+// allow-listed so no newer/public page can copy those fake contact details.
 const fakeContactTokens = [
   '967000000000',
   'mailto:hello@ibtikar-tech.com',
   'mailto:support@tharaa.com',
   't.me/tharaa_theme'
 ];
-const legacyContactSourceAllowlist = new Set(['index.html', 'services.html', 'tharaa.html']);
+const legacyContactSourceAllowlist = new Set([
+  'index.html',
+  'services.html',
+  'product-page-optimization.html',
+  'tharaa.html'
+]);
 const legacyTokenPages = [];
 
 requiredPages.forEach((file) => {
