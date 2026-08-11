@@ -3,7 +3,8 @@
 Date: 2026-08-11  
 Branch: `feature/competitor-analysis-preserve-original`  
 Current base branch: `main`  
-QA reference commit: `9e8361aee7bcf560b46548d33966a30739b1015a`
+QA reference commit: `a408ff80afef3e06c09d6ecdd5e7013a504a6e0d`  
+QA reference run: `31464197807`
 
 ## Goal
 
@@ -145,8 +146,9 @@ Finalization additions/guards:
 - launch recipes
 - unsupported generic comparison/support placeholders hidden
 - no fake price, purchase link, version, update date, support channel or changelog
-- legacy desktop animation compatibility guard prevents a removed library track from crashing ScrollTrigger
+- legacy desktop animation compatibility guard prevents a removed library track from crashing ScrollTrigger without participating in final layout
 - mobile Canvas geometry guard prevents invalid negative corner radius errors while preserving valid drawing geometry
+- the decorative mobile-orbit composition is clipped at the full `#v4-mobile` section boundary so it remains visually intact inside the section without increasing document width on tablet / RTL layouts
 
 ## Works and knowledge
 
@@ -193,7 +195,9 @@ Files:
 
 GitHub Actions runs on push and pull request.
 
-### Passed on `9e8361aee7bcf560b46548d33966a30739b1015a`
+### Passed on `a408ff80afef3e06c09d6ecdd5e7013a504a6e0d`
+
+GitHub Actions run: `31464197807`
 
 #### JavaScript syntax
 
@@ -213,11 +217,12 @@ Passed checks include:
 - referenced root-page CSS/JS/image assets checked by the script exist
 - public routes have a non-empty title and meta description
 
-#### Headless Chrome regression QA
+#### Headless Chrome responsive regression QA
 
-Passed for **19 routes × 2 viewports = 38 page/viewport combinations**:
+Passed for **19 routes × 3 viewports = 57 page/viewport combinations**:
 
 - Desktop: `1440 × 960`
+- Tablet: `820 × 1180`
 - Mobile: `390 × 844`
 
 Routes covered:
@@ -255,6 +260,14 @@ Runtime checks include:
 - Tharaa unsupported-placeholder visibility checks
 - product-page related-route checks
 
+#### Keyboard Tab smoke
+
+Every one of the **57 page/viewport combinations** received eight real `Tab` key events through Chrome DevTools Protocol.
+
+The QA requires focus to move through at least two distinct interactive elements; the passing reference run recorded **8 distinct focus targets in every tested combination**.
+
+This is a strong automated keyboard smoke test, but it does not replace a deeper manual audit of focus order, focus trapping, Enter/Space activation and every complex interaction state.
+
 ### Non-blocking known asset warning
 
 `/favicon.ico` is not configured yet. The browser QA treats **only this missing favicon request** as non-blocking until the official favicon/brand asset is approved. No placeholder favicon was committed just to make CI green.
@@ -263,18 +276,17 @@ Runtime checks include:
 
 Passing the automated frontend QA does **not** make the site production-ready by itself. The remaining gates are:
 
-1. Tablet-specific visual review in addition to the tested desktop/mobile widths.
-2. Manual keyboard-only traversal of all complex interactive components and focus order.
-3. Safari regression review.
-4. Firefox regression review.
-5. Lighthouse / Core Web Vitals on the final real HTTP origin/staging deployment.
-6. Official favicon and social/share assets.
-7. Real form endpoint / CRM connection.
-8. Official company/contact data.
-9. Legal review and final privacy/terms data.
-10. Analytics/consent configuration if analytics are enabled.
-11. Additional external client case studies only when evidence and publishing permission exist.
-12. Final Tharaa commercial/product metadata: official price, purchase URL, demo URL, version, update date, documentation, changelog and license/support wording.
+1. Manual deeper keyboard-only traversal of complex interactive components, including focus order and activation behavior beyond the automated Tab smoke.
+2. Safari regression review.
+3. Firefox regression review.
+4. Lighthouse / Core Web Vitals on the final real HTTP origin/staging deployment.
+5. Official favicon and social/share assets.
+6. Real form endpoint / CRM connection.
+7. Official company/contact data.
+8. Legal review and final privacy/terms data.
+9. Analytics/consent configuration if analytics are enabled.
+10. Additional external client case studies only when evidence and publishing permission exist.
+11. Final Tharaa commercial/product metadata: official price, purchase URL, demo URL, version, update date, documentation, changelog and license/support wording.
 
 ## Merge policy
 
