@@ -71,6 +71,28 @@ jobs:
           done
           exit "$status"
 
+      - name: Deep interaction QA
+        env:
+          BASE_URL: http://127.0.0.1:4173
+        shell: bash
+        run: |
+          set +e
+          for attempt in 1 2; do
+            echo "Interaction QA attempt ${attempt}/2"
+            node scripts/interaction-qa.cjs
+            status=$?
+            if [ "$status" -eq 0 ]; then
+              exit 0
+            fi
+            if [ "$status" -eq 75 ] && [ "$attempt" -eq 1 ]; then
+              echo "Transient Chrome/CDP startup failure; retrying interaction QA once."
+              sleep 2
+              continue
+            fi
+            exit "$status"
+          done
+          exit "$status"
+
       - name: Stop local site
         if: always()
         shell: bash
