@@ -3,8 +3,8 @@
 Date: 2026-08-11  
 Branch: `feature/competitor-analysis-preserve-original`  
 Current base branch: `main`  
-QA reference commit: `a408ff80afef3e06c09d6ecdd5e7013a504a6e0d`  
-QA reference run: `31464197807`
+Latest validated code/CI commit before this documentation update: `1b62dd46c9643daae0390dcaabf9900468b1a5cf`  
+Latest validated GitHub Actions run before this documentation update: `31467524022`
 
 ## Goal
 
@@ -59,7 +59,7 @@ Platform expertise appears contextually inside ecommerce/services. Legacy links 
 
 ## Shared navigation
 
-`assets/js/page-shell.js`
+`assets/js/page-shell.js` and `assets/js/ibtikar-shell.js`
 
 Current public header:
 
@@ -77,6 +77,19 @@ Rules:
 - There is no standalone top-level `المنصات` item.
 - Products currently expose only `ثيم ثراء`.
 - Footer platform names are expertise/context labels, not standalone platform-page promises.
+
+### Navigation accessibility corrections
+
+The shared shell now has explicit, tested interaction behavior:
+
+- desktop mega menus open from keyboard with `Enter`, `Space` or `ArrowDown`
+- opening a mega menu moves focus into the disclosed panel immediately
+- `Escape` closes the open mega menu and restores focus to its toggle
+- the approved opacity/transform opening motion is preserved while the old `visibility` transition no longer delays keyboard focus
+- mobile menu opens reliably from keyboard input
+- mobile menu traps `Tab` / `Shift+Tab` within the open menu
+- `Escape` closes the mobile menu and restores focus to the menu button
+- Enter/Space activation on the mobile menu button is explicit and does not depend on browser-specific native activation timing
 
 ## Services experience
 
@@ -107,6 +120,14 @@ Eight concrete services are shown without duplicating the six main families:
 8. ربط وأتمتة العمليات
 
 The slider supports native scrolling/touch, pointer drag, keyboard arrows and direct service links.
+
+Interaction corrections completed during deep QA:
+
+- initial state remains intentionally on service `01` instead of auto-selecting the card closest to the track center
+- keyboard/button navigation state is independent from the amount of physical scrolling needed to expose an already-visible card
+- `ArrowLeft` advances `01 → 02` and `ArrowRight` returns `02 → 01`
+- manual pointer/wheel/touch scrolling still recalculates the nearest active service
+- programmatic smooth scrolling cannot overwrite the service explicitly selected by the user while that movement is in progress
 
 ## Ecommerce architecture
 
@@ -149,6 +170,7 @@ Finalization additions/guards:
 - legacy desktop animation compatibility guard prevents a removed library track from crashing ScrollTrigger without participating in final layout
 - mobile Canvas geometry guard prevents invalid negative corner radius errors while preserving valid drawing geometry
 - the decorative mobile-orbit composition is clipped at the full `#v4-mobile` section boundary so it remains visually intact inside the section without increasing document width on tablet / RTL layouts
+- preview-studio sector, page-view and device controls are keyboard-tested for Enter/Space activation and ARIA-state updates
 
 ## Works and knowledge
 
@@ -180,30 +202,54 @@ Current behavior:
 - success copy explicitly says the request has **not** reached Ibtikar Tech
 - no official email/phone/WhatsApp is invented
 
+The multi-step form is now covered by deep interaction QA for:
+
+- required-field blocking on step one
+- next-step navigation after valid name/phone
+- focus transfer to the first field of the next step
+- previous-step navigation
+- goal/stage validation and step-three navigation
+- local-only draft storage in `localStorage`
+- truthful success copy stating the request did not reach the team
+- reset back to step one after saving a local draft
+
 Legacy homepage/services fake WhatsApp/email CTAs and the old fake-success Brief UI are retired from the public experience.
 
 `assets/js/site-config.js` uses empty values for unavailable official data instead of publishable `[TODO: ...]` strings.
 
-## Automated QA added in this finalization pass
+## Automated QA
 
-Files:
+Permanent files:
 
 - `.github/workflows/frontend-qa.yml`
 - `scripts/static-qa.cjs`
 - `scripts/browser-qa.cjs`
 - `scripts/browser-qa-ci.cjs`
+- `scripts/interaction-qa.cjs`
 
-GitHub Actions runs on push and pull request.
+Temporary diagnostic scripts used while investigating focus behavior were removed after the permanent interaction suite passed.
 
-### Passed on `a408ff80afef3e06c09d6ecdd5e7013a504a6e0d`
+GitHub Actions runs on push and pull request. The permanent order is:
 
-GitHub Actions run: `31464197807`
+1. JavaScript syntax
+2. Static frontend QA
+3. start local HTTP preview
+4. deep interaction QA
+5. 57-case responsive/browser regression QA
+6. stop local preview
 
-#### JavaScript syntax
+### Latest validated permanent-suite reference
+
+Commit: `1b62dd46c9643daae0390dcaabf9900468b1a5cf`  
+GitHub Actions run: `31467524022`
+
+The run completed successfully after the temporary diagnostic step/file had already been removed from the branch.
+
+### JavaScript syntax
 
 `node --check` passed for project JS/CJS files included by the workflow.
 
-#### Static QA
+### Static QA
 
 Passed checks include:
 
@@ -217,7 +263,22 @@ Passed checks include:
 - referenced root-page CSS/JS/image assets checked by the script exist
 - public routes have a non-empty title and meta description
 
-#### Headless Chrome responsive regression QA
+### Deep interaction QA
+
+`scripts/interaction-qa.cjs` launches real headless Chrome through Chrome DevTools Protocol and exercises six stateful keyboard/interaction scenarios before the broader responsive sweep.
+
+Passed scenarios:
+
+1. **Desktop mega menus** — Enter/ArrowDown opening, focus transfer, Escape close, focus restoration.
+2. **Mobile menu** — Enter opening, focus containment, `Tab`/`Shift+Tab` wrapping, Escape close, focus restoration.
+3. **FAQ** — Enter opens, Space closes, ARIA state follows visual state.
+4. **Services discovery slider** — eight slides, initial `01`, ArrowLeft `01 → 02`, ArrowRight `02 → 01`.
+5. **Contact flow** — validation, next/previous steps, focus transfer, local draft save, truthful success state and reset.
+6. **Tharaa preview studio** — sector, page-view and device controls respond to keyboard activation and update selected/pressed state.
+
+The keyboard emulator sends native-style Enter/Space text values through CDP to avoid false positives caused by incomplete synthetic key events.
+
+### Headless Chrome responsive regression QA
 
 Passed for **19 routes × 3 viewports = 57 page/viewport combinations**:
 
@@ -260,13 +321,13 @@ Runtime checks include:
 - Tharaa unsupported-placeholder visibility checks
 - product-page related-route checks
 
-#### Keyboard Tab smoke
+### Keyboard Tab smoke
 
-Every one of the **57 page/viewport combinations** received eight real `Tab` key events through Chrome DevTools Protocol.
+Every one of the **57 page/viewport combinations** receives eight real `Tab` key events through Chrome DevTools Protocol.
 
-The QA requires focus to move through at least two distinct interactive elements; the passing reference run recorded **8 distinct focus targets in every tested combination**.
+The QA requires focus to move through at least two distinct interactive elements; the passing reference run records distinct focus progression across the tested combinations.
 
-This is a strong automated keyboard smoke test, but it does not replace a deeper manual audit of focus order, focus trapping, Enter/Space activation and every complex interaction state.
+The dedicated deep interaction suite now extends this beyond simple Tab movement by checking Enter, Space, Escape, arrow keys, focus restoration, focus containment and state transitions on the most complex public interactions.
 
 ### Non-blocking known asset warning
 
@@ -276,7 +337,7 @@ This is a strong automated keyboard smoke test, but it does not replace a deeper
 
 Passing the automated frontend QA does **not** make the site production-ready by itself. The remaining gates are:
 
-1. Manual deeper keyboard-only traversal of complex interactive components, including focus order and activation behavior beyond the automated Tab smoke.
+1. Final manual keyboard/accessibility review by a human, especially reading order, visual focus quality and unusual interaction paths that automated scenarios do not cover.
 2. Safari regression review.
 3. Firefox regression review.
 4. Lighthouse / Core Web Vitals on the final real HTTP origin/staging deployment.
