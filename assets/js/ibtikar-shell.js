@@ -8,36 +8,47 @@
 
   const menuFor = (toggle) => toggle ? document.getElementById(toggle.getAttribute('aria-controls')) : null;
 
+  function applyMegaState(toggle, open) {
+    const menu = menuFor(toggle);
+    if (!toggle || !menu) return;
+    toggle.setAttribute('aria-expanded',String(open));
+    menu.classList.toggle('is-open',open);
+    menu.setAttribute('aria-hidden',String(!open));
+    if (open) menu.removeAttribute('inert'); else menu.setAttribute('inert','');
+    if (open) lastMegaToggle = toggle;
+  }
+
   function closeMega(except = null, restoreFocus = false) {
     megaToggles.forEach((toggle) => {
       if (toggle === except) return;
       const menu = menuFor(toggle);
       const wasOpen = menu?.classList.contains('is-open');
-      toggle.setAttribute('aria-expanded','false');
-      menu?.classList.remove('is-open');
-      menu?.setAttribute('aria-hidden','true');
+      applyMegaState(toggle,false);
       if (restoreFocus && wasOpen) toggle.focus();
     });
   }
 
   function setMega(toggle, open) {
-    const menu = menuFor(toggle);
-    if (!toggle || !menu) return;
-    closeMega(toggle);
-    toggle.setAttribute('aria-expanded',String(open));
-    menu.classList.toggle('is-open',open);
-    menu.setAttribute('aria-hidden',String(!open));
-    if (open) lastMegaToggle = toggle;
+    if (!toggle || !menuFor(toggle)) return;
+    if (open) closeMega(toggle);
+    applyMegaState(toggle,open);
   }
 
   megaToggles.forEach((toggle) => {
-    const menu = menuFor(toggle);
+    applyMegaState(toggle,false);
     toggle.addEventListener('click',(event) => {
       event.preventDefault();
-      setMega(toggle,!menu?.classList.contains('is-open'));
+      setMega(toggle,toggle.getAttribute('aria-expanded') !== 'true');
+    });
+    toggle.addEventListener('keydown',(event) => {
+      if (!['ArrowDown','Enter',' '].includes(event.key)) return;
+      event.preventDefault();
+      setMega(toggle,true);
+      requestAnimationFrame(() => menuFor(toggle)?.querySelector('a[href],button:not([disabled])')?.focus());
     });
   });
 
+  // The label remains a real destination; the adjacent arrow owns expansion.
   megaRoots.forEach((root) => {
     const link = root.querySelector(':scope > .ibt-shell-nav-link');
     const toggle = root.querySelector('[data-ibt-mega-toggle]');
@@ -45,7 +56,7 @@
     if (!link || !toggle || !menu) return;
     link.setAttribute('aria-haspopup','true');
     link.setAttribute('aria-controls',menu.id);
-    root.addEventListener('focusin',() => setMega(toggle,true));
+
     root.addEventListener('focusout',(event) => {
       const next = event.relatedTarget;
       if (next && root.contains(next)) return;
@@ -53,7 +64,9 @@
     });
     if (window.matchMedia('(hover:hover) and (pointer:fine)').matches) {
       root.addEventListener('pointerenter',() => setMega(toggle,true));
-      root.addEventListener('pointerleave',() => setMega(toggle,false));
+      root.addEventListener('pointerleave',() => {
+        if (!root.contains(document.activeElement)) setMega(toggle,false);
+      });
     }
   });
 
