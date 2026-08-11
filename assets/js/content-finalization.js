@@ -35,7 +35,7 @@
       link.removeAttribute('target');
       link.removeAttribute('rel');
       const label = (link.textContent || '').trim();
-      if (/واتساب|بريد|email|whatsapp|تيليجرام|telegram|support@/i.test(label)) link.textContent = 'اطلب عرض سعر';
+      if (/واتساب|بريد|email|whatsapp|تيليجرام|telegram|support@/i.test(label)) link.textContent = 'ابدأ مشروعك';
     });
   };
 
@@ -70,8 +70,6 @@
 
   const cleanServices = () => {
     if (path !== 'services.html') return;
-    // The catalog is the lightweight “بعض خدماتنا المتنوعة” slider in the current services experience.
-    // Keep it; only legacy filtering/search UI is intentionally removed.
     const catalog = $('[data-strategy-service-catalog]');
     catalog?.querySelector('.strategy-filterbar')?.remove();
     catalog?.querySelector('.strategy-scope-note')?.remove();
@@ -170,8 +168,14 @@
 
   const cleanEcommerce = () => {
     if (path !== 'ecommerce.html') return;
+
     $('#store-anatomy')?.remove();
     $$('a[href="#store-anatomy"]').forEach((link) => link.remove());
+
+    const platformIntro = $('#platforms .platform-heading p');
+    if (platformIntro) {
+      platformIntro.textContent = 'المنصة عامل تنفيذ داخل الخدمة. نحدد الأنسب وفق تشغيل مشروعك وحدود التخصيص، وتظهر خبرة المنصة داخل نطاق الخدمة نفسها.';
+    }
 
     $$('p').forEach((paragraph) => {
       const text = (paragraph.textContent || '').trim();
@@ -195,6 +199,14 @@
       }
     });
 
+    const faqIntro = $('.faq-intro p');
+    if (faqIntro) faqIntro.textContent = 'إجابات مختصرة عن التوافق والتخصيص والمعاينة ونطاق خدمات التركيب.';
+    const faqIntroButton = $('.faq-intro a');
+    if (faqIntroButton) {
+      faqIntroButton.href = 'contact.html#quote';
+      faqIntroButton.textContent = 'ناقش احتياج متجرك';
+    }
+
     $$('.faq-item').forEach((item) => {
       const question = (item.querySelector('button')?.textContent || '').replace(/\s+/g, ' ').trim();
       const answer = item.querySelector('.faq-answer p');
@@ -217,6 +229,12 @@
       link.setAttribute('href', '#faq');
       if (/دعم|خيارات/.test(link.textContent || '')) link.textContent = 'الأسئلة الشائعة';
     });
+
+    const finalActions = $$('.final-cta .final-actions a');
+    if (finalActions[1]) {
+      finalActions[1].href = 'contact.html#quote';
+      finalActions[1].textContent = 'تركيب وتخصيص ثراء ←';
+    }
   };
 
   const markUnreadyEditorialPages = () => {
