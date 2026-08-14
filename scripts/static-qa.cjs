@@ -20,8 +20,12 @@ const requiredPages = [
   'tharaa.html',
   'portfolio.html',
   'knowledge.html',
+  'article-store-launch.html',
+  'article-product-page.html',
+  'article-store-redesign.html',
   'about.html',
   'contact.html',
+  'legal.html',
   'store-launch.html',
   'storefront-customization.html',
   'store-redesign.html',
@@ -55,11 +59,15 @@ const contentFinalizationPath = 'assets/js/content-finalization.js';
 
 if (exists(shellPath)) {
   const shell = read(shellPath);
-  if (!shell.includes('الحلول والخدمات')) fail('Shared shell must contain combined “الحلول والخدمات” navigation.');
   if (shell.includes('>المنصات<')) fail('Shared shell must not expose “المنصات” as a top-level navigation item.');
-  if (!shell.includes('portfolio.html')) fail('Shared shell must expose أعمالنا.');
-  if (!shell.includes('knowledge.html')) fail('Shared shell must expose المعرفة.');
-  if (!shell.includes('tharaa.html')) fail('Shared shell must expose ثيم ثراء.');
+}
+
+if (exists('404.html')) {
+  const staticShell = read('404.html');
+  if (!staticShell.includes('الحلول والخدمات')) fail('Static shared shell must contain combined “الحلول والخدمات” navigation.');
+  if (!staticShell.includes('portfolio.html')) fail('Static shared shell must expose أعمالنا.');
+  if (!staticShell.includes('knowledge.html')) fail('Static shared shell must expose المقالات.');
+  if (!staticShell.includes('tharaa.html')) fail('Static shared shell must expose ثيم ثراء.');
 }
 
 if (exists(configPath)) {
