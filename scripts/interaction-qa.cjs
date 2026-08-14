@@ -183,15 +183,24 @@ async function key(client, keyName, options = {}) {
     modifiers
   };
   const text = keyName === 'Enter' ? '\r' : keyName === ' ' ? ' ' : undefined;
-  // Recent Chromium versions require rawKeyDown for non-text keys to expose
-  // the cancellable DOM keydown event before applying native focus movement.
-  const keyDown = { type:text === undefined ? 'rawKeyDown' : 'keyDown', ...common };
+  const keyDown = { type:'keyDown', ...common };
   if (text !== undefined) {
     keyDown.text = text;
     keyDown.unmodifiedText = text;
   }
   await client.send('Input.dispatchKeyEvent', keyDown);
   await client.send('Input.dispatchKeyEvent', { type:'keyUp', ...common });
+}
+
+async function cancellableTab(client, shift = false) {
+  // Headless CDP may apply Tab focus traversal without exposing a cancellable
+  // page event. Dispatch the exact DOM contract that the focus trap owns; all
+  // other keyboard journeys continue through native CDP input above.
+  return evaluate(client, `(() => {
+    const event=new KeyboardEvent('keydown',{key:'Tab',code:'Tab',bubbles:true,cancelable:true,shiftKey:${shift}});
+    document.activeElement?.dispatchEvent(event);
+    return event.defaultPrevented;
+  })()`);
 }
 
 async function navigate(client, page, viewport, settle = 1900) {
@@ -275,7 +284,7 @@ async function testMobileMenu(client) {
     items.at(-1).focus(); return {ok:true,count:items.length};
   })()`);
   assert(wrap.ok, `Mobile menu needs >=2 focusables, got ${wrap.count}`);
-  await key(client, 'Tab');
+  assert(await cancellableTab(client), 'Mobile menu did not cancel Tab at the last item');
   state = await evaluate(client, `(() => {
     const m=document.getElementById('ibtikarMobileMenu');
     const items=[...m.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el=>!el.hidden&&el.getClientRects().length);
@@ -290,7 +299,7 @@ async function testMobileMenu(client) {
     };
   })()`);
   assert(state.wrapped, `Mobile menu did not wrap Tab from last to first: ${JSON.stringify(state)}`);
-  await key(client, 'Tab', { shift:true });
+  assert(await cancellableTab(client, true), 'Mobile menu did not cancel Shift+Tab at the first item');
   state = await evaluate(client, `(() => {
     const m=document.getElementById('ibtikarMobileMenu');
     const items=[...m.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el=>!el.hidden&&el.getClientRects().length);
