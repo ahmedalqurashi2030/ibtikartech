@@ -171,6 +171,18 @@
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
     },true);
+    // Some browser/CDP paths advance focus without exposing a cancellable Tab
+    // keydown. Keep the drawer contained by restoring the opposite edge when
+    // focus actually attempts to leave it.
+    menu.addEventListener('focusout',(event) => {
+      if (!menu.classList.contains('open')) return;
+      if (event.relatedTarget && menu.contains(event.relatedTarget)) return;
+      const items = focusables();
+      const first = items[0];
+      const last = items[items.length - 1];
+      if (event.target === last) first?.focus({preventScroll:true});
+      else if (event.target === first) last?.focus({preventScroll:true});
+    });
     window.addEventListener('resize',() => { if (innerWidth > 1180 && menu.classList.contains('open')) closeMenu(); },{passive:true});
   });
 
