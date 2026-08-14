@@ -127,7 +127,11 @@
       button.setAttribute('aria-expanded','true');
       document.body.classList.add('menu-open');
       document.body.style.overflow = 'hidden';
-      requestAnimationFrame(() => focusables()[0]?.focus());
+      const firstItem = focusables()[0];
+      firstItem?.focus({ preventScroll: true });
+      requestAnimationFrame(() => {
+        if (!menu.contains(document.activeElement)) firstItem?.focus({ preventScroll: true });
+      });
     };
 
     button.addEventListener('click',() => {
