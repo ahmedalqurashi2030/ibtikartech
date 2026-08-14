@@ -197,9 +197,18 @@ async function cancellableTab(client, shift = false) {
   // page event. Dispatch the exact DOM contract that the focus trap owns; all
   // other keyboard journeys continue through native CDP input above.
   return evaluate(client, `(() => {
+    const before=document.activeElement;
+    let observed=false;
+    const probe=()=>{ observed=true; };
+    document.addEventListener('keydown',probe,{capture:true,once:true});
     const event=new KeyboardEvent('keydown',{key:'Tab',code:'Tab',bubbles:true,cancelable:true,shiftKey:${shift}});
-    document.activeElement?.dispatchEvent(event);
-    return event.defaultPrevented;
+    before?.dispatchEvent(event);
+    return {
+      defaultPrevented:event.defaultPrevented,
+      observed,
+      before:before?.outerHTML?.slice(0,180),
+      after:document.activeElement?.outerHTML?.slice(0,180)
+    };
   })()`);
 }
 
@@ -284,7 +293,8 @@ async function testMobileMenu(client) {
     items.at(-1).focus(); return {ok:true,count:items.length};
   })()`);
   assert(wrap.ok, `Mobile menu needs >=2 focusables, got ${wrap.count}`);
-  assert(await cancellableTab(client), 'Mobile menu did not cancel Tab at the last item');
+  const forwardTab = await cancellableTab(client);
+  assert(forwardTab.defaultPrevented, `Mobile menu did not cancel Tab at the last item: ${JSON.stringify(forwardTab)}`);
   state = await evaluate(client, `(() => {
     const m=document.getElementById('ibtikarMobileMenu');
     const items=[...m.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el=>!el.hidden&&el.getClientRects().length);
@@ -299,7 +309,8 @@ async function testMobileMenu(client) {
     };
   })()`);
   assert(state.wrapped, `Mobile menu did not wrap Tab from last to first: ${JSON.stringify(state)}`);
-  assert(await cancellableTab(client, true), 'Mobile menu did not cancel Shift+Tab at the first item');
+  const reverseTab = await cancellableTab(client, true);
+  assert(reverseTab.defaultPrevented, `Mobile menu did not cancel Shift+Tab at the first item: ${JSON.stringify(reverseTab)}`);
   state = await evaluate(client, `(() => {
     const m=document.getElementById('ibtikarMobileMenu');
     const items=[...m.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el=>!el.hidden&&el.getClientRects().length);
