@@ -34,6 +34,26 @@ const requiredPages = [
   'ecommerce-support.html',
   '404.html'
 ];
+const finalizedFrontendPages = requiredPages.filter((file) => file !== 'portfolio.html');
+
+// These pages started as approved standalone sources. Their large inline
+// bundles must stay external so HTML remains quick to parse and assets can be
+// cached between visits.
+const approvedSourceAssets = {
+  'index.html': ['assets/css/pages/source-home.css', 'assets/js/source-home.js'],
+  'services.html': ['assets/css/pages/source-services.css', 'assets/js/source-services.js'],
+  'tharaa.html': ['assets/css/pages/source-tharaa.css', 'assets/js/source-tharaa.js'],
+  'product-page-optimization.html': ['assets/css/pages/source-product-page.css', 'assets/js/source-product-page.js']
+};
+const serviceDecisionPages = [
+  'store-launch.html',
+  'storefront-customization.html',
+  'store-redesign.html',
+  'product-page-optimization.html',
+  'ecommerce-growth.html',
+  'ecommerce-support.html'
+];
+const serviceDecisionContract = ['problems', 'fit', 'scope', 'deliverables', 'exclusions'];
 
 const retiredPages = ['salla.html', 'zid.html', 'shopify.html', 'woocommerce.html', 'wordpress.html'];
 const accidentalFiles = ['NEVER', 'THIS_SHOULD_NOT_BE_CREATED', 'THIS_SHOULD_NOT_EXIST', 'TEMP_MERGE_MARKER', 'README_SYNC_TEMP', 'UNWANTED'];
@@ -156,7 +176,66 @@ requiredPages.forEach((file) => {
   }
 });
 
+finalizedFrontendPages.forEach((file) => {
+  if (!exists(file)) return;
+  const source = read(file);
+
+  const h1Count = (source.match(/<h1\b/gi) || []).length;
+  if (h1Count !== 1) fail(`${file} must contain exactly one <h1>; found ${h1Count}.`);
+
+  const sectionCount = (source.match(/<section\b/gi) || []).length;
+  if (sectionCount > 12) fail(`${file} exceeds the frontend content budget with ${sectionCount} source sections.`);
+
+  const ids = [...source.matchAll(/\bid=["']([^"']+)["']/gi)].map((match) => match[1]);
+  const duplicateIds = [...new Set(ids.filter((id, index) => ids.indexOf(id) !== index))];
+  if (duplicateIds.length) fail(`${file} contains duplicate IDs: ${duplicateIds.join(', ')}.`);
+
+  const emptySections = [...source.matchAll(/<section\b[^>]*>([\s\S]*?)<\/section>/gi)]
+    .filter((match) => !match[1].replace(/<[^>]*>/g, '').replace(/&nbsp;/gi, '').trim());
+  if (emptySections.length) fail(`${file} contains ${emptySections.length} empty section(s).`);
+
+  if (/data-(?:service-)?decision-(?:tab|panel)=["']results["']/i.test(source)) {
+    fail(`${file} contains the retired hidden “results” decision content.`);
+  }
+});
+
+Object.entries(approvedSourceAssets).forEach(([file, assets]) => {
+  if (!exists(file)) return;
+  const source = read(file);
+  assets.forEach((asset) => {
+    if (!exists(asset)) fail(`Approved source asset missing: ${asset}`);
+    if (!source.includes(asset)) fail(`${file} must reference external source asset: ${asset}`);
+  });
+  if (/<style\b/i.test(source)) fail(`${file} must not restore inline <style> bundles.`);
+  if (/<script\b(?![^>]*\bsrc\s*=)[^>]*>/i.test(source)) fail(`${file} must not restore inline script bundles.`);
+});
+
+serviceDecisionPages.forEach((file) => {
+  if (!exists(file)) return;
+  const source = read(file);
+  const tabs = [...source.matchAll(/data-(?:service-)?decision-tab=["']([^"']+)/gi)].map((match) => match[1]);
+  const panels = [...source.matchAll(/data-(?:service-)?decision-panel=["']([^"']+)/gi)].map((match) => match[1]);
+  if (tabs.join(',') !== serviceDecisionContract.join(',')) {
+    fail(`${file} decision tabs must follow the shared five-part contract.`);
+  }
+  if (panels.join(',') !== serviceDecisionContract.join(',')) {
+    fail(`${file} decision panels must follow the shared five-part contract.`);
+  }
+});
+
+[
+  'assets/css/pages/launch-readiness.css',
+  'assets/js/commerce-service-detail.js',
+  'assets/js/content-finalization.js',
+  'assets/js/source-product-page.js'
+].forEach((file) => {
+  if (exists(file) && /decision-(?:tab|panel)=["']results["']/i.test(read(file))) {
+    fail(`${file} still carries runtime deletion for retired results content.`);
+  }
+});
+
 note(`Checked ${requiredPages.length} public HTML routes.`);
+note(`Enforced final content architecture on ${finalizedFrontendPages.length} frontend routes (portfolio intentionally excluded).`);
 note(`Confirmed ${retiredPages.length} retired platform pages remain deleted.`);
 if (legacyTokenPages.length) {
   note(`Legacy demo contact tokens remain confined to approved source files: ${[...new Set(legacyTokenPages)].join(', ')}.`);
