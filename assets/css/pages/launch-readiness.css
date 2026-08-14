@@ -35,8 +35,10 @@
   --ibt-launch-reading:68ch;
 }
 
-html{scroll-padding-top:112px}
+html{max-width:100%;overflow-x:clip;scroll-padding-top:112px}
 body{
+  max-width:100%;
+  overflow-x:clip;
   font-family:var(--ibt-font);
   font-synthesis:none;
   font-kerning:normal;

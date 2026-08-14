@@ -165,6 +165,17 @@ function validateAssetReferences(file) {
   });
 }
 
+function validateCssReferences(file) {
+  const source = read(file);
+  const refs = [...source.matchAll(/url\(\s*["']?([^"')]+)["']?\s*\)/gi)].map((match) => match[1].trim());
+  refs.forEach((value) => {
+    if (!value || value.startsWith('#') || value.startsWith('%23') || /^(?:https?:|data:)/i.test(value)) return;
+    const clean = value.split('#')[0].split('?')[0];
+    const resolved = path.normalize(path.join(path.dirname(file), clean));
+    if (!exists(resolved)) fail(`${file} references missing CSS asset: ${clean}`);
+  });
+}
+
 requiredPages.forEach((file) => {
   if (!exists(file)) return;
   validateAssetReferences(file);
@@ -205,6 +216,7 @@ Object.entries(approvedSourceAssets).forEach(([file, assets]) => {
   assets.forEach((asset) => {
     if (!exists(asset)) fail(`Approved source asset missing: ${asset}`);
     if (!source.includes(asset)) fail(`${file} must reference external source asset: ${asset}`);
+    if (asset.endsWith('.css') && exists(asset)) validateCssReferences(asset);
   });
   if (/<style\b/i.test(source)) fail(`${file} must not restore inline <style> bundles.`);
   if (/<script\b(?![^>]*\bsrc\s*=)[^>]*>/i.test(source)) fail(`${file} must not restore inline script bundles.`);
