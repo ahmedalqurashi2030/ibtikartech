@@ -183,7 +183,9 @@ async function key(client, keyName, options = {}) {
     modifiers
   };
   const text = keyName === 'Enter' ? '\r' : keyName === ' ' ? ' ' : undefined;
-  const keyDown = { type:'keyDown', ...common };
+  // Recent Chromium versions require rawKeyDown for non-text keys to expose
+  // the cancellable DOM keydown event before applying native focus movement.
+  const keyDown = { type:text === undefined ? 'rawKeyDown' : 'keyDown', ...common };
   if (text !== undefined) {
     keyDown.text = text;
     keyDown.unmodifiedText = text;
