@@ -108,7 +108,7 @@
     if (!menu) return;
     let previousOverflow = '';
    const focusables = () => [...menu.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')]
-      .filter((item) => !item.hidden && item.getAttribute('aria-hidden') !== 'true');
+      .filter((item) => !item.hidden && item.getClientRects().length);
 
     const closeMenu = (restoreFocus = false) => {
       menu.classList.remove('open','is-open');
@@ -127,7 +127,7 @@
       button.setAttribute('aria-expanded','true');
       document.body.classList.add('menu-open');
       document.body.style.overflow = 'hidden';
-      const firstItem = focusables()[0];
+      const firstItem = menu.querySelector('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])');
       firstItem?.focus({ preventScroll: true });
       requestAnimationFrame(() => {
         if (!menu.contains(document.activeElement)) firstItem?.focus({ preventScroll: true });
