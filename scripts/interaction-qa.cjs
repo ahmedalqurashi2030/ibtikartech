@@ -192,6 +192,26 @@ async function key(client, keyName, options = {}) {
   await client.send('Input.dispatchKeyEvent', { type:'keyUp', ...common });
 }
 
+async function cancellableTab(client, shift = false) {
+  // Headless CDP may apply Tab focus traversal without exposing a cancellable
+  // page event. Dispatch the exact DOM contract that the focus trap owns; all
+  // other keyboard journeys continue through native CDP input above.
+  return evaluate(client, `(() => {
+    const before=document.activeElement;
+    let observed=false;
+    const probe=()=>{ observed=true; };
+    document.addEventListener('keydown',probe,{capture:true,once:true});
+    const event=new KeyboardEvent('keydown',{key:'Tab',code:'Tab',bubbles:true,cancelable:true,shiftKey:${shift}});
+    before?.dispatchEvent(event);
+    return {
+      defaultPrevented:event.defaultPrevented,
+      observed,
+      before:before?.outerHTML?.slice(0,180),
+      after:document.activeElement?.outerHTML?.slice(0,180)
+    };
+  })()`);
+}
+
 async function navigate(client, page, viewport, settle = 1900) {
   await client.send('Emulation.setDeviceMetricsOverride', viewport);
   await client.send('Page.navigate', { url: `${baseUrl}/${page}` });
@@ -270,17 +290,27 @@ async function testMobileMenu(client) {
     const m=document.getElementById('ibtikarMobileMenu');
     const items=[...m.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el=>!el.hidden&&el.getClientRects().length);
     if(items.length<2) return {ok:false,count:items.length};
-    items.at(-1).focus(); return {ok:true,count:items.length};
+    items.at(-1).focus(); return {ok:document.activeElement===items.at(-1),count:items.length,inert:m.hasAttribute('inert')};
   })()`);
-  assert(wrap.ok, `Mobile menu needs >=2 focusables, got ${wrap.count}`);
-  await key(client, 'Tab');
+  assert(wrap.ok, `Mobile menu could not focus its last item: ${JSON.stringify(wrap)}`);
+  const forwardTab = await cancellableTab(client);
+  assert(forwardTab.defaultPrevented, `Mobile menu did not cancel Tab at the last item: ${JSON.stringify(forwardTab)}`);
   state = await evaluate(client, `(() => {
     const m=document.getElementById('ibtikarMobileMenu');
     const items=[...m.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el=>!el.hidden&&el.getClientRects().length);
-    return document.activeElement===items[0];
+    const active=document.activeElement;
+    return {
+      wrapped:active===items[0],
+      active:active?.outerHTML?.slice(0,180),
+      first:items[0]?.outerHTML?.slice(0,180),
+      last:items.at(-1)?.outerHTML?.slice(0,180),
+      inert:m?.hasAttribute('inert'),
+      count:items.length
+    };
   })()`);
-  assert(state, 'Mobile menu did not wrap Tab from last to first');
-  await key(client, 'Tab', { shift:true });
+  assert(state.wrapped, `Mobile menu did not wrap Tab from last to first: ${JSON.stringify(state)}`);
+  const reverseTab = await cancellableTab(client, true);
+  assert(reverseTab.defaultPrevented, `Mobile menu did not cancel Shift+Tab at the first item: ${JSON.stringify(reverseTab)}`);
   state = await evaluate(client, `(() => {
     const m=document.getElementById('ibtikarMobileMenu');
     const items=[...m.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el=>!el.hidden&&el.getClientRects().length);
