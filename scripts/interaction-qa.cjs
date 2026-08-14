@@ -241,17 +241,17 @@ async function testMegaMenus(client) {
   })()`);
   assert(state.expanded === 'false' && state.hidden === 'true' && !state.open && state.focusBack, `Solutions mega Escape close failed: ${JSON.stringify(state)}`);
 
-  const products = '[data-ibt-mega-toggle][aria-controls="productsMega"]';
+  const products = solutions;
   await focus(client, products);
   await key(client, 'ArrowDown');
   await wait(120);
   state = await evaluate(client, `(() => {
-    const t=document.querySelector(${JSON.stringify(products)}), m=document.getElementById('productsMega');
+    const t=document.querySelector(${JSON.stringify(products)}), m=document.getElementById('solutionsServicesMega');
     return {expanded:t?.getAttribute('aria-expanded'), focusInside:m?.contains(document.activeElement)};
   })()`);
-  assert(state.expanded === 'true' && state.focusInside, `Products mega ArrowDown failed: ${JSON.stringify(state)}`);
+  assert(state.expanded === 'true' && state.focusInside, `Solutions mega ArrowDown failed: ${JSON.stringify(state)}`);
   await key(client, 'Escape');
-  console.log('✓ desktop mega menus: Enter / ArrowDown / Escape / focus restore');
+  console.log('✓ desktop solutions mega menu: Enter / ArrowDown / Escape / focus restore');
 }
 
 async function testMobileMenu(client) {
