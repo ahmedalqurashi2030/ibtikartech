@@ -277,9 +277,17 @@ async function testMobileMenu(client) {
   state = await evaluate(client, `(() => {
     const m=document.getElementById('ibtikarMobileMenu');
     const items=[...m.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el=>!el.hidden&&el.getClientRects().length);
-    return document.activeElement===items[0];
+    const active=document.activeElement;
+    return {
+      wrapped:active===items[0],
+      active:active?.outerHTML?.slice(0,180),
+      first:items[0]?.outerHTML?.slice(0,180),
+      last:items.at(-1)?.outerHTML?.slice(0,180),
+      inert:m?.hasAttribute('inert'),
+      count:items.length
+    };
   })()`);
-  assert(state, 'Mobile menu did not wrap Tab from last to first');
+  assert(state.wrapped, `Mobile menu did not wrap Tab from last to first: ${JSON.stringify(state)}`);
   await key(client, 'Tab', { shift:true });
   state = await evaluate(client, `(() => {
     const m=document.getElementById('ibtikarMobileMenu');
