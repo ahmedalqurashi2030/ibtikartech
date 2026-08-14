@@ -290,9 +290,9 @@ async function testMobileMenu(client) {
     const m=document.getElementById('ibtikarMobileMenu');
     const items=[...m.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')].filter(el=>!el.hidden&&el.getClientRects().length);
     if(items.length<2) return {ok:false,count:items.length};
-    items.at(-1).focus(); return {ok:true,count:items.length};
+    items.at(-1).focus(); return {ok:document.activeElement===items.at(-1),count:items.length,inert:m.hasAttribute('inert')};
   })()`);
-  assert(wrap.ok, `Mobile menu needs >=2 focusables, got ${wrap.count}`);
+  assert(wrap.ok, `Mobile menu could not focus its last item: ${JSON.stringify(wrap)}`);
   const forwardTab = await cancellableTab(client);
   assert(forwardTab.defaultPrevented, `Mobile menu did not cancel Tab at the last item: ${JSON.stringify(forwardTab)}`);
   state = await evaluate(client, `(() => {
