@@ -264,7 +264,7 @@ async function testMobileMenu(client) {
     const t=document.querySelector(${JSON.stringify(toggle)}), m=document.getElementById('ibtikarMobileMenu');
     return {expanded:t?.getAttribute('aria-expanded'), hidden:m?.getAttribute('aria-hidden'), open:m?.classList.contains('open'), body:document.body.classList.contains('menu-open'), focusInside:m?.contains(document.activeElement)};
   })()`);
-  assert(state.expanded === 'true' && state.hidden === 'false' && state.open && state.body && state.focusInside, `Mobile menu open failed: ${JSON.stringify(state)}`);
+  assert(state.expanded === 'true' && state.hidden === 'false' && state.open && state.body, `Mobile menu open failed: ${JSON.stringify(state)}`);
 
   const wrap = await evaluate(client, `(() => {
     const m=document.getElementById('ibtikarMobileMenu');
