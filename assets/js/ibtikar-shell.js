@@ -107,8 +107,8 @@
     const menu = document.getElementById(button.getAttribute('aria-controls'));
     if (!menu) return;
     let previousOverflow = '';
-    const focusables = () => [...menu.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')]
-      .filter((item) => !item.hidden && item.getClientRects().length);
+   const focusables = () => [...menu.querySelectorAll('a[href],button:not([disabled]),summary,[tabindex]:not([tabindex="-1"])')]
+      .filter((item) => !item.hidden && item.getAttribute('aria-hidden') !== 'true');
 
     const closeMenu = (restoreFocus = false) => {
       menu.classList.remove('open','is-open');
