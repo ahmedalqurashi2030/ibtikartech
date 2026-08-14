@@ -454,10 +454,16 @@ async function testTharaaStudio(client) {
     }
     const pageTarget = targets.find((target) => target.type === 'page');
     assert(pageTarget?.webSocketDebuggerUrl, 'No debuggable page target found');
-    client = connectWebSocket(pageTarget.webSocketDebuggerUrl);
-    await wait(120);
-    await client.send('Page.enable');
-    await client.send('Runtime.enable');
+   client = connectWebSocket(pageTarget.webSocketDebuggerUrl);
+   await wait(120);
+    try {
+      await client.send('Page.enable');
+      await client.send('Runtime.enable');
+    } catch (error) {
+      console.error(`Chrome/CDP startup failed: ${error.message}`);
+      process.exitCode = 75;
+      return;
+    }
 
     const tests = [
       ['desktop mega menus', testMegaMenus],
