@@ -183,6 +183,16 @@
       if (event.target === last) first?.focus({preventScroll:true});
       else if (event.target === first) last?.focus({preventScroll:true});
     });
+    let lastMenuFocus = null;
+    menu.addEventListener('focusin',(event) => { lastMenuFocus = event.target; });
+    document.addEventListener('focusin',(event) => {
+      if (!menu.classList.contains('open') || menu.contains(event.target)) return;
+      const items = focusables();
+      const first = items[0];
+      const last = items[items.length - 1];
+      const target = lastMenuFocus === first ? last : first;
+      target?.focus({preventScroll:true});
+    });
     window.addEventListener('resize',() => { if (innerWidth > 1180 && menu.classList.contains('open')) closeMenu(); },{passive:true});
   });
 
