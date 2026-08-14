@@ -141,7 +141,16 @@ function connectWebSocket(wsUrl) {
     send(method, params = {}) {
       const id = nextId++;
       socket.write(encodeFrame(JSON.stringify({ id, method, params })));
-      return new Promise((resolve) => pending.set(id, resolve));
+      return new Promise((resolve, reject) => {
+        const timeout = setTimeout(() => {
+          pending.delete(id);
+          reject(new Error(`CDP command timed out: ${method}`));
+        }, 15_000);
+        pending.set(id, (data) => {
+          clearTimeout(timeout);
+          resolve(data);
+        });
+      });
     },
     close() { socket.destroy(); }
   };
