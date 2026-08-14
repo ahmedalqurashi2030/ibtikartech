@@ -170,7 +170,7 @@
       const last = items[items.length - 1];
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last.focus(); }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first.focus(); }
-    });
+    },true);
     window.addEventListener('resize',() => { if (innerWidth > 1180 && menu.classList.contains('open')) closeMenu(); },{passive:true});
   });
 
