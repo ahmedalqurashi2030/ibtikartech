@@ -896,7 +896,7 @@ body.source-product-service .quick-info>span:nth-child(n+5){display:none!importa
     visibility:hidden;
     pointer-events:none;
     transform:translateX(104%);
-    transition:transform .3s var(--ibt-ease),opacity .22s,visibility .3s;
+    transition:transform .3s var(--ibt-ease),opacity .22s,visibility 0s linear .3s;
   }
   .ibt-shell-mobile-menu.open,
   .ibt-shell-mobile-menu.is-open,
@@ -906,6 +906,7 @@ body.source-product-service .quick-info>span:nth-child(n+5){display:none!importa
     visibility:visible;
     pointer-events:auto;
     transform:none;
+    transition:transform .3s var(--ibt-ease),opacity .22s,visibility 0s;
   }
   body.source-tharaa .float-chip{display:none!important}
   body.source-tharaa #heroCanvas{opacity:.1!important}
