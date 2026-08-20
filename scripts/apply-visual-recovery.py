@@ -3,9 +3,15 @@ import re
 
 css_path = Path('assets/css/ibtikar-shell.css')
 css = css_path.read_text(encoding='utf-8')
-marker = '/* === APPROVED VISUAL RECOVERY 2026-08-20 === */'
-if marker not in css:
-    css += r'''
+start_marker = '/* === APPROVED VISUAL RECOVERY 2026-08-20 ==='
+
+# Recovery is intentionally a single final layer. Remove any earlier temporary
+# copies produced during the audit, then append one canonical block.
+marker_index = css.find(start_marker)
+if marker_index != -1:
+    css = css[:marker_index].rstrip() + '\n'
+
+recovery = r'''
 
 /* === APPROVED VISUAL RECOVERY 2026-08-20 ===
    Restores the approved flat/clean shell without reverting newer content,
@@ -101,8 +107,10 @@ body.source-home .cinematic-story__brand {
   .ibt-shell-nav { width: min(calc(100% - 28px), var(--ibt-container)); }
 }
 '''
-    css_path.write_text(css, encoding='utf-8')
+css_path.write_text(css + recovery, encoding='utf-8')
 
+# Remove the active Journey brand markup itself. Reference/artifact files remain
+# untouched so historical source material is preserved.
 index_path = Path('index.html')
 index = index_path.read_text(encoding='utf-8')
 index = re.sub(
@@ -112,22 +120,3 @@ index = re.sub(
     count=1,
 )
 index_path.write_text(index, encoding='utf-8')
-
-qa_path = Path('scripts/recovery-visual-qa.cjs')
-qa_path.write_text(r'''const fs = require('fs');
-const assert = require('assert');
-const shell = fs.readFileSync('assets/css/ibtikar-shell.css', 'utf8');
-const home = fs.readFileSync('index.html', 'utf8');
-const recovered = shell.slice(shell.indexOf('APPROVED VISUAL RECOVERY'));
-assert(shell.includes('APPROVED VISUAL RECOVERY 2026-08-20'));
-assert(shell.includes('radial-gradient(circle at 5px 5px'));
-assert(/\.ibt-shell-nav[\s\S]*?border:\s*0\s*!important/.test(recovered));
-assert(/\.ibt-shell-nav[\s\S]*?box-shadow:\s*none\s*!important/.test(recovered));
-assert(home.includes('نبني منظومة رقمية'));
-assert(home.includes('ابدأ بتشخيص مشروعك'));
-assert(home.includes('استكشف منظومة الحلول'));
-assert(home.includes('hero-dashboard hero-system-stage'));
-assert(!home.includes('<div class="cinematic-story__brand"><span aria-hidden="true" class="cinematic-story__mark"'));
-assert(home.includes('نبني منظومة واحدة'));
-console.log('Recovery visual QA: 10/10 passed');
-''', encoding='utf-8')
