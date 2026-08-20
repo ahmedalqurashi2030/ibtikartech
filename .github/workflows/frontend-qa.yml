@@ -74,7 +74,7 @@ jobs:
           BASE_URL: http://127.0.0.1:4173
           QA_PAGES: >-
             index.html,services.html,ecommerce.html,websites.html,brand-content.html,growth.html,
-            custom-systems.html,tharaa.html,knowledge.html,article-store-launch.html,
+            custom-systems.html,tharaa.html,portfolio.html,knowledge.html,article-store-launch.html,
             article-product-page.html,article-store-redesign.html,about.html,contact.html,legal.html,
             store-launch.html,storefront-customization.html,store-redesign.html,
             product-page-optimization.html,ecommerce-growth.html,ecommerce-support.html,404.html
