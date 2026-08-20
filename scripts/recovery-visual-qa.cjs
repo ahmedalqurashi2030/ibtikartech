@@ -1,0 +1,16 @@
+const fs = require('fs');
+const assert = require('assert');
+const shell = fs.readFileSync('assets/css/ibtikar-shell.css', 'utf8');
+const home = fs.readFileSync('index.html', 'utf8');
+const recovered = shell.slice(shell.indexOf('APPROVED VISUAL RECOVERY'));
+assert(shell.includes('APPROVED VISUAL RECOVERY 2026-08-20'));
+assert(shell.includes('radial-gradient(circle at 5px 5px'));
+assert(/\.ibt-shell-nav[\s\S]*?border:\s*0\s*!important/.test(recovered));
+assert(/\.ibt-shell-nav[\s\S]*?box-shadow:\s*none\s*!important/.test(recovered));
+assert(home.includes('نبني منظومة رقمية'));
+assert(home.includes('ابدأ بتشخيص مشروعك'));
+assert(home.includes('استكشف منظومة الحلول'));
+assert(home.includes('hero-dashboard hero-system-stage'));
+assert(!home.includes('<div class="cinematic-story__brand"><span aria-hidden="true" class="cinematic-story__mark"'));
+assert(home.includes('نبني منظومة واحدة'));
+console.log('Recovery visual QA: 10/10 passed');
