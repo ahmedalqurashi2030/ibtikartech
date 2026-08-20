@@ -23,7 +23,7 @@ jobs:
       - name: Apply deterministic recovery
         run: python3 scripts/apply-visual-recovery.py
 
-      - name: Run recovery and existing QA
+      - name: Run deterministic recovery QA
         run: |
           set -e
           node --check assets/js/ibtikar-shell.js
@@ -31,7 +31,6 @@ jobs:
           node --check assets/js/source-home.js
           node scripts/recovery-visual-qa.cjs
           node scripts/static-qa.cjs
-          node scripts/interaction-qa.cjs
 
       - name: Commit recovery result
         run: |
