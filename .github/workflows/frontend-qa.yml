@@ -30,6 +30,9 @@ jobs:
       - name: Static frontend QA
         run: node scripts/static-qa.cjs
 
+      - name: Visual recovery guard
+        run: node scripts/recovery-visual-qa.cjs
+
       - name: Start local site
         shell: bash
         run: |
