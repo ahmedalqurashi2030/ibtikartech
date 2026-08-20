@@ -1,0 +1,75 @@
+name: Production Browser QA
+
+on:
+  pull_request:
+    branches:
+      - main
+    paths:
+      - ".github/workflows/production-browser-qa.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  production-browser-qa:
+    runs-on: ubuntu-latest
+    timeout-minutes: 20
+
+    steps:
+      - name: Checkout frontend QA scripts
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+
+      - name: Deep interaction QA against production
+        env:
+          BASE_URL: https://ibtikartech.co
+        shell: bash
+        run: |
+          set +e
+          for attempt in 1 2; do
+            echo "Production interaction QA attempt ${attempt}/2"
+            node scripts/interaction-qa.cjs
+            status=$?
+            if [ "$status" -eq 0 ]; then
+              exit 0
+            fi
+            if [ "$status" -eq 75 ] && [ "$attempt" -eq 1 ]; then
+              echo "Transient Chrome/CDP startup failure; retrying once."
+              sleep 2
+              continue
+            fi
+            exit "$status"
+          done
+          exit "$status"
+
+      - name: Headless Chrome regression against production
+        env:
+          BASE_URL: https://ibtikartech.co
+          QA_PAGES: >-
+            index.html,services.html,ecommerce.html,websites.html,brand-content.html,growth.html,
+            custom-systems.html,tharaa.html,portfolio.html,knowledge.html,article-store-launch.html,
+            article-product-page.html,article-store-redesign.html,about.html,contact.html,legal.html,
+            store-launch.html,storefront-customization.html,store-redesign.html,
+            product-page-optimization.html,ecommerce-growth.html,ecommerce-support.html,404.html
+        shell: bash
+        run: |
+          set +e
+          for attempt in 1 2; do
+            echo "Production browser QA attempt ${attempt}/2"
+            node scripts/browser-qa-ci.cjs
+            status=$?
+            if [ "$status" -eq 0 ]; then
+              exit 0
+            fi
+            if [ "$status" -eq 75 ] && [ "$attempt" -eq 1 ]; then
+              echo "Transient Chrome/CDP startup failure; retrying once."
+              sleep 2
+              continue
+            fi
+            exit "$status"
+          done
+          exit "$status"
