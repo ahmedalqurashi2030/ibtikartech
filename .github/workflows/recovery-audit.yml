@@ -1,0 +1,109 @@
+name: Recovery Visual Audit
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  audit:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+    steps:
+      - uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Fetch all branches
+        shell: bash
+        run: |
+          git fetch --prune origin '+refs/heads/*:refs/remotes/origin/*'
+
+      - name: Locate visual-regression history
+        shell: bash
+        run: |
+          set +e
+          echo '=== CURRENT HEAD ==='
+          git rev-parse HEAD
+          echo
+
+          echo '=== EXACT TEXT HISTORY: ابدأ تشخيص مشروعك ==='
+          git log --all --oneline -S'ابدأ تشخيص مشروعك' -- '*.html' '*.js' '*.css'
+          echo
+
+          echo '=== EXACT TEXT HISTORY: ابدأ من هدفك، ثم نبني المنظومة المناسبة ==='
+          git log --all --oneline -S'ابدأ من هدفك، ثم نبني المنظومة المناسبة' -- '*.html' '*.js' '*.css'
+          echo
+
+          echo '=== EXACT TEXT HISTORY: منظومة ابتكار تك ==='
+          git log --all --oneline -S'منظومة ابتكار تك' -- '*.html' '*.js' '*.css'
+          echo
+
+          echo '=== ALL REFS CONTAINING TARGET TEXT ==='
+          for ref in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin); do
+            for needle in 'ابدأ تشخيص مشروعك' 'ابدأ من هدفك، ثم نبني المنظومة المناسبة' 'منظومة ابتكار تك'; do
+              if git grep -q -F "$needle" "$ref" -- '*.html' '*.js' '*.css' 2>/dev/null; then
+                echo "REF=$ref HAS=$needle"
+                git grep -n -F "$needle" "$ref" -- '*.html' '*.js' '*.css' 2>/dev/null | head -n 8
+              fi
+            done
+          done
+          echo
+
+          echo '=== MENU / DOT / DRAWER MARKERS ACROSS REFS ==='
+          for ref in $(git for-each-ref --format='%(refname:short)' refs/remotes/origin); do
+            out=$(git grep -n -E 'menu[^\n]{0,40}(dot|grid)|dot[^\n]{0,40}menu|grid-template-columns:[^;]*repeat\(2' "$ref" -- '*.html' '*.js' '*.css' 2>/dev/null | head -n 12)
+            if [ -n "$out" ]; then
+              echo "--- $ref ---"
+              echo "$out"
+            fi
+          done
+          echo
+
+          echo '=== HEADER SHELL HISTORY ==='
+          git log --all --oneline --decorate -- assets/css/ibtikar-shell.css assets/js/page-shell.js assets/js/ibtikar-shell.js | head -n 120
+          echo
+
+          echo '=== MAIN HEADER CURRENT RULES ==='
+          grep -n -A24 -B4 '^\.ibt-shell-nav' assets/css/ibtikar-shell.css | head -n 120
+          echo
+
+          echo '=== MAIN MOBILE TOGGLE CURRENT MARKUP ==='
+          grep -n -E 'ibt-shell-menu-toggle|menu-toggle' index.html | head -n 30
+          echo
+
+          echo '=== BRANCH DIFF SUMMARY AGAINST MAIN ==='
+          for ref in \
+            origin/release/launch-readiness-2026-08-12 \
+            origin/feature/continuous-background-home-slider \
+            origin/release/frontend-finalization-2026-08-11 \
+            origin/feature/competitor-analysis-preserve-original \
+            origin/agent/sync-sites-v13; do
+            if git rev-parse --verify "$ref" >/dev/null 2>&1; then
+              echo "--- $ref ---"
+              git rev-list --left-right --count origin/main..."$ref"
+              git diff --stat origin/main..."$ref" -- index.html services.html ecommerce.html tharaa.html assets/css/ibtikar-shell.css assets/css/pages/frontend-final.css assets/css/pages/launch-readiness.css assets/js/page-shell.js assets/js/ibtikar-shell.js assets/js/source-home.js | tail -n 30
+            fi
+          done
+          echo
+
+          echo '=== COMMITS BETWEEN APPROVED FINALIZATION AND SITES V13 ==='
+          git log --oneline --decorate 9bffb83e029d315519d3ae354ce6f4ba6962c917..999845f48ddaf3ed59f49b1515ff9b94474141a1
+          echo
+
+          echo '=== KEY FILE DIFF: APPROVED FINALIZATION -> SITES V13 ==='
+          git diff --unified=3 9bffb83e029d315519d3ae354ce6f4ba6962c917 999845f48ddaf3ed59f49b1515ff9b94474141a1 -- \
+            index.html assets/css/ibtikar-shell.css assets/js/page-shell.js assets/js/ibtikar-shell.js \
+            | sed -n '1,1200p'
+
+      - name: Confirm current QA files exist
+        shell: bash
+        run: |
+          set -e
+          test -f scripts/static-qa.cjs
+          test -f scripts/interaction-qa.cjs
+          test -f .github/workflows/frontend-qa.yml
+          echo 'Recovery audit is read-only; QA files are present.'
