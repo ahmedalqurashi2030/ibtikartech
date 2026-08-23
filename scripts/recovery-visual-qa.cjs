@@ -3,7 +3,6 @@ const assert = require('assert');
 
 const shell = fs.readFileSync('assets/css/ibtikar-shell.css', 'utf8');
 const home = fs.readFileSync('index.html', 'utf8');
-const recovered = shell.slice(shell.indexOf('APPROVED VISUAL RECOVERY'));
 const servicePages = [
   'store-launch.html',
   'storefront-customization.html',
@@ -13,12 +12,35 @@ const servicePages = [
   'ecommerce-support.html',
 ];
 
-assert(shell.includes('APPROVED VISUAL RECOVERY 2026-08-20'), 'recovery shell marker missing');
-assert(shell.match(/APPROVED VISUAL RECOVERY 2026-08-20/g)?.length === 1, 'recovery shell must exist exactly once');
+function declarationBlock(selector) {
+  const start = shell.indexOf(selector);
+  assert(start >= 0, `missing shell selector: ${selector}`);
+  const open = shell.indexOf('{', start);
+  const close = shell.indexOf('}', open);
+  assert(open >= 0 && close > open, `invalid shell block: ${selector}`);
+  return shell.slice(open + 1, close);
+}
+
+const headerBlock = declarationBlock('.ibt-shell-header,');
+const navBlock = declarationBlock('.ibt-shell-nav,');
+const desktopNavBlock = declarationBlock('.ibt-shell-desktop-nav,');
+
+assert(shell.includes('P0 shell consolidation'), 'canonical shell marker missing');
+assert(!shell.includes('APPROVED VISUAL RECOVERY'), 'retired visual recovery layer returned');
+assert(!shell.includes('V11 refined combined solutions/services header'), 'retired V11 shell layer returned');
+assert(/\btop:\s*0\s*;/.test(headerBlock), 'canonical header top position missing');
+assert(/border:\s*0\s*!important/.test(headerBlock), 'canonical header border reset missing');
+assert(/box-shadow:\s*none\s*!important/.test(headerBlock), 'canonical header shadow reset missing');
+assert(/border:\s*0\s*!important/.test(navBlock), 'canonical navigation border reset missing');
+assert(/border-radius:\s*0\s*!important/.test(navBlock), 'canonical navigation radius reset missing');
+assert(/background:\s*transparent\s*!important/.test(navBlock), 'canonical navigation background reset missing');
+assert(/box-shadow:\s*none\s*!important/.test(navBlock), 'canonical navigation shadow reset missing');
+assert(/background:\s*transparent\s*!important/.test(desktopNavBlock), 'desktop navigation canonical background missing');
 assert(shell.includes('radial-gradient(circle at 5px 5px'), 'four-dot mobile trigger missing');
-assert(/\.ibt-shell-nav[\s\S]*?border:\s*0\s*!important/.test(recovered), 'header border recovery missing');
-assert(/\.ibt-shell-nav[\s\S]*?box-shadow:\s*none\s*!important/.test(recovered), 'header shadow recovery missing');
-assert(/\.ibt-shell-desktop-nav[\s\S]*?background:\s*transparent\s*!important/.test(recovered), 'desktop navigation recovery missing');
+assert(shell.includes('body.source-home #home.hero'), 'homepage shell offset contract missing');
+assert(shell.includes('body.source-home .cinematic-story__brand'), 'homepage journey brand suppression missing');
+assert(shell.includes('@media (prefers-reduced-motion: reduce)'), 'reduced-motion shell guard missing');
+
 assert(home.includes('نبني منظومة رقمية'), 'approved hero heading missing');
 assert(home.includes('ابدأ بتشخيص مشروعك'), 'secondary hero CTA missing');
 assert(home.includes('استكشف منظومة الحلول'), 'primary hero CTA missing');
@@ -34,4 +56,4 @@ for (const page of servicePages) {
   assert(!html.includes('data-service-decision-panel="results"'), `${page}: retired results panel returned`);
 }
 
-console.log('Recovery visual QA: 20/20 passed');
+console.log('Canonical visual QA passed.');
